@@ -62,7 +62,7 @@
     }
 
     /* =========================================================
-       CAMERA SHUTTER / PHOTOGRAPHY PRELOADER (GSAP-POWERED)
+       CAMERA VIEWFINDER PRELOADER
     ========================================================= */
     #preloader {
       position: fixed;
@@ -142,59 +142,72 @@
       to { opacity: 1; box-shadow: 0 0 8px #D9534F; }
     }
 
-    /* Center Camera Lens Aperture Container */
+    /* Center Camera Lens Circles Container */
     .lens-wrapper {
       position: relative;
-      width: 160px;
-      height: 160px;
+      width: 150px;
+      height: 150px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 28px;
     }
 
-    .lens-aperture-outer {
+    /* Concentric Minimalist Lens Rings */
+    .lens-ring-outer {
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      border: 1px solid rgba(198, 159, 104, 0.2);
-      box-shadow: 0 0 30px rgba(198, 159, 104, 0.15);
+      border: 1px solid rgba(198, 159, 104, 0.25);
+      box-shadow: 0 0 35px rgba(198, 159, 104, 0.15);
+      animation: spin-ring 12s linear infinite;
     }
 
-    /* Camera Aperture Iris SVG */
-    .aperture-svg {
-      width: 100px;
-      height: 100px;
-      transform-origin: center;
+    .lens-ring-mid {
+      position: absolute;
+      inset: 16px;
+      border-radius: 50%;
+      border: 1px dashed rgba(228, 197, 151, 0.4);
+      animation: spin-ring-reverse 8s linear infinite;
     }
 
-    .blade {
-      fill: none;
-      stroke: var(--gold);
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0.85;
-      transition: all 0.2s ease;
+    .lens-ring-inner {
+      position: absolute;
+      inset: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(198, 159, 104, 0.6);
+      box-shadow: inset 0 0 15px rgba(198, 159, 104, 0.2);
+    }
+
+    @keyframes spin-ring {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes spin-ring-reverse {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(-360deg); }
     }
 
     /* Viewfinder Target Crosshair (+) */
     .focus-target {
       position: absolute;
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgba(228, 197, 151, 0.4);
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--gold-light);
+      border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 0 12px rgba(198, 159, 104, 0.4);
     }
     .focus-target::before, .focus-target::after {
       content: '';
       position: absolute;
-      background: var(--gold);
+      background: var(--gold-light);
     }
-    .focus-target::before { width: 10px; height: 1px; }
-    .focus-target::after { width: 1px; height: 10px; }
+    .focus-target::before { width: 12px; height: 1.5px; }
+    .focus-target::after { width: 1.5px; height: 12px; }
 
     /* Preloader Text Status */
     .preloader-status {
@@ -228,7 +241,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       color: var(--gold);
-      opacity: 0.8;
+      opacity: 0.85;
       margin-top: 4px;
     }
 
@@ -383,19 +396,22 @@
       will-change: transform, opacity;
     }
 
-    /* SVG Logo */
-    .logo-svg {
-      width: 140px;
-      height: auto;
-      fill: var(--cream);
-      filter: drop-shadow(0 0 24px rgba(198,159,104,0.3));
+    /* SVG Logo with Golden Glow Effect */
+    .logo-container {
+      position: relative;
       margin-bottom: 28px;
-      transition: transform 0.5s ease;
-      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .logo-svg:hover {
-      transform: scale(1.04);
+    .logo-svg {
+      width: 145px;
+      height: auto;
+      fill: var(--cream);
+      filter: drop-shadow(0 0 20px rgba(198,159,104,0.4));
+      opacity: 0;
+      will-change: transform, filter, opacity;
     }
 
     /* Decorative Divider */
@@ -553,21 +569,14 @@
       <div class="corner corner-br"></div>
     </div>
 
-    <!-- Camera Lens Aperture & Focus Target -->
+    <!-- Minimalist Concentric Camera Lens Rings -->
     <div class="lens-wrapper">
-      <div class="lens-aperture-outer"></div>
+      <div class="lens-ring-outer"></div>
+      <div class="lens-ring-mid"></div>
+      <div class="lens-ring-inner"></div>
       
       <!-- Focus Target (+) -->
       <div class="focus-target" id="focusTarget"></div>
-
-      <!-- 6-Blade Camera Aperture SVG -->
-      <svg class="aperture-svg" viewBox="0 0 100 100" id="apertureSvg">
-        <!-- Outer Circle -->
-        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(198,159,104,0.25)" stroke-width="1"/>
-        <!-- Aperture Blades -->
-        <path class="blade" d="M50,10 L78,38 M78,38 L62,78 M62,78 L22,70 M22,70 L10,38 M10,38 L38,10 M38,10 L50,10"/>
-        <path class="blade" d="M50,10 L70,30 L60,65 L30,60 L20,35 L40,15 Z" fill="rgba(198,159,104,0.06)" stroke="var(--gold)" stroke-width="1"/>
-      </svg>
     </div>
 
     <!-- Preloader Text & Counter -->
@@ -605,10 +614,12 @@
   <main class="main-card" id="mainCard" role="main">
 
     <!-- Logo SVG -->
-    <svg viewBox="100 400 750 300" class="logo-svg" id="logoSvg" aria-label="Lamha Studios Logo">
-      <path d="M805.99,486.53c-.82,1.83-3.51,1.4-3.8-.58-4.38-31.31-23.1-39.11-23.1-39.11-15.71.09,61.92,158.43-10.37,158.43-26.61,0-23.93-9.1-28.57-9.27-4.64-.19-1.44,21.08-6.96,18.55-8.83-4.05-41.53-29.06-45.68-26.41-4.69,3.01-10.35,18.92-38.72,18.92-34.78-1.31-27.42-35.48-25.92-47.03,4.98-3.74,8.5-6.84,10.93-9.19.37,12.24,3.76,26.96,21.84,26.96,32.08.3,46.58-50.29,66.63-50.29,27.46.32,9.81,44.71,41.65,44.71,0,0,20.56.89,21.01-7.57,1.8-33.81-46.2-120.95-10.28-143.77,3.67-2.33,8.47-2,11.72.88,11.55,10.24,30.47,40.26,19.61,64.77Z"/>
-      <path d="M615.34,560.8l.03.04c-18.99,12.47-73.99,49.65-176.24,49.65-130.47,0-125.84-48.73-121.22-64.15,4.64-15.42,23.44-39.79,19.44-44.73-4.02-4.94-17.58-7.1-17.58-7.1,0,0-10.18,25.3-16.04,25.6-5.86.32-22.52-10.18-30.54-10.18s6.18-28.07,10.18-28.68c4.02-.62,22.52,11.1,26.22,9.26,3.7-1.86,13.56-26.84,17.88-26.84s28.38,12.34,28.38,15.42-26.22,53.67-25.3,63.55c.94,9.86,16.66,50.63,133.88,38.59,144.04-16.96,175.81-63.58,175.81-63.58l-125.14,13.2c-2.53.22-4.36-2.38-3.31-4.69l9.4-23.78c.49-1.05,1.47-1.79,2.62-1.93,14.76-1.83,113.34-13.82,135.62-12.14,2.48.19,4.35,2.3,4.25,4.78-1.09,24.45-21.95,39.87-28.17,50.13,0,0-.01.03-.04.07-.52.73-5.04,6.94-20.13,17.5Z"/>
-    </svg>
+    <div class="logo-container">
+      <svg viewBox="100 400 750 300" class="logo-svg" id="logoSvg" aria-label="Lamha Studios Logo">
+        <path d="M805.99,486.53c-.82,1.83-3.51,1.4-3.8-.58-4.38-31.31-23.1-39.11-23.1-39.11-15.71.09,61.92,158.43-10.37,158.43-26.61,0-23.93-9.1-28.57-9.27-4.64-.19-1.44,21.08-6.96,18.55-8.83-4.05-41.53-29.06-45.68-26.41-4.69,3.01-10.35,18.92-38.72,18.92-34.78-1.31-27.42-35.48-25.92-47.03,4.98-3.74,8.5-6.84,10.93-9.19.37,12.24,3.76,26.96,21.84,26.96,32.08.3,46.58-50.29,66.63-50.29,27.46.32,9.81,44.71,41.65,44.71,0,0,20.56.89,21.01-7.57,1.8-33.81-46.2-120.95-10.28-143.77,3.67-2.33,8.47-2,11.72.88,11.55,10.24,30.47,40.26,19.61,64.77Z"/>
+        <path d="M615.34,560.8l.03.04c-18.99,12.47-73.99,49.65-176.24,49.65-130.47,0-125.84-48.73-121.22-64.15,4.64-15.42,23.44-39.79,19.44-44.73-4.02-4.94-17.58-7.1-17.58-7.1,0,0-10.18,25.3-16.04,25.6-5.86.32-22.52-10.18-30.54-10.18s6.18-28.07,10.18-28.68c4.02-.62,22.52,11.1,26.22,9.26,3.7-1.86,13.56-26.84,17.88-26.84s28.38,12.34,28.38,15.42-26.22,53.67-25.3,63.55c.94,9.86,16.66,50.63,133.88,38.59,144.04-16.96,175.81-63.58,175.81-63.58l-125.14,13.2c-2.53.22-4.36-2.38-3.31-4.69l9.4-23.78c.49-1.05,1.47-1.79,2.62-1.93,14.76-1.83,113.34-13.82,135.62-12.14,2.48.19,4.35,2.3,4.25,4.78-1.09,24.45-21.95,39.87-28.17,50.13,0,0-.01.03-.04.07-.52.73-5.04,6.94-20.13,17.5Z"/>
+      </svg>
+    </div>
 
     <div class="sep" id="sep" aria-hidden="true">
       <div class="sep-line"></div>
@@ -724,7 +735,7 @@
     })();
 
     // =========================================================
-    // GSAP PHOTOGRAPHY ANIMATION SEQUENCE
+    // GSAP ENHANCED ANIMATION SEQUENCE
     // =========================================================
     window.addEventListener('load', function() {
       const tl = gsap.timeline();
@@ -733,29 +744,24 @@
       let obj = { val: 0 };
       gsap.to(obj, {
         val: 100,
-        duration: 1.6,
+        duration: 1.5,
         ease: "power2.inOut",
         onUpdate: function() {
           document.getElementById('progressNum').textContent = Math.floor(obj.val) + "%";
         }
       });
 
-      // Camera lens aperture pulse & focus target scale
-      gsap.fromTo('#apertureSvg', 
-        { rotate: 0, scale: 0.8 }, 
-        { rotate: 180, scale: 1.15, duration: 1.6, ease: "power2.inOut" }
-      );
-
+      // Target Focus Pulse
       gsap.fromTo('#focusTarget',
-        { scale: 1.6, opacity: 0.2 },
-        { scale: 1.0, opacity: 1, duration: 1.2, ease: "back.out(1.7)" }
+        { scale: 1.5, opacity: 0.2 },
+        { scale: 1.0, opacity: 1, duration: 1.2, ease: "back.out(1.8)" }
       );
 
       // Shutter snap & reveal entrance sequence
-      tl.to('#focusText', { textContent: "FOCUSED ✓", color: "#C69F68", duration: 0.3, delay: 1.4 })
+      tl.to('#focusText', { textContent: "FOCUSED ✓", color: "#C69F68", duration: 0.25, delay: 1.3 })
         // Camera flash effect
-        .to('#shutter-flash', { opacity: 0.9, duration: 0.08, ease: "power4.in" })
-        .to('#shutter-flash', { opacity: 0, duration: 0.4, ease: "power2.out" })
+        .to('#shutter-flash', { opacity: 0.95, duration: 0.08, ease: "power4.in" })
+        .to('#shutter-flash', { opacity: 0, duration: 0.45, ease: "power2.out" })
         // Hide preloader
         .to('#preloader', { opacity: 0, visibility: 'hidden', duration: 0.6, ease: "power3.inOut" }, "-=0.4")
         
@@ -769,16 +775,30 @@
         // Main Card Glassmorphism Reveal
         .to('#mainCard', { opacity: 1, duration: 0.8, ease: "power2.out" }, "-=1.8")
         
-        // Staggered entrance for internal elements
+        // HERO LOGO ENTRANCE (Ultra Luxury GSAP Glow Bloom & Elastic Scale)
         .fromTo('#logoSvg', 
-          { y: 30, opacity: 0, scale: 0.85 }, 
-          { y: 0, opacity: 1, scale: 1, duration: 1.0, ease: "back.out(1.6)" }, 
+          { 
+            y: 40, 
+            opacity: 0, 
+            scale: 0.7, 
+            filter: "drop-shadow(0 0 50px rgba(198,159,104,1)) brightness(1.5)" 
+          }, 
+          { 
+            y: 0, 
+            opacity: 1, 
+            scale: 1, 
+            filter: "drop-shadow(0 0 20px rgba(198,159,104,0.4)) brightness(1)", 
+            duration: 1.4, 
+            ease: "elastic.out(1.1, 0.6)" 
+          }, 
           "-=1.4"
         )
+
+        // Staggered entrance for remaining elements
         .fromTo('#sep', 
           { width: 0, opacity: 0 }, 
           { width: 200, opacity: 1, duration: 0.8, ease: "power3.out" }, 
-          "-=0.8"
+          "-=0.7"
         )
         .fromTo('#cs-label', 
           { y: 15, opacity: 0 }, 
@@ -810,6 +830,16 @@
           { opacity: 1, duration: 0.8, ease: "power1.out" }, 
           "-=0.4"
         );
+
+      // Continuous subtle breathing motion for Logo
+      gsap.to('#logoSvg', {
+        y: -3,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: 2.5
+      });
 
       // Interactive 3D Card Parallax Tilt on Mouse Move
       const card = document.getElementById('mainCard');
