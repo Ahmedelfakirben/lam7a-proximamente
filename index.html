@@ -86,7 +86,6 @@
       text-align: center;
     }
 
-    /* Logo giratorio de carga con anillo de luz */
     .loader-logo-container {
       position: relative;
       width: 90px;
@@ -147,7 +146,6 @@
       opacity: 0.9;
     }
 
-    /* Barra de progreso elegante */
     .loader-bar-bg {
       width: 140px;
       height: 2px;
@@ -417,11 +415,9 @@
       margin-bottom: 36px;
     }
 
-    /* Action Buttons (Instagram & WhatsApp) */
+    /* Action Buttons (Instagram Only) */
     .cta-group {
       display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
       justify-content: center;
       width: 100%;
     }
@@ -430,39 +426,25 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      padding: 14px 28px;
+      gap: 12px;
+      padding: 15px 36px;
       border-radius: 999px;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 500;
       text-decoration: none;
       transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .btn-ig {
-      background: linear-gradient(135deg, rgba(198, 159, 104, 0.9), rgba(86, 64, 49, 0.9));
+      background: linear-gradient(135deg, rgba(198, 159, 104, 0.95), rgba(86, 64, 49, 0.95));
       color: #fff;
-      border: 1px solid transparent;
-      box-shadow: 0 4px 22px rgba(198, 159, 104, 0.35);
+      border: 1px solid rgba(228, 197, 151, 0.3);
+      box-shadow: 0 4px 24px rgba(198, 159, 104, 0.4);
     }
 
     .btn-ig:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 8px 30px rgba(198, 159, 104, 0.55);
-    }
-
-    .btn-wa {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-gold);
-      color: var(--cream);
-      backdrop-filter: blur(8px);
-    }
-
-    .btn-wa:hover {
-      background: rgba(198, 159, 104, 0.15);
-      border-color: var(--gold);
-      transform: translateY(-2px);
-      color: var(--gold-light);
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 8px 32px rgba(198, 159, 104, 0.6);
     }
 
     /* Footer */
@@ -503,16 +485,13 @@
 
     @media (max-width: 540px) {
       .main-card { padding: 40px 22px; }
-      .cta-group { flex-direction: column; }
-      .btn-action { width: 100%; }
+      .btn-action { width: 100%; max-width: 280px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- =========================================================
-       PRELOADER (PANTALLA DE CARGA PREMUM)
-  ========================================================= -->
+  <!-- Preloader -->
   <div id="preloader" role="status" aria-label="Cargando sitio">
     <div class="loader-content">
       <div class="loader-logo-container">
@@ -574,18 +553,14 @@
     <h1 id="cs-title">Sitio en <em>construcción</em></h1>
 
     <p class="sub" id="cs-sub">
-      Estamos preparando algo especial. Estaremos en línea muy pronto.<br>Mientras tanto, encuéntranos en Instagram o WhatsApp.
+      Estamos preparando algo especial. Estaremos en línea muy pronto.<br>Mientras tanto, encuéntranos en Instagram.
     </p>
 
-    <!-- Botones de Redes y Contacto -->
+    <!-- Botón de Redes (Solo Instagram) -->
     <div class="cta-group">
       <a href="https://www.instagram.com/Lamhastudios" target="_blank" rel="noopener" class="btn-action btn-ig" id="btn-insta">
         <i class="fa-brands fa-instagram"></i>
         <span id="cs-ig-text">Seguir en Instagram</span>
-      </a>
-      <a href="https://wa.me/" target="_blank" rel="noopener" class="btn-action btn-wa" id="btn-wapp">
-        <i class="fa-brands fa-whatsapp"></i>
-        <span id="cs-wa-text">Contactar por WhatsApp</span>
       </a>
     </div>
 
@@ -596,45 +571,41 @@
   </footer>
 
   <script>
-    // Control del Preloader elegante
+    // Control del Preloader
     window.addEventListener('load', function() {
       setTimeout(function() {
         const preloader = document.getElementById('preloader');
         if (preloader) preloader.classList.add('loaded');
-      }, 1000);
+      }, 900);
     });
 
     const T = {
       es: {
         label: "Haute Photographie d'Auteur • Tetuán",
         title: ['Sitio en ', 'construcción'],
-        sub:   'Estamos preparando algo especial. Estaremos en línea muy pronto.<br>Mientras tanto, encuéntranos en Instagram o WhatsApp.',
+        sub:   'Estamos preparando algo especial. Estaremos en línea muy pronto.<br>Mientras tanto, encuéntranos en Instagram.',
         ig:    'Seguir en Instagram',
-        wa:    'Contactar por WhatsApp',
         dir:   'ltr'
       },
       en: {
         label: "Haute Photographie d'Auteur • Tetuán",
         title: ['Site under ', 'construction'],
-        sub:   'We are preparing something special. We will be online very soon.<br>In the meantime, find us on Instagram or WhatsApp.',
+        sub:   'We are preparing something special. We will be online very soon.<br>In the meantime, find us on Instagram.',
         ig:    'Follow on Instagram',
-        wa:    'Contact on WhatsApp',
         dir:   'ltr'
       },
       fr: {
         label: "Haute Photographie d'Auteur • Tétouan",
         title: ['Site en ', 'construction'],
-        sub:   'Nous préparons quelque chose de spécial. Bientôt en ligne.<br>En attendant, retrouvez-nous sur Instagram ou WhatsApp.',
+        sub:   'Nous préparons quelque chose de spécial. Bientôt en ligne.<br>En attendant, retrouvez-nous sur Instagram.',
         ig:    'Suivre sur Instagram',
-        wa:    'Contacter sur WhatsApp',
         dir:   'ltr'
       },
       ar: {
         label: 'هوت فوتوغرافي • تطوان',
         title: ['الموقع قيد ', 'الإنشاء'],
-        sub:   'نحن نحضّر شيئاً مميزاً. سنكون متاحين قريباً.<br>في غضون ذلك، تجدوننا على إنستغرام أو واتساب.',
+        sub:   'نحن نحضّر شيئاً مميزاً. سنكون متاحين قريباً.<br>في غضون ذلك، تجدوننا على إنستغرام.',
         ig:    'تابعونا على إنستغرام',
-        wa:    'تواصل عبر واتساب',
         dir:   'rtl'
       }
     };
@@ -680,7 +651,6 @@
 
       document.getElementById('cs-sub').innerHTML = d.sub;
       document.getElementById('cs-ig-text').textContent = d.ig;
-      document.getElementById('cs-wa-text').textContent = d.wa;
     }
 
     // Auto-detect browser language
