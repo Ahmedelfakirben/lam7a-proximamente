@@ -1,0 +1,5 @@
+[providers]
+providers = ['static']
+
+[start]
+cmd = 'npx serve -s . -l 80'

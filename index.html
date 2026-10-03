@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Próximamente — Lamha Studios | Haute Photographie d'Auteur</title>
+  <meta name="description" content="Lamha Studios por Afaf El Aribi. Haute Photographie d'Auteur en Tetuán, Marruecos. Muy pronto disponible en línea.">
+  <meta name="keywords" content="Lamha Studios, Afaf El Aribi, Photographie Tetouan, Haute Photographie, Tetuán, Fotografía Marruecos">
+  <meta name="robots" content="index, follow">
+  
+  <!-- OpenGraph / Social Media Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lamha Studios — Haute Photographie d'Auteur">
+  <meta property="og:description" content="Estamos preparando algo excepcional. Sitio en construcción. Tetuán, Marruecos.">
+  <meta property="og:image" content="assets/lamha-coming-soon-bg.jpg">
+  <meta property="twitter:card" content="summary_large_image">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="assets/logo/logo-dark.svg">
+  <link rel="alternate icon" type="image/png" href="assets/logo/logo-black-clean.png">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=IBM+Plex+Serif:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C69F68;
+      --gold-light: #E4C597;
+      --gold-dark: #9A7544;
+      --dark: #0F0D0C;
+      --dark-card: rgba(22, 18, 15, 0.75);
+      --cream: #FAF8F5;
+      --muted: rgba(250, 248, 245, 0.65);
+      --border-gold: rgba(198, 159, 104, 0.25);
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--dark);
+      color: var(--cream);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+      selection-background-color: var(--gold);
+      selection-color: var(--dark);
+    }
+
+    /* Background image & ambient animation */
+    .bg-wrapper {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg {
+      position: absolute;
+      inset: -5%;
+      background-image: url('assets/lamha-coming-soon-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.65) contrast(1.1);
+      animation: breathe 28s ease-in-out infinite alternate;
+    }
+
+    @keyframes breathe {
+      from { transform: scale(1.0); }
+      to   { transform: scale(1.08); }
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(circle at center, rgba(15, 13, 12, 0.75) 0%, rgba(10, 8, 7, 0.94) 100%);
+    }
+
+    /* Subtle luxury glowing light particles */
+    .glow-orb {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(198,159,104,0.15) 0%, rgba(0,0,0,0) 70%);
+      z-index: 2;
+      pointer-events: none;
+      animation: float-glow 15s ease-in-out infinite alternate;
+    }
+
+    .glow-orb-1 { top: -100px; left: -100px; }
+    .glow-orb-2 { bottom: -120px; right: -120px; animation-delay: -7s; }
+
+    @keyframes float-glow {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, 50px) scale(1.1); }
+      100% { transform: translate(-20px, 30px) scale(0.95); }
+    }
+
+    /* Language Switcher */
+    .lang-drop {
+      position: fixed;
+      top: 24px;
+      right: 28px;
+      z-index: 50;
+      opacity: 0;
+      animation: fadein 1s ease forwards 1.2s;
+    }
+
+    .lang-drop-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--border-gold);
+      border-radius: 999px;
+      color: rgba(250, 248, 245, 0.85);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+    }
+
+    .lang-drop-btn:hover {
+      background: rgba(198, 159, 104, 0.18);
+      border-color: var(--gold);
+      color: var(--gold);
+      box-shadow: 0 0 15px rgba(198, 159, 104, 0.2);
+    }
+
+    .lang-drop-btn i.globe { font-size: 0.8rem; color: var(--gold); }
+    .lang-drop-btn .chevron { font-size: 0.6rem; opacity: 0.6; transition: transform 0.3s ease; }
+    .lang-drop.open .chevron { transform: rotate(180deg); }
+
+    .lang-drop-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: rgba(18, 14, 12, 0.95);
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      padding: 6px;
+      min-width: 160px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: none;
+      animation: dropdown-open 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lang-drop.open .lang-drop-menu { display: block; }
+
+    @keyframes dropdown-open {
+      from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .lang-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 9px 14px;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      color: rgba(250, 248, 245, 0.75);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .lang-option:hover {
+      background: rgba(198, 159, 104, 0.15);
+      color: var(--gold);
+    }
+
+    .lang-option.active {
+      color: var(--gold);
+      font-weight: 600;
+      background: rgba(198, 159, 104, 0.1);
+    }
+
+    .lang-option .lang-code {
+      font-size: 0.65rem;
+      opacity: 0.5;
+      letter-spacing: 0.08em;
+    }
+
+    /* Main Container Card */
+    .main-card {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 48px 36px;
+      max-width: 580px;
+      width: 90%;
+      margin: 40px auto;
+      background: var(--dark-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 24px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      opacity: 0;
+      animation: fadeup 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+    }
+
+    /* SVG Logo */
+    .logo-svg {
+      width: 140px;
+      height: auto;
+      fill: var(--cream);
+      filter: drop-shadow(0 0 24px rgba(198,159,104,0.3));
+      margin-bottom: 28px;
+      transition: transform 0.5s ease;
+    }
+
+    .logo-svg:hover {
+      transform: scale(1.03);
+    }
+
+    /* Decorative Divider */
+    .sep {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      width: 200px;
+    }
+
+    .sep-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .sep-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    /* Headings & Text */
+    .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'IBM Plex Serif', Georgia, serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cream);
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+      background: linear-gradient(135deg, #FAF8F5 30%, #C69F68 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .sub {
+      font-size: clamp(0.88rem, 1.8vw, 1rem);
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 440px;
+      margin-bottom: 32px;
+    }
+
+    /* Email Notify Form */
+    .notify-form {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .notify-input {
+      flex: 1;
+      padding: 13px 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(198, 159, 104, 0.3);
+      border-radius: 999px;
+      color: var(--cream);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    .notify-input::placeholder {
+      color: rgba(250, 248, 245, 0.4);
+    }
+
+    .notify-input:focus {
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 16px rgba(198, 159, 104, 0.25);
+    }
+
+    .notify-btn {
+      padding: 13px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      border: none;
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 16px rgba(198, 159, 104, 0.3);
+    }
+
+    .notify-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(198, 159, 104, 0.5);
+    }
+
+    .notify-toast {
+      position: absolute;
+      bottom: -28px;
+      left: 0;
+      right: 0;
+      font-size: 0.75rem;
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .notify-toast.show { opacity: 1; }
+
+    /* Action Buttons (Instagram & WhatsApp) */
+    .cta-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-ig {
+      background: linear-gradient(135deg, rgba(198, 159, 104, 0.9), rgba(86, 64, 49, 0.9));
+      color: #fff;
+      border: 1px solid transparent;
+      box-shadow: 0 4px 20px rgba(198, 159, 104, 0.3);
+    }
+
+    .btn-ig:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 28px rgba(198, 159, 104, 0.5);
+    }
+
+    .btn-wa {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-gold);
+      color: var(--cream);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-wa:hover {
+      background: rgba(198, 159, 104, 0.15);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      color: var(--gold-light);
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 10;
+      margin-bottom: 24px;
+      text-align: center;
+      opacity: 0;
+      animation: fadein 1s ease forwards 1.5s;
+    }
+
+    footer p {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      color: rgba(250, 248, 245, 0.35);
+      text-transform: uppercase;
+    }
+
+    footer span { color: var(--gold); }
+
+    /* RTL Support */
+    .ar-text {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      direction: rtl;
+    }
+
+    /* Animations */
+    @keyframes fadeup {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @media (max-width: 540px) {
+      .main-card { padding: 36px 20px; }
+      .notify-form { flex-direction: column; }
+      .notify-btn { width: 100%; }
+      .cta-group { flex-direction: column; }
+      .btn-action { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Layer -->
+  <div class="bg-wrapper" aria-hidden="true">
+    <div class="bg"></div>
+    <div class="overlay"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+  </div>
+
+  <!-- Language Switcher Dropdown -->
+  <div class="lang-drop" id="langDrop">
+    <button class="lang-drop-btn" id="langDropBtn" onclick="toggleLangDrop()" aria-label="Cambiar idioma">
+      <i class="fa-solid fa-globe globe"></i>
+      <span id="currentLang">ES</span>
+      <i class="fa-solid fa-chevron-down chevron"></i>
+    </button>
+    <div class="lang-drop-menu" id="langDropMenu">
+      <button class="lang-option active" id="btn-es" onclick="selectLang('es','ES','Español')">Español <span class="lang-code">ES</span></button>
+      <button class="lang-option" id="btn-en" onclick="selectLang('en','EN','English')">English <span class="lang-code">EN</span></button>
+      <button class="lang-option" id="btn-fr" onclick="selectLang('fr','FR','Français')">Français <span class="lang-code">FR</span></button>
+      <button class="lang-option" id="btn-ar" onclick="selectLang('ar','AR','العربية')">العربية <span class="lang-code">AR</span></button>
+    </div>
+  </div>
+
+  <!-- Central Card Content -->
+  <main class="main-card" role="main">
+
+    <!-- Logo SVG -->
+    <svg viewBox="100 400 750 300" class="logo-svg" aria-label="Lamha Studios Logo">
+      <path d="M805.99,486.53c-.82,1.83-3.51,1.4-3.8-.58-4.38-31.31-23.1-39.11-23.1-39.11-15.71.09,61.92,158.43-10.37,158.43-26.61,0-23.93-9.1-28.57-9.27-4.64-.19-1.44,21.08-6.96,18.55-8.83-4.05-41.53-29.06-45.68-26.41-4.69,3.01-10.35,18.92-38.72,18.92-34.78-1.31-27.42-35.48-25.92-47.03,4.98-3.74,8.5-6.84,10.93-9.19.37,12.24,3.76,26.96,21.84,26.96,32.08.3,46.58-50.29,66.63-50.29,27.46.32,9.81,44.71,41.65,44.71,0,0,20.56.89,21.01-7.57,1.8-33.81-46.2-120.95-10.28-143.77,3.67-2.33,8.47-2,11.72.88,11.55,10.24,30.47,40.26,19.61,64.77Z"/>
+      <path d="M615.34,560.8l.03.04c-18.99,12.47-73.99,49.65-176.24,49.65-130.47,0-125.84-48.73-121.22-64.15,4.64-15.42,23.44-39.79,19.44-44.73-4.02-4.94-17.58-7.1-17.58-7.1,0,0-10.18,25.3-16.04,25.6-5.86.32-22.52-10.18-30.54-10.18s6.18-28.07,10.18-28.68c4.02-.62,22.52,11.1,26.22,9.26,3.7-1.86,13.56-26.84,17.88-26.84s28.38,12.34,28.38,15.42-26.22,53.67-25.3,63.55c.94,9.86,16.66,50.63,133.88,38.59,144.04-16.96,175.81-63.58,175.81-63.58l-125.14,13.2c-2.53.22-4.36-2.38-3.31-4.69l9.4-23.78c.49-1.05,1.47-1.79,2.62-1.93,14.76-1.83,113.34-13.82,135.62-12.14,2.48.19,4.35,2.3,4.25,4.78-1.09,24.45-21.95,39.87-28.17,50.13,0,0-.01.03-.04.07-.52.73-5.04,6.94-20.13,17.5Z"/>
+    </svg>
+
+    <div class="sep" aria-hidden="true">
+      <div class="sep-line"></div>
+      <div class="sep-dot"></div>
+      <div class="sep-line"></div>
+    </div>
+
+    <p class="label" id="cs-label">Haute Photographie d'Auteur • Tetuán</p>
+
+    <h1 id="cs-title">Sitio en <em>construcción</em></h1>
+
+    <p class="sub" id="cs-sub">
+      Estamos creando algo verdaderamente exclusivo. Estaremos online muy pronto.<br>Déjanos tu correo para avisarte en cuanto lancemos.
+    </p>
+
+    <!-- Formulario de Notificación por Correo -->
+    <form class="notify-form" id="notifyForm" onsubmit="handleNotifySubmit(event)">
+      <input type="email" class="notify-input" id="notifyEmail" placeholder="Tu correo electrónico..." required aria-label="Correo electrónico">
+      <button type="submit" class="notify-btn" id="cs-notify-btn">Notificarme</button>
+      <div class="notify-toast" id="notifyToast">✓ ¡Gracias! Te avisaremos el día del lanzamiento.</div>
+    </form>
+
+    <!-- Botones de Redes y Contacto -->
+    <div class="cta-group">
+      <a href="https://www.instagram.com/Lamhastudios" target="_blank" rel="noopener" class="btn-action btn-ig" id="btn-insta">
+        <i class="fa-brands fa-instagram"></i>
+        <span id="cs-ig-text">Instagram</span>
+      </a>
+      <a href="https://wa.me/" target="_blank" rel="noopener" class="btn-action btn-wa" id="btn-wapp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span id="cs-wa-text">Contactar</span>
+      </a>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2026 <span>Lamha Studios</span> by Afaf El Aribi • Tetuán, Maroc</p>
+  </footer>
+
+  <script>
+    const T = {
+      es: {
+        label: "Haute Photographie d'Auteur • Tetuán",
+        title: ['Sitio en ', 'construcción'],
+        sub:   'Estamos preparando algo especial. Estaremos en línea muy pronto.<br>Déjanos tu correo para avisarte el día del lanzamiento.',
+        placeholder: 'Tu correo electrónico...',
+        notifyBtn: 'Notificarme',
+        toastMsg: '✓ ¡Gracias! Te avisaremos muy pronto.',
+        ig:    'Seguir en Instagram',
+        wa:    'Contactar por WhatsApp',
+        dir:   'ltr'
+      },
+      en: {
+        label: "Haute Photographie d'Auteur • Tetuán",
+        title: ['Site under ', 'construction'],
+        sub:   'We are preparing something special. We will be online very soon.<br>Leave your email to get notified when we launch.',
+        placeholder: 'Your email address...',
+        notifyBtn: 'Notify Me',
+        toastMsg: '✓ Thank you! We will notify you soon.',
+        ig:    'Follow on Instagram',
+        wa:    'Contact on WhatsApp',
+        dir:   'ltr'
+      },
+      fr: {
+        label: "Haute Photographie d'Auteur • Tétouan",
+        title: ['Site en ', 'construction'],
+        sub:   'Nous préparons quelque chose de spécial. Bientôt en ligne.<br>Laissez votre e-mail pour être informé du lancement.',
+        placeholder: 'Votre adresse e-mail...',
+        notifyBtn: 'M\'informer',
+        toastMsg: '✓ Merci ! Nous vous tiendrons informé.',
+        ig:    'Suivre sur Instagram',
+        wa:    'Contacter sur WhatsApp',
+        dir:   'ltr'
+      },
+      ar: {
+        label: 'هوت فوتوغرافي • تطوان',
+        title: ['الموقع قيد ', 'الإنشاء'],
+        sub:   'نحن نحضّر شيئاً مميزاً. سنكون متاحين قريباً.<br>اترك بريدك الإلكتروني لإبلاغك عند الإطلاق.',
+        placeholder: 'بريدك الإلكتروني...',
+        notifyBtn: 'أبلغني',
+        toastMsg: '✓ شكراً لك! سنحيطكم علماً قريباً.',
+        ig:    'تابعونا على إنستغرام',
+        wa:    'تواصل عبر واتساب',
+        dir:   'rtl'
+      }
+    };
+
+    let currentLangKey = 'es';
+
+    function toggleLangDrop() {
+      document.getElementById('langDrop').classList.toggle('open');
+    }
+
+    document.addEventListener('click', function(e) {
+      const drop = document.getElementById('langDrop');
+      if (drop && !drop.contains(e.target)) drop.classList.remove('open');
+    });
+
+    function selectLang(lang, code, name) {
+      currentLangKey = lang;
+      setLang(lang);
+      document.getElementById('currentLang').textContent = code;
+      document.getElementById('langDrop').classList.remove('open');
+      ['es','en','fr','ar'].forEach(l => {
+        const el = document.getElementById('btn-'+l);
+        if (el) el.classList.toggle('active', l === lang);
+      });
+    }
+
+    function setLang(lang) {
+      const d = T[lang];
+      document.documentElement.lang = lang;
+      document.documentElement.dir  = d.dir;
+
+      document.getElementById('cs-label').textContent = d.label;
+      const h1 = document.getElementById('cs-title');
+      h1.innerHTML = d.title[0] + '<em>' + d.title[1] + '</em>';
+
+      if (d.dir === 'rtl') {
+        h1.classList.add('ar-text');
+        document.querySelector('.main-card').classList.add('ar-text');
+      } else {
+        h1.classList.remove('ar-text');
+        document.querySelector('.main-card').classList.remove('ar-text');
+      }
+
+      document.getElementById('cs-sub').innerHTML = d.sub;
+      document.getElementById('notifyEmail').placeholder = d.placeholder;
+      document.getElementById('cs-notify-btn').textContent = d.notifyBtn;
+      document.getElementById('notifyToast').textContent = d.toastMsg;
+      document.getElementById('cs-ig-text').textContent = d.ig;
+      document.getElementById('cs-wa-text').textContent = d.wa;
+    }
+
+    function handleNotifySubmit(e) {
+      e.preventDefault();
+      const toast = document.getElementById('notifyToast');
+      const input = document.getElementById('notifyEmail');
+      toast.classList.add('show');
+      input.value = '';
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    // Auto-detect browser language
+    (function() {
+      const codes = { es:'ES', en:'EN', fr:'FR', ar:'AR' };
+      const names = { es:'Español', en:'English', fr:'Français', ar:'العربية' };
+      const nav = (navigator.language || 'es').toLowerCase().slice(0,2);
+      const lang = ['es','en','fr','ar'].includes(nav) ? nav : 'es';
+      selectLang(lang, codes[lang], names[lang]);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  proximamente:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lamha-proximamente
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      - PORT=80
