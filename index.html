@@ -33,7 +33,7 @@
       --gold-light: #E4C597;
       --gold-dark: #9A7544;
       --dark: #0F0D0C;
-      --dark-card: rgba(22, 18, 15, 0.75);
+      --dark-card: rgba(22, 18, 15, 0.78);
       --cream: #FAF8F5;
       --muted: rgba(250, 248, 245, 0.65);
       --border-gold: rgba(198, 159, 104, 0.25);
@@ -55,8 +55,122 @@
       justify-content: center;
       min-height: 100vh;
       position: relative;
-      selection-background-color: var(--gold);
-      selection-color: var(--dark);
+    }
+
+    /* =========================================================
+       PRELOADER (PANTALLA DE CARGA ELEGANTE)
+    ========================================================= */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #0B0908;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.8s ease;
+    }
+
+    #preloader.loaded {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      text-align: center;
+    }
+
+    /* Logo giratorio de carga con anillo de luz */
+    .loader-logo-container {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loader-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(198, 159, 104, 0.15);
+      border-top-color: var(--gold);
+      border-right-color: rgba(228, 197, 151, 0.6);
+      animation: spin-ring 1.4s linear infinite;
+      box-shadow: 0 0 20px rgba(198, 159, 104, 0.2);
+    }
+
+    .loader-ring-outer {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 1px dashed rgba(198, 159, 104, 0.2);
+      animation: spin-ring-reverse 8s linear infinite;
+    }
+
+    @keyframes spin-ring {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes spin-ring-reverse {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .loader-svg {
+      width: 48px;
+      height: auto;
+      fill: var(--gold-light);
+      filter: drop-shadow(0 0 12px rgba(198,159,104,0.5));
+      animation: pulse-logo 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse-logo {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      100% { transform: scale(1.05); opacity: 1; }
+    }
+
+    .loader-brand {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    /* Barra de progreso elegante */
+    .loader-bar-bg {
+      width: 140px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loader-bar-fill {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+      border-radius: 999px;
+      box-shadow: 0 0 10px var(--gold);
+      animation: load-progress 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    }
+
+    @keyframes load-progress {
+      0% { width: 0%; }
+      50% { width: 70%; }
+      100% { width: 100%; }
     }
 
     /* Background image & ambient animation */
@@ -215,18 +329,18 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 48px 36px;
+      padding: 54px 40px;
       max-width: 580px;
       width: 90%;
       margin: 40px auto;
       background: var(--dark-card);
       border: 1px solid var(--border-gold);
-      border-radius: 24px;
+      border-radius: 28px;
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
       opacity: 0;
-      animation: fadeup 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+      animation: fadeup 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
     }
 
     /* SVG Logo */
@@ -278,11 +392,11 @@
 
     h1 {
       font-family: 'IBM Plex Serif', Georgia, serif;
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
       font-weight: 400;
       line-height: 1.15;
       color: var(--cream);
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       letter-spacing: -0.01em;
     }
 
@@ -295,86 +409,18 @@
     }
 
     .sub {
-      font-size: clamp(0.88rem, 1.8vw, 1rem);
+      font-size: clamp(0.9rem, 1.8vw, 1.02rem);
       color: var(--muted);
       font-weight: 300;
-      line-height: 1.7;
+      line-height: 1.75;
       max-width: 440px;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
-
-    /* Email Notify Form */
-    .notify-form {
-      width: 100%;
-      max-width: 420px;
-      display: flex;
-      gap: 8px;
-      margin-bottom: 32px;
-      position: relative;
-    }
-
-    .notify-input {
-      flex: 1;
-      padding: 13px 18px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(198, 159, 104, 0.3);
-      border-radius: 999px;
-      color: var(--cream);
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.85rem;
-      outline: none;
-      backdrop-filter: blur(8px);
-      transition: all 0.3s ease;
-    }
-
-    .notify-input::placeholder {
-      color: rgba(250, 248, 245, 0.4);
-    }
-
-    .notify-input:focus {
-      border-color: var(--gold);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 16px rgba(198, 159, 104, 0.25);
-    }
-
-    .notify-btn {
-      padding: 13px 22px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-      border: none;
-      color: #fff;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 4px 16px rgba(198, 159, 104, 0.3);
-    }
-
-    .notify-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(198, 159, 104, 0.5);
-    }
-
-    .notify-toast {
-      position: absolute;
-      bottom: -28px;
-      left: 0;
-      right: 0;
-      font-size: 0.75rem;
-      color: var(--gold);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .notify-toast.show { opacity: 1; }
 
     /* Action Buttons (Instagram & WhatsApp) */
     .cta-group {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       flex-wrap: wrap;
       justify-content: center;
       width: 100%;
@@ -385,24 +431,24 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      padding: 12px 24px;
+      padding: 14px 28px;
       border-radius: 999px;
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 500;
       text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .btn-ig {
       background: linear-gradient(135deg, rgba(198, 159, 104, 0.9), rgba(86, 64, 49, 0.9));
       color: #fff;
       border: 1px solid transparent;
-      box-shadow: 0 4px 20px rgba(198, 159, 104, 0.3);
+      box-shadow: 0 4px 22px rgba(198, 159, 104, 0.35);
     }
 
     .btn-ig:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 8px 28px rgba(198, 159, 104, 0.5);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 30px rgba(198, 159, 104, 0.55);
     }
 
     .btn-wa {
@@ -446,7 +492,7 @@
 
     /* Animations */
     @keyframes fadeup {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
@@ -456,15 +502,34 @@
     }
 
     @media (max-width: 540px) {
-      .main-card { padding: 36px 20px; }
-      .notify-form { flex-direction: column; }
-      .notify-btn { width: 100%; }
+      .main-card { padding: 40px 22px; }
       .cta-group { flex-direction: column; }
       .btn-action { width: 100%; }
     }
   </style>
 </head>
 <body>
+
+  <!-- =========================================================
+       PRELOADER (PANTALLA DE CARGA PREMUM)
+  ========================================================= -->
+  <div id="preloader" role="status" aria-label="Cargando sitio">
+    <div class="loader-content">
+      <div class="loader-logo-container">
+        <div class="loader-ring-outer"></div>
+        <div class="loader-ring"></div>
+        <svg viewBox="100 400 750 300" class="loader-svg" aria-hidden="true">
+          <path d="M805.99,486.53c-.82,1.83-3.51,1.4-3.8-.58-4.38-31.31-23.1-39.11-23.1-39.11-15.71.09,61.92,158.43-10.37,158.43-26.61,0-23.93-9.1-28.57-9.27-4.64-.19-1.44,21.08-6.96,18.55-8.83-4.05-41.53-29.06-45.68-26.41-4.69,3.01-10.35,18.92-38.72,18.92-34.78-1.31-27.42-35.48-25.92-47.03,4.98-3.74,8.5-6.84,10.93-9.19.37,12.24,3.76,26.96,21.84,26.96,32.08.3,46.58-50.29,66.63-50.29,27.46.32,9.81,44.71,41.65,44.71,0,0,20.56.89,21.01-7.57,1.8-33.81-46.2-120.95-10.28-143.77,3.67-2.33,8.47-2,11.72.88,11.55,10.24,30.47,40.26,19.61,64.77Z"/>
+          <path d="M615.34,560.8l.03.04c-18.99,12.47-73.99,49.65-176.24,49.65-130.47,0-125.84-48.73-121.22-64.15,4.64-15.42,23.44-39.79,19.44-44.73-4.02-4.94-17.58-7.1-17.58-7.1,0,0-10.18,25.3-16.04,25.6-5.86.32-22.52-10.18-30.54-10.18s6.18-28.07,10.18-28.68c4.02-.62,22.52,11.1,26.22,9.26,3.7-1.86,13.56-26.84,17.88-26.84s28.38,12.34,28.38,15.42-26.22,53.67-25.3,63.55c.94,9.86,16.66,50.63,133.88,38.59,144.04-16.96,175.81-63.58,175.81-63.58l-125.14,13.2c-2.53.22-4.36-2.38-3.31-4.69l9.4-23.78c.49-1.05,1.47-1.79,2.62-1.93,14.76-1.83,113.34-13.82,135.62-12.14,2.48.19,4.35,2.3,4.25,4.78-1.09,24.45-21.95,39.87-28.17,50.13,0,0-.01.03-.04.07-.52.73-5.04,6.94-20.13,17.5Z"/>
+        </svg>
+      </div>
+
+      <div class="loader-brand">Lamha Studios</div>
+      <div class="loader-bar-bg">
+        <div class="loader-bar-fill"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- Background Layer -->
   <div class="bg-wrapper" aria-hidden="true">
@@ -509,25 +574,18 @@
     <h1 id="cs-title">Sitio en <em>construcción</em></h1>
 
     <p class="sub" id="cs-sub">
-      Estamos creando algo verdaderamente exclusivo. Estaremos online muy pronto.<br>Déjanos tu correo para avisarte en cuanto lancemos.
+      Estamos preparando algo especial. Estaremos en línea muy pronto.<br>Mientras tanto, encuéntranos en Instagram o WhatsApp.
     </p>
-
-    <!-- Formulario de Notificación por Correo -->
-    <form class="notify-form" id="notifyForm" onsubmit="handleNotifySubmit(event)">
-      <input type="email" class="notify-input" id="notifyEmail" placeholder="Tu correo electrónico..." required aria-label="Correo electrónico">
-      <button type="submit" class="notify-btn" id="cs-notify-btn">Notificarme</button>
-      <div class="notify-toast" id="notifyToast">✓ ¡Gracias! Te avisaremos el día del lanzamiento.</div>
-    </form>
 
     <!-- Botones de Redes y Contacto -->
     <div class="cta-group">
       <a href="https://www.instagram.com/Lamhastudios" target="_blank" rel="noopener" class="btn-action btn-ig" id="btn-insta">
         <i class="fa-brands fa-instagram"></i>
-        <span id="cs-ig-text">Instagram</span>
+        <span id="cs-ig-text">Seguir en Instagram</span>
       </a>
       <a href="https://wa.me/" target="_blank" rel="noopener" class="btn-action btn-wa" id="btn-wapp">
         <i class="fa-brands fa-whatsapp"></i>
-        <span id="cs-wa-text">Contactar</span>
+        <span id="cs-wa-text">Contactar por WhatsApp</span>
       </a>
     </div>
 
@@ -538,14 +596,19 @@
   </footer>
 
   <script>
+    // Control del Preloader elegante
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const preloader = document.getElementById('preloader');
+        if (preloader) preloader.classList.add('loaded');
+      }, 1000);
+    });
+
     const T = {
       es: {
         label: "Haute Photographie d'Auteur • Tetuán",
         title: ['Sitio en ', 'construcción'],
-        sub:   'Estamos preparando algo especial. Estaremos en línea muy pronto.<br>Déjanos tu correo para avisarte el día del lanzamiento.',
-        placeholder: 'Tu correo electrónico...',
-        notifyBtn: 'Notificarme',
-        toastMsg: '✓ ¡Gracias! Te avisaremos muy pronto.',
+        sub:   'Estamos preparando algo especial. Estaremos en línea muy pronto.<br>Mientras tanto, encuéntranos en Instagram o WhatsApp.',
         ig:    'Seguir en Instagram',
         wa:    'Contactar por WhatsApp',
         dir:   'ltr'
@@ -553,10 +616,7 @@
       en: {
         label: "Haute Photographie d'Auteur • Tetuán",
         title: ['Site under ', 'construction'],
-        sub:   'We are preparing something special. We will be online very soon.<br>Leave your email to get notified when we launch.',
-        placeholder: 'Your email address...',
-        notifyBtn: 'Notify Me',
-        toastMsg: '✓ Thank you! We will notify you soon.',
+        sub:   'We are preparing something special. We will be online very soon.<br>In the meantime, find us on Instagram or WhatsApp.',
         ig:    'Follow on Instagram',
         wa:    'Contact on WhatsApp',
         dir:   'ltr'
@@ -564,10 +624,7 @@
       fr: {
         label: "Haute Photographie d'Auteur • Tétouan",
         title: ['Site en ', 'construction'],
-        sub:   'Nous préparons quelque chose de spécial. Bientôt en ligne.<br>Laissez votre e-mail pour être informé du lancement.',
-        placeholder: 'Votre adresse e-mail...',
-        notifyBtn: 'M\'informer',
-        toastMsg: '✓ Merci ! Nous vous tiendrons informé.',
+        sub:   'Nous préparons quelque chose de spécial. Bientôt en ligne.<br>En attendant, retrouvez-nous sur Instagram ou WhatsApp.',
         ig:    'Suivre sur Instagram',
         wa:    'Contacter sur WhatsApp',
         dir:   'ltr'
@@ -575,10 +632,7 @@
       ar: {
         label: 'هوت فوتوغرافي • تطوان',
         title: ['الموقع قيد ', 'الإنشاء'],
-        sub:   'نحن نحضّر شيئاً مميزاً. سنكون متاحين قريباً.<br>اترك بريدك الإلكتروني لإبلاغك عند الإطلاق.',
-        placeholder: 'بريدك الإلكتروني...',
-        notifyBtn: 'أبلغني',
-        toastMsg: '✓ شكراً لك! سنحيطكم علماً قريباً.',
+        sub:   'نحن نحضّر شيئاً مميزاً. سنكون متاحين قريباً.<br>في غضون ذلك، تجدوننا على إنستغرام أو واتساب.',
         ig:    'تابعونا على إنستغرام',
         wa:    'تواصل عبر واتساب',
         dir:   'rtl'
@@ -625,22 +679,8 @@
       }
 
       document.getElementById('cs-sub').innerHTML = d.sub;
-      document.getElementById('notifyEmail').placeholder = d.placeholder;
-      document.getElementById('cs-notify-btn').textContent = d.notifyBtn;
-      document.getElementById('notifyToast').textContent = d.toastMsg;
       document.getElementById('cs-ig-text').textContent = d.ig;
       document.getElementById('cs-wa-text').textContent = d.wa;
-    }
-
-    function handleNotifySubmit(e) {
-      e.preventDefault();
-      const toast = document.getElementById('notifyToast');
-      const input = document.getElementById('notifyEmail');
-      toast.classList.add('show');
-      input.value = '';
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 4000);
     }
 
     // Auto-detect browser language
