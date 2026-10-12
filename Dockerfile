@@ -1,6 +1,9 @@
 # Dockerfile para despliegue de página estática en Coolify
 FROM nginx:alpine
 
+# Configuración personalizada para URLs limpias (/portal)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Copiar todo el contenido al directorio servido por Nginx
 COPY . /usr/share/nginx/html
 

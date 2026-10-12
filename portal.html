@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace Privé — Leyla & Karim (#LMH-8942) | Lamha Studios</title>
+  <meta name="description" content="Suite privada de clientes de Lamha Studios. Selección de fotografías de autor y seguimiento del pedido.">
+
+  <!-- Tipografías oficiales del Brand Book: IBM Plex Sans Arabic, Sweet Sans Pro & IBM Plex Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Favicon / Icono del Navegador -->
+  <link rel="icon" type="image/svg+xml" href="assets/logo/logo-dark.svg">
+  <link rel="alternate icon" type="image/png" href="assets/logo/logo-black-clean.png">
+  <link rel="apple-touch-icon" href="assets/logo/logo-black-clean.png">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="portal.css">
+</head>
+<body class="luxury-portal-body">
+
+  <!-- BARRA SUPERIOR DE LA SUITE PRIVADA -->
+  <aside class="suite-topbar">
+    <div class="container suite-topbar-inner">
+      <div class="topbar-left">
+        <a href="index.html" class="back-to-site-link">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="portal_back">Volver a Lamha Studios</span>
+        </a>
+        <span class="topbar-sep">•</span>
+        <span class="session-code-pill">
+          <span class="live-dot-green"></span>
+          <span data-i18n="portal_session_active">Sesión Activa #LMH-8942</span>
+        </span>
+      </div>
+
+      <div class="topbar-right">
+        <!-- Selector Desplegable de Idioma en la Suite -->
+        <div class="lang-dropdown" id="portalLangDropdown">
+          <button class="lang-dropdown-btn" id="portalLangDropdownBtn" onclick="togglePortalLangDropdown(event)" aria-label="Cambiar idioma">
+            <i class="fa-solid fa-globe"></i>
+            <span id="portalCurrentLangCode">ES</span>
+            <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+          </button>
+          <div class="lang-dropdown-menu hidden" id="portalLangDropdownMenu">
+            <button class="lang-option" data-lang="es" onclick="selectPortalLanguage('es')">
+              <span class="lang-name">Español</span>
+              <span class="lang-code-badge">ES</span>
+            </button>
+            <button class="lang-option" data-lang="en" onclick="selectPortalLanguage('en')">
+              <span class="lang-name">English</span>
+              <span class="lang-code-badge">EN</span>
+            </button>
+            <button class="lang-option" data-lang="fr" onclick="selectPortalLanguage('fr')">
+              <span class="lang-name">Français</span>
+              <span class="lang-code-badge">FR</span>
+            </button>
+            <button class="lang-option" data-lang="ar" onclick="selectPortalLanguage('ar')">
+              <span class="lang-name">العربية</span>
+              <span class="lang-code-badge">AR</span>
+            </button>
+          </div>
+        </div>
+
+        <span class="client-badge"><i class="fa-solid fa-gem text-gold"></i> <span data-i18n="portal_badge">Colección Fine Art Heritage</span></span>
+        <a href="https://www.instagram.com/Lamhastudios" target="_blank" class="contact-afaf-btn" style="color: #E1306C; background: rgba(225, 48, 108, 0.12);" title="Instagram oficial @Lamhastudios">
+          <i class="fa-brands fa-instagram"></i>
+          <span>@Lamhastudios</span>
+        </a>
+        <a href="https://wa.me/" target="_blank" class="contact-afaf-btn" title="Contactar con Afaf">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span data-i18n="portal_chat_afaf">Chat con Afaf</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- HEADER DEDICADO DE LA SUITE DE CLIENTE -->
+  <header class="suite-header">
+    <div class="container suite-header-inner">
+      <div class="suite-brand">
+        <a href="index.html" title="Volver al sitio principal">
+          <svg viewBox="100 400 750 300" class="brand-svg-logo-dark">
+            <path d="M805.99,486.53c-.82,1.83-3.51,1.4-3.8-.58-4.38-31.31-23.1-39.11-23.1-39.11-15.71.09,61.92,158.43-10.37,158.43-26.61,0-23.93-9.1-28.57-9.27-4.64-.19-1.44,21.08-6.96,18.55-8.83-4.05-41.53-29.06-45.68-26.41-4.69,3.01-10.35,18.92-38.72,18.92-34.78-1.31-27.42-35.48-25.92-47.03,4.98-3.74,8.5-6.84,10.93-9.19.37,12.24,3.76,26.96,21.84,26.96,32.08.3,46.58-50.29,66.63-50.29,27.46.32,9.81,44.71,41.65,44.71,0,0,20.56.89,21.01-7.57,1.8-33.81-46.2-120.95-10.28-143.77,3.67-2.33,8.47-2,11.72.88,11.55,10.24,30.47,40.26,19.61,64.77Z"/>
+            <path d="M615.34,560.8l.03.04c-18.99,12.47-73.99,49.65-176.24,49.65-130.47,0-125.84-48.73-121.22-64.15,4.64-15.42,23.44-39.79,19.44-44.73-4.02-4.94-17.58-7.1-17.58-7.1,0,0-10.18,25.3-16.04,25.6-5.86.32-22.52-10.18-30.54-10.18s6.18-28.07,10.18-28.68c4.02-.62,22.52,11.1,26.22,9.26,3.7-1.86,13.56-26.84,17.88-26.84s28.38,12.34,28.38,15.42-26.22,53.67-25.3,63.55c.94,9.86,16.66,50.63,133.88,38.59,144.04-16.96,175.81-63.58,175.81-63.58l-125.14,13.2c-2.53.22-4.36-2.38-3.31-4.69l9.4-23.78c.49-1.05,1.47-1.79,2.62-1.93,14.76-1.83,113.34-13.82,135.62-12.14,2.48.19,4.35,2.3,4.25,4.78-1.09,24.45-21.95,39.87-28.17,50.13,0,0-.01.03-.04.07-.52.73-5.04,6.94-20.13,17.5Z"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="suite-welcome">
+        <span class="suite-tag" data-i18n="portal_tag">ESPACE PRIVÉ DU CLIENT</span>
+        <h1 class="suite-client-name" data-i18n="portal_client_name">Leyla & Karim</h1>
+        <p class="suite-session-name" data-i18n="portal_session_name">Boda de Destino en Namaskar & Retratos Íntimos</p>
+      </div>
+
+      <!-- Pestañas dedicadas del cliente -->
+      <nav class="suite-tabs">
+        <button class="suite-tab-btn active" data-tab="selection" onclick="switchSuiteTab('selection')">
+          <i class="fa-regular fa-images"></i>
+          <span data-i18n="portal_tab_selection">Selección de Fotos</span>
+          <span class="tab-badge" id="tabCount">10</span>
+        </button>
+        <button class="suite-tab-btn" data-tab="timeline" onclick="switchSuiteTab('timeline')">
+          <i class="fa-solid fa-timeline"></i>
+          <span data-i18n="portal_tab_timeline">Estado del Pedido</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTENIDO DE LA SUITE -->
+  <main class="suite-main-content">
+
+    <!-- ============================================== -->
+    <!-- TAB 1: GALERÍA DE SELECCIÓN DE FOTOS -->
+    <!-- ============================================== -->
+    <section id="tab-selection" class="suite-tab-pane active">
+      <!-- PANEL DE CONTROL DE CUOTA -->
+      <div class="selection-quota-hero">
+        <div class="container quota-inner">
+          <div class="quota-text-col">
+            <span class="quota-subtitle" data-i18n="quota_subtitle">Curaduría de vuestro libro en piel</span>
+            <h2 class="quota-title" data-i18n="quota_title">Seleccionad vuestras 20 fotografías maestras</h2>
+            <p class="quota-desc" data-i18n="quota_desc">
+              Hemos preparado <strong>24 fotografías seleccionadas</strong> con el tratamiento cromático de autor. Marcad las 20 que protagonizarán el libro artesanal en lino y piel.
+            </p>
+          </div>
+
+          <div class="quota-metric-card">
+            <div class="q-metric-header">
+              <span class="q-label" data-i18n="quota_label">Cupo de autor seleccionado</span>
+              <span class="q-ratio" id="quotaRatio">10 / 20</span>
+            </div>
+            <div class="q-progress-bar">
+              <div class="q-progress-fill" id="quotaProgressFill" style="width: 50%;"></div>
+            </div>
+            <p class="q-subtext" id="quotaHelpText">Tenéis 10 fotografías marcadas. Os faltan 10 para completar el cupo.</p>
+            <div class="q-actions">
+              <button class="btn-luxury-primary" onclick="openReviewModal()">
+                <i class="fa-solid fa-check-double"></i>
+                <span data-i18n="btn_submit_taller">Enviar Selección al Taller</span>
+              </button>
+              <button class="btn-luxury-ghost-dark" onclick="downloadSelectedProofs()">
+                <i class="fa-solid fa-download"></i>
+                <span data-i18n="btn_download_previews">Descargar Previews</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BARRA DE FILTROS POR MOMENTOS -->
+      <div class="suite-filters-bar">
+        <div class="container filters-bar-inner">
+          <div class="suite-pills-row">
+            <button class="suite-pill active" onclick="filterSuiteGallery('all')">
+              <span data-i18n="pill_all">Todas</span> <span class="pill-count">24</span>
+            </button>
+            <button class="suite-pill" onclick="filterSuiteGallery('favorites')">
+              <i class="fa-solid fa-heart text-gold"></i> <span data-i18n="pill_favs">Mis Favoritas</span> <span class="pill-count" id="pillFavCount">10</span>
+            </button>
+            <button class="suite-pill" onclick="filterSuiteGallery('preparativos')" data-i18n="pill_prep">Preparativos</button>
+            <button class="suite-pill" onclick="filterSuiteGallery('ceremonia')" data-i18n="pill_ceremony">Ceremonia</button>
+            <button class="suite-pill" onclick="filterSuiteGallery('retratos')" data-i18n="pill_portraits">Retratos Íntimos</button>
+            <button class="suite-pill" onclick="filterSuiteGallery('detalles')" data-i18n="pill_details">Detalles & Joyería</button>
+          </div>
+
+          <div class="suite-view-options">
+            <div class="suite-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" placeholder="Buscar por número o nota..." data-i18n-ph="search_ph" oninput="handleSearch(this.value)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRILLA DE FOTOGRAFÍAS (MASONRY EDITORIAL) -->
+      <div class="container suite-gallery-container">
+        <div class="suite-masonry-grid" id="suiteGrid">
+          <!-- Inyectado dinámicamente vía app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- TAB 2: TIMELINE / ESTADO DEL PEDIDO -->
+    <!-- ============================================== -->
+    <section id="tab-timeline" class="suite-tab-pane">
+      <div class="container timeline-container">
+        <div class="suite-heading-center">
+          <span class="section-tag-gold">SEGUIMIENTO EN VIVO</span>
+          <h2 class="editorial-heading-lg">El Viaje de tus Recuerdos</h2>
+          <p class="timeline-intro">
+            Acompañamos cada fase del proceso con calibración óptica y confección artesanal.
+          </p>
+        </div>
+
+        <div class="suite-timeline-list">
+          <div class="t-step completed">
+            <div class="t-node"><i class="fa-solid fa-check"></i></div>
+            <div class="t-card">
+              <div class="t-card-head">
+                <span class="t-step-tag">Etapa 1 • Completada</span>
+                <span class="t-date">12 Agosto, 2026</span>
+              </div>
+              <h3>Entrevista Estética & Reserva</h3>
+              <p>Definición del estilo visual, paleta cromática preferida y planificación de la cobertura.</p>
+            </div>
+          </div>
+
+          <div class="t-step completed">
+            <div class="t-node"><i class="fa-solid fa-check"></i></div>
+            <div class="t-card">
+              <div class="t-card-head">
+                <span class="t-step-tag">Etapa 2 • Completada</span>
+                <span class="t-date">24 Agosto, 2026</span>
+              </div>
+              <h3>Día de la Boda en Namaskar</h3>
+              <p>Cobertura integral de 10 horas con iluminación natural y doble equipo de formato completo.</p>
+            </div>
+          </div>
+
+          <div class="t-step completed">
+            <div class="t-node"><i class="fa-solid fa-check"></i></div>
+            <div class="t-card">
+              <div class="t-card-head">
+                <span class="t-step-tag">Etapa 3 • Completada</span>
+                <span class="t-date">02 Septiembre, 2026</span>
+              </div>
+              <h3>Curaduría & Etalonaje de Autor</h3>
+              <p>Selección de las tomas más emotivas y aplicación de la paleta tonal exclusiva Lamha.</p>
+            </div>
+          </div>
+
+          <div class="t-step current">
+            <div class="t-node pulse-node"><i class="fa-solid fa-arrows-rotate fa-spin"></i></div>
+            <div class="t-card active-t-card">
+              <div class="t-card-head">
+                <span class="t-step-tag highlight">Etapa 4 • En Curso (Vuestra Acción)</span>
+                <span class="t-date">Hoy</span>
+              </div>
+              <h3>Selección de las 20 Fotografías Maestras</h3>
+              <p>Es vuestro momento: marcad vuestras 20 favoritas para comenzar el retoque de piel y maquetación del libro.</p>
+              <div class="t-cta-row">
+                <button class="btn-luxury-primary-sm" onclick="switchSuiteTab('selection')">
+                  Continuar Selección <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="t-step pending">
+            <div class="t-node"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <div class="t-card">
+              <div class="t-card-head">
+                <span class="t-step-tag">Etapa 5 • Próxima</span>
+                <span class="t-date">Est. 5 días tras selección</span>
+              </div>
+              <h3>Retoque Fino & Confección en Taller</h3>
+              <p>Limpieza microscópica, etalonaje final y encuadernación manual del libro en lino belga y piel.</p>
+            </div>
+          </div>
+
+          <div class="t-step pending">
+            <div class="t-node"><i class="fa-solid fa-box-open"></i></div>
+            <div class="t-card">
+              <div class="t-card-head">
+                <span class="t-step-tag">Etapa 6 • Entrega Final</span>
+                <span class="t-date">Est. 20 Septiembre, 2026</span>
+              </div>
+              <h3>Cofre de Madera Grabado & Entrega Cloud</h3>
+              <p>Envío a vuestro domicilio del cofre con las impresiones de museo y descargas ilimitadas en la nube.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX CINEMATOGRÁFICO DE LA SUITE -->
+  <div class="lightbox-overlay hidden" id="lightboxModal" role="dialog" aria-modal="true">
+    <div class="lightbox-backdrop" onclick="closeLightbox()"></div>
+    <div class="lightbox-content">
+      <div class="lightbox-topbar">
+        <div class="lightbox-counter">
+          <span id="lbCurrentIndex">1</span> de <span id="lbTotalCount">24</span>
+          <span class="lb-category-tag" id="lbCategoryTag">Ceremonia</span>
+        </div>
+        <div class="lightbox-actions">
+          <button class="lb-btn-icon" id="lbBtnFavorite" onclick="toggleFavoriteCurrentFromLightbox()">
+            <i class="fa-regular fa-heart"></i> <span>Marcar para Libro</span>
+          </button>
+          <button class="lb-btn-icon" id="lbBtnNote" onclick="toggleLightboxNotes()">
+            <i class="fa-regular fa-comment-dots"></i> <span>Añadir Nota</span>
+          </button>
+          <button class="lb-btn-icon close-btn" onclick="closeLightbox()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="lightbox-main-stage">
+        <button class="lb-nav-btn prev" onclick="prevLightboxPhoto()"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="lightbox-image-wrapper">
+          <img src="" alt="Fotografía" id="lbImage" class="lightbox-img">
+          <div class="lb-watermark">LAMHA STUDIOS • PROOF OF ART</div>
+        </div>
+        <button class="lb-nav-btn next" onclick="nextLightboxPhoto()"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+
+      <div class="lightbox-notes-drawer hidden" id="lbNotesDrawer">
+        <div class="drawer-header">
+          <h4><i class="fa-solid fa-pen-nib"></i> Instrucción de Retoque para Afaf</h4>
+          <button class="btn-close-sm" onclick="toggleLightboxNotes()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <textarea id="lbPhotoNoteInput" class="notes-textarea" placeholder="Escribe aquí tu ajuste para esta foto..."></textarea>
+        <button class="btn-luxury-primary-sm" onclick="savePhotoNote()">Guardar Nota</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE REVISIÓN FINAL -->
+  <div class="modal-dialog-overlay hidden" id="reviewModal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" onclick="closeReviewModal()"></div>
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="tag-pill">Paso Final</span>
+          <h3>Confirmar Selección para Confección del Libro</h3>
+        </div>
+        <button class="btn-close-modal" onclick="closeReviewModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="selection-summary-banner">
+          <div class="summary-metric">
+            <span class="metric-num" id="modalSelectedCount">10</span>
+            <span class="metric-label">Fotos Elegidas</span>
+          </div>
+          <div class="summary-divider"></div>
+          <div class="summary-metric">
+            <span class="metric-num">20</span>
+            <span class="metric-label">Cupo del Paquete</span>
+          </div>
+          <div class="summary-divider"></div>
+          <div class="summary-metric">
+            <span class="metric-num" id="modalNotesCount">1</span>
+            <span class="metric-label">Notas con Retoque</span>
+          </div>
+        </div>
+        <div class="modal-thumbnails-preview">
+          <h4>Miniaturas que integrarán vuestro libro:</h4>
+          <div class="thumbs-scroll-grid" id="modalThumbsGrid"></div>
+        </div>
+        <div class="modal-general-notes">
+          <label for="generalClientNotes"><strong>Instrucciones generales para Afaf Elaribi:</strong></label>
+          <textarea id="generalClientNotes" rows="3" placeholder="Comentarios sobre el orden, foto preferida para portada en piel..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-luxury-ghost-dark" onclick="closeReviewModal()">Seguir Editando</button>
+        <button class="btn-luxury-primary" onclick="submitFinalSelection()">
+          <i class="fa-solid fa-check"></i> Enviar al Taller de Afaf Elaribi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE ACCESO PIN A LA SUITE -->
+  <div class="modal-dialog-overlay hidden" id="portalLoginModal" style="position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center;">
+    <div class="modal-backdrop" onclick="closePortalLoginModal()" style="position: absolute; inset: 0; background: rgba(15, 13, 12, 0.88); backdrop-filter: blur(12px);"></div>
+    <div class="modal-window modal-auth" style="position: relative; z-index: 2; width: 100%; max-width: 440px; margin: 20px; background: #161311; border: 1px solid rgba(198, 159, 104, 0.3); border-radius: 20px; padding: 36px 32px; box-shadow: 0 25px 60px rgba(0,0,0,0.7); text-align: center;">
+      <button class="btn-close-modal" onclick="closePortalLoginModal()" style="position: absolute; right: 20px; top: 20px; background: none; border: none; font-size: 1.3rem; color: #a39b94; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+      <div class="auth-header" style="margin-bottom: 24px;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(198, 159, 104, 0.12); border: 1px solid rgba(198, 159, 104, 0.25); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+          <i class="fa-solid fa-key" style="font-size: 1.4rem; color: #c69f68;"></i>
+        </div>
+        <h3 style="font-family: 'IBM Plex Serif', serif; font-size: 1.5rem; color: #faf8f5; margin-bottom: 8px;">Espace Privé du Client</h3>
+        <p style="color: #a39b94; font-size: 0.90rem;">Introduce el código PIN de 4 dígitos proporcionado por Lamha Studios para acceder a tu galería privada.</p>
+      </div>
+      <div class="auth-body">
+        <input type="password" id="portalPinInput" maxlength="10" placeholder="••••" style="font-size: 1.8rem; letter-spacing: 8px; text-align: center; padding: 14px; width: 100%; background: #0f0d0c; border: 1px solid rgba(198, 159, 104, 0.35); border-radius: 12px; color: #c69f68; outline: none; font-family: monospace;" onkeydown="if(event.key==='Enter') attemptPortalLogin()" />
+        <p id="portalLoginError" style="color: #ef4444; font-size: 0.85rem; margin-top: 12px; display: none;"></p>
+        <button id="portalLoginBtn" class="btn-luxury-primary" style="margin-top: 24px; padding: 14px; width: 100%; border-radius: 12px; font-weight: 600; cursor: pointer; background: #c69f68; color: #0f0d0c; border: none; font-size: 0.95rem;" onclick="attemptPortalLogin()">Acceder a la Suite</button>
+        <div style="margin-top: 16px;">
+          <a href="index.html" style="font-size: 0.80rem; color: #8c7a6b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#c69f68'" onmouseout="this.style.color='#8c7a6b'"><i class="fa-solid fa-arrow-left"></i> Volver a Lamha Studios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+
+  <script src="portal.js"></script>
+</body>
+</html>
