@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { LamhaLogo } from '@/components/LamhaLogo'
@@ -102,6 +102,9 @@ const PORTAL_I18N = {
     lbMarkForBook: 'Marcar para Libro',
     lbNoteSaved: 'Nota Guardada',
     lbAddNote: 'Añadir Nota',
+    lbRotate: 'Girar',
+    lbFitScreen: 'Ajustar',
+    lbZoomIn: 'Ampliar 1:1',
     lbRetouchTitle: (id: string) => `Instrucción de Retoque para ${id}`,
     lbRetouchPlaceholder: 'Escribe aquí tu ajuste para esta foto...',
     lbSaveNote: 'Guardar Nota',
@@ -248,6 +251,9 @@ const PORTAL_I18N = {
     lbMarkForBook: 'Choisir pour le Livre',
     lbNoteSaved: 'Note Enregistrée',
     lbAddNote: 'Ajouter une Note',
+    lbRotate: 'Pivoter',
+    lbFitScreen: 'Ajuster',
+    lbZoomIn: 'Agrandir 1:1',
     lbRetouchTitle: (id: string) => `Instruction de Retouche pour ${id}`,
     lbRetouchPlaceholder: 'Indiquez ici vos souhaits de retouche pour cette photo...',
     lbSaveNote: 'Enregistrer la Note',
@@ -393,6 +399,9 @@ const PORTAL_I18N = {
     lbMarkForBook: 'Mark for Book',
     lbNoteSaved: 'Note Saved',
     lbAddNote: 'Add Note',
+    lbRotate: 'Rotate',
+    lbFitScreen: 'Fit Screen',
+    lbZoomIn: 'Zoom 1:1',
     lbRetouchTitle: (id: string) => `Retouch Instruction for ${id}`,
     lbRetouchPlaceholder: 'Write your retouching notes for this photo...',
     lbSaveNote: 'Save Note',
@@ -538,6 +547,9 @@ const PORTAL_I18N = {
     lbMarkForBook: 'تحديد للألبوم',
     lbNoteSaved: 'تم حفظ الملاحظة',
     lbAddNote: 'إضافة ملاحظة',
+    lbRotate: 'تدوير',
+    lbFitScreen: 'ملاءمة',
+    lbZoomIn: 'تكبير 1:1',
     lbRetouchTitle: (id: string) => `تعليمات التعديل لـ ${id}`,
     lbRetouchPlaceholder: 'اكتب ملاحظاتك وتعديلاتك على هذه الصورة...',
     lbSaveNote: 'حفظ الملاحظة',
@@ -664,6 +676,9 @@ export default function PortalPage() {
   // Modals
   const [activeNoteModal, setActiveNoteModal] = useState<PhotoItem | null>(null)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [rotation, setRotation] = useState<number>(0)
+  const [isZoomed, setIsZoomed] = useState<boolean>(false)
+  const filmstripRef = useRef<HTMLDivElement | null>(null)
   const [reviewModalOpen, setReviewModalOpen] = useState(false)
   const [generalNotes, setGeneralNotes] = useState('')
   const [isSubmittingOrder, setIsSubmittingOrder] = useState(false)
@@ -920,6 +935,51 @@ export default function PortalPage() {
     if (category === 'favs') return selectedIds.has(photo.id)
     return true
   })
+
+  // Reset zoom & rotación y auto-scroll de miniaturas al cambiar de foto
+  useEffect(() => {
+    setRotation(0)
+    setIsZoomed(false)
+    if (lightboxIndex !== null && filmstripRef.current) {
+      const activeThumb = filmstripRef.current.children[lightboxIndex] as HTMLElement
+      if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+      }
+    }
+  }, [lightboxIndex])
+
+  // Navegación por teclado para el Lightbox (Esc, Flechas, R para rotar, F para zoom)
+  useEffect(() => {
+    if (lightboxIndex === null) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const targetTag = (e.target as HTMLElement)?.tagName
+      if (targetTag === 'TEXTAREA' || targetTag === 'INPUT') return
+
+      if (e.key === 'Escape') {
+        if (activeNoteModal) {
+          setActiveNoteModal(null)
+        } else {
+          setLightboxIndex(null)
+        }
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        setActiveNoteModal(null)
+        setLightboxIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : filteredPhotos.length - 1))
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        setActiveNoteModal(null)
+        setLightboxIndex((prev) => (prev !== null && prev < filteredPhotos.length - 1 ? prev + 1 : 0))
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault()
+        setRotation((prev) => (prev + 90) % 360)
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault()
+        setIsZoomed((prev) => !prev)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [lightboxIndex, activeNoteModal, filteredPhotos.length])
 
   // Language Dropdown Component
   const renderLanguageSelector = (placement: 'topbar' | 'card' = 'topbar') => {
@@ -2436,6 +2496,27 @@ export default function PortalPage() {
               </div>
               <div className="lightbox-actions">
                 <button
+                  type="button"
+                  className="lb-btn-icon"
+                  title="Girar 90° (R)"
+                  onClick={() => setRotation((prev) => (prev + 90) % 360)}
+                >
+                  <i className="fa-solid fa-rotate-right" />
+                  <span>{t.lbRotate}</span>
+                </button>
+
+                <button
+                  type="button"
+                  className={`lb-btn-icon ${isZoomed ? 'is-favorite' : ''}`}
+                  title={isZoomed ? "Ajustar a pantalla (F)" : "Ampliar 1:1 (F)"}
+                  onClick={() => setIsZoomed((prev) => !prev)}
+                >
+                  <i className={`fa-solid ${isZoomed ? 'fa-compress' : 'fa-magnifying-glass-plus'}`} />
+                  <span>{isZoomed ? t.lbFitScreen : t.lbZoomIn}</span>
+                </button>
+
+                <button
+                  type="button"
                   className={`lb-btn-icon ${selectedIds.has(filteredPhotos[lightboxIndex].id) ? 'is-favorite' : ''}`}
                   onClick={() => toggleSelect(filteredPhotos[lightboxIndex].id)}
                 >
@@ -2448,7 +2529,9 @@ export default function PortalPage() {
                     {selectedIds.has(filteredPhotos[lightboxIndex].id) ? t.lbInBook : t.lbMarkForBook}
                   </span>
                 </button>
+
                 <button
+                  type="button"
                   className={`lb-btn-icon ${notes[filteredPhotos[lightboxIndex].id] ? 'is-favorite' : ''}`}
                   onClick={() => setActiveNoteModal(activeNoteModal ? null : filteredPhotos[lightboxIndex])}
                 >
@@ -2461,7 +2544,13 @@ export default function PortalPage() {
                     {notes[filteredPhotos[lightboxIndex].id] ? t.lbNoteSaved : t.lbAddNote}
                   </span>
                 </button>
-                <button className="lb-btn-icon close-btn" onClick={() => setLightboxIndex(null)}>
+
+                <button 
+                  type="button" 
+                  className="lb-btn-icon close-btn" 
+                  onClick={() => setLightboxIndex(null)}
+                  title="Cerrar (Esc)"
+                >
                   <i className="fa-solid fa-xmark" />
                 </button>
               </div>
@@ -2469,7 +2558,9 @@ export default function PortalPage() {
 
             <div className="lightbox-main-stage">
               <button
+                type="button"
                 className="lb-nav-btn prev"
+                title="Anterior (Flecha Izquierda)"
                 onClick={(e) => {
                   e.stopPropagation()
                   setActiveNoteModal(null)
@@ -2478,17 +2569,31 @@ export default function PortalPage() {
               >
                 <i className={`fa-solid ${isRTL ? 'fa-chevron-right' : 'fa-chevron-left'}`} />
               </button>
-              <div className="lightbox-image-wrapper">
+
+              <div 
+                className="lightbox-image-wrapper"
+                onClick={() => setIsZoomed((prev) => !prev)}
+                style={{ cursor: isZoomed ? 'zoom-out' : 'zoom-in' }}
+              >
                 <img
                   src={filteredPhotos[lightboxIndex].url}
-                  alt="Fotografía"
+                  alt={filteredPhotos[lightboxIndex].title || 'Fotografía'}
                   id="lbImage"
                   className="lightbox-img"
+                  style={{
+                    transform: `rotate(${rotation}deg) scale(${isZoomed ? 1.6 : 1})`,
+                    maxHeight: isZoomed ? 'none' : '100%',
+                    maxWidth: isZoomed ? 'none' : '100%',
+                  }}
+                  draggable={false}
                 />
                 <div className="lb-watermark">LAMHA STUDIOS • PROOF OF ART</div>
               </div>
+
               <button
+                type="button"
                 className="lb-nav-btn next"
+                title="Siguiente (Flecha Derecha)"
                 onClick={(e) => {
                   e.stopPropagation()
                   setActiveNoteModal(null)
@@ -2499,13 +2604,39 @@ export default function PortalPage() {
               </button>
             </div>
 
+            {/* CARRUSEL INFERIOR DE FOTOS PEQUEÑAS (FILMSTRIP ESTILO TELÉFONO) */}
+            <div className="lightbox-filmstrip">
+              <div ref={filmstripRef} className="filmstrip-scroll">
+                {filteredPhotos.map((photo, idx) => {
+                  const isActive = idx === lightboxIndex
+                  const isThumbSelected = selectedIds.has(photo.id)
+                  return (
+                    <button
+                      key={photo.id || idx}
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setActiveNoteModal(null)
+                        setLightboxIndex(idx)
+                      }}
+                      className={`filmstrip-thumb ${isActive ? 'is-active' : ''}`}
+                      title={`${idx + 1} - ${photo.title}`}
+                    >
+                      <img src={photo.url} alt="" loading="lazy" />
+                      {isThumbSelected && <span className="thumb-badge" />}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+
             {/* MODAL NOTA DE ENCUADRE / RETOQUE (DRAWER) */}
             <div className={`lightbox-notes-drawer ${!activeNoteModal ? 'hidden' : ''}`} id="lbNotesDrawer">
               <div className="drawer-header">
                 <h4>
                   <i className="fa-solid fa-pen-nib" /> {t.lbRetouchTitle(filteredPhotos[lightboxIndex].id)}
                 </h4>
-                <button className="btn-close-sm" onClick={() => setActiveNoteModal(null)}>
+                <button type="button" className="btn-close-sm" onClick={() => setActiveNoteModal(null)}>
                   <i className="fa-solid fa-xmark" />
                 </button>
               </div>
@@ -2516,6 +2647,7 @@ export default function PortalPage() {
                 onChange={(e) => setNotes({ ...notes, [filteredPhotos[lightboxIndex].id]: e.target.value })}
               />
               <button
+                type="button"
                 className="btn-luxury-primary-sm"
                 onClick={async () => {
                   const photoId = filteredPhotos[lightboxIndex].id

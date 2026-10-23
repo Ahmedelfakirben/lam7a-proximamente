@@ -295,7 +295,7 @@ export function Portfolio() {
             className="relative max-w-5xl w-full max-h-[90vh] flex flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] max-h-[75vh] rounded-lg overflow-hidden border border-[#C69F68]/30 shadow-2xl">
+            <div className="relative w-full h-[70vh] max-h-[75vh] flex items-center justify-center rounded-lg overflow-hidden border border-[#C69F68]/30 shadow-2xl bg-black/40">
               <Image
                 src={selectedPhoto.img}
                 alt={selectedPhoto.title}
