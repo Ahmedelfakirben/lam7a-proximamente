@@ -53,11 +53,6 @@
 /* RESET & BASE */
 *, *::before, *::after {
   box-sizing: border-box;
-}
-
-body.luxury-experience *,
-body.luxury-experience *::before,
-body.luxury-experience *::after {
   margin: 0;
   padding: 0;
 }
