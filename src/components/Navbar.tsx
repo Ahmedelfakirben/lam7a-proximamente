@@ -1,0 +1,216 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useLanguage } from '@/context/LanguageContext'
+import { Lang } from '@/lib/i18n'
+
+const LANG_OPTIONS: { code: Lang; name: string }[] = [
+  { code: 'ES', name: 'Español' },
+  { code: 'EN', name: 'English' },
+  { code: 'FR', name: 'Français' },
+  { code: 'AR', name: 'العربية' },
+]
+
+export function Navbar() {
+  const { lang, setLang, t, isRTL } = useLanguage()
+  const [scrolled, setScrolled] = useState(false)
+  const [langOpen, setLangOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileMenuOpen])
+
+  return (
+    <>
+      <header
+        className={`luxury-nav-header ${scrolled ? 'scrolled' : ''}`}
+        id="mainHeader"
+      >
+        <div className="header-inner-row">
+
+          {/* 1. Navegación izquierda & Selector de Idioma */}
+          <nav className="nav-side nav-left" aria-label="Navegación principal">
+            <div className="lang-dropdown">
+              <button
+                className="lang-dropdown-btn"
+                onClick={() => setLangOpen(!langOpen)}
+                aria-label="Cambiar idioma"
+                type="button"
+              >
+                <i className="fa-solid fa-globe" />
+                <span>{lang}</span>
+                <i className={`fa-solid fa-chevron-down dropdown-arrow ${langOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {langOpen && (
+                <div className="lang-dropdown-menu" style={{ display: 'block' }}>
+                  {LANG_OPTIONS.map((item) => (
+                    <button
+                      key={item.code}
+                      type="button"
+                      className={`lang-option ${item.code === lang ? 'active' : ''}`}
+                      onClick={() => {
+                        setLang(item.code)
+                        setLangOpen(false)
+                      }}
+                    >
+                      <span className="lang-name">{item.name}</span>
+                      <span className="lang-code-badge">{item.code}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <a href="#filosofia" className="luxury-link">
+              {t('nav_filosofia')}
+            </a>
+            <a href="#portfolio" className="luxury-link">
+              {t('nav_colecciones')}
+            </a>
+            <a href="#tematicas" className="luxury-link">
+              {t('nav_tematicas')}
+            </a>
+          </nav>
+
+          {/* 2. Logo Central Majestuoso */}
+          <div className="nav-center-brand">
+            <Link href="#hero" className="brand-center-link" title="Lamha Studios by Afaf Elaribi">
+              <svg viewBox="100 400 750 300" className="brand-svg-logo" aria-label="Lamha Studios Logo">
+                <path d="M805.99,486.53c-.82,1.83-3.51,1.4-3.8-.58-4.38-31.31-23.1-39.11-23.1-39.11-15.71.09,61.92,158.43-10.37,158.43-26.61,0-23.93-9.1-28.57-9.27-4.64-.19-1.44,21.08-6.96,18.55-8.83-4.05-41.53-29.06-45.68-26.41-4.69,3.01-10.35,18.92-38.72,18.92-34.78-1.31-27.42-35.48-25.92-47.03,4.98-3.74,8.5-6.84,10.93-9.19.37,12.24,3.76,26.96,21.84,26.96,32.08.3,46.58-50.29,66.63-50.29,27.46.32,9.81,44.71,41.65,44.71,0,0,20.56.89,21.01-7.57,1.8-33.81-46.2-120.95-10.28-143.77,3.67-2.33,8.47-2,11.72.88,11.55,10.24,30.47,40.26,19.61,64.77Z" />
+                <path d="M615.34,560.8l.03.04c-18.99,12.47-73.99,49.65-176.24,49.65-130.47,0-125.84-48.73-121.22-64.15,4.64-15.42,23.44-39.79,19.44-44.73-4.02-4.94-17.58-7.1-17.58-7.1,0,0-10.18,25.3-16.04,25.6-5.86.32-22.52-10.18-30.54-10.18s6.18-28.07,10.18-28.68c4.02-.62,22.52,11.1,26.22,9.26,3.7-1.86,13.56-26.84,17.88-26.84s28.38,12.34,28.38,15.42-26.22,53.67-25.3,63.55c.94,9.86,16.66,50.63,133.88,38.59,144.04-16.96,175.81-63.58,175.81-63.58l-125.14,13.2c-2.53.22-4.36-2.38-3.31-4.69l9.4-23.78c.49-1.05,1.47-1.79,2.62-1.93,14.76-1.83,113.34-13.82,135.62-12.14,2.48.19,4.35,2.3,4.25,4.78-1.09,24.45-21.95,39.87-28.17,50.13,0,0-.01.03-.04.07-.52.73-5.04,6.94-20.13,17.5Z" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* 3. Navegación derecha & Acceso a Portal Independiente */}
+          <nav className="nav-side nav-right" aria-label="Navegación de cliente">
+            <a href="#before-after" className="luxury-link">
+              {t('nav_color')}
+            </a>
+            <a href="#contacto" className="luxury-link">
+              {t('nav_contacto')}
+            </a>
+            <Link href="/portal" className="luxury-link link-highlight" title="Acceder al Espace Privé de clientes">
+              <i className="fa-solid fa-lock" style={{ marginRight: '6px' }} />
+              <span>{t('nav_espace_prive')}</span>
+            </Link>
+          </nav>
+
+          {/* Botón móvil hamburguesa */}
+          <button
+            className="mobile-menu-trigger"
+            id="mobileMenuBtn"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Abrir menú"
+            type="button"
+          >
+            <span />
+            <span />
+          </button>
+        </div>
+      </header>
+
+      {/* ── MENÚ MÓVIL OVERLAY ULTRA-LUJO ── */}
+      {mobileMenuOpen && (
+        <div className="mobile-nav-overlay" id="mobileNav" dir={isRTL ? 'rtl' : 'ltr'}>
+          <button
+            className="mobile-nav-close"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Cerrar menú"
+            type="button"
+          >
+            <i className="fa-solid fa-xmark" />
+          </button>
+
+          <div className="mobile-nav-inner">
+            <div className="mobile-nav-logo">
+              <svg viewBox="100 400 750 300" className="brand-svg-logo-dark" style={{ fill: '#fbfaf8' }}>
+                <path d="M805.99,486.53c-.82,1.83-3.51,1.4-3.8-.58-4.38-31.31-23.1-39.11-23.1-39.11-15.71.09,61.92,158.43-10.37,158.43-26.61,0-23.93-9.1-28.57-9.27-4.64-.19-1.44,21.08-6.96,18.55-8.83-4.05-41.53-29.06-45.68-26.41-4.69,3.01-10.35,18.92-38.72,18.92-34.78-1.31-27.42-35.48-25.92-47.03,4.98-3.74,8.5-6.84,10.93-9.19.37,12.24,3.76,26.96,21.84,26.96,32.08.3,46.58-50.29,66.63-50.29,27.46.32,9.81,44.71,41.65,44.71,0,0,20.56.89,21.01-7.57,1.8-33.81-46.2-120.95-10.28-143.77,3.67-2.33,8.47-2,11.72.88,11.55,10.24,30.47,40.26,19.61,64.77Z" />
+                <path d="M615.34,560.8l.03.04c-18.99,12.47-73.99,49.65-176.24,49.65-130.47,0-125.84-48.73-121.22-64.15,4.64-15.42,23.44-39.79,19.44-44.73-4.02-4.94-17.58-7.1-17.58-7.1,0,0-10.18,25.3-16.04,25.6-5.86.32-22.52-10.18-30.54-10.18s6.18-28.07,10.18-28.68c4.02-.62,22.52,11.1,26.22,9.26,3.7-1.86,13.56-26.84,17.88-26.84s28.38,12.34,28.38,15.42-26.22,53.67-25.3,63.55c.94,9.86,16.66,50.63,133.88,38.59,144.04-16.96,175.81-63.58,175.81-63.58l-125.14,13.2c-2.53.22-4.36-2.38-3.31-4.69l9.4-23.78c.49-1.05,1.47-1.79,2.62-1.93,14.76-1.83,113.34-13.82,135.62-12.14,2.48.19,4.35,2.3,4.25,4.78-1.09,24.45-21.95,39.87-28.17,50.13,0,0-.01.03-.04.07-.52.73-5.04,6.94-20.13,17.5Z" />
+              </svg>
+              <span className="mobile-brand-subtitle">STUDIOS BY AFAF EL ARIBI</span>
+              <span className="mobile-slogan">تخليد ذكرياتك في لمحة • L’élégance simplement.</span>
+            </div>
+
+            <div className="mobile-lang-switcher">
+              {LANG_OPTIONS.map((item) => (
+                <button
+                  key={item.code}
+                  type="button"
+                  className={`lang-btn ${item.code === lang ? 'active' : ''}`}
+                  onClick={() => setLang(item.code)}
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+
+            <nav className="mobile-nav-links-list">
+              <a href="#filosofia" onClick={() => setMobileMenuOpen(false)}>
+                {t('nav_filosofia')}
+              </a>
+              <a href="#portfolio" onClick={() => setMobileMenuOpen(false)}>
+                {t('nav_colecciones')}
+              </a>
+              <a href="#tematicas" onClick={() => setMobileMenuOpen(false)}>
+                {t('nav_tematicas')}
+              </a>
+              <a href="#proceso" onClick={() => setMobileMenuOpen(false)}>
+                {t('nav_proceso')}
+              </a>
+              <a href="#before-after" onClick={() => setMobileMenuOpen(false)}>
+                {t('nav_color')}
+              </a>
+              <a href="#contacto" onClick={() => setMobileMenuOpen(false)}>
+                {t('nav_contacto')}
+              </a>
+            </nav>
+
+            <Link
+              href="/portal"
+              onClick={() => setMobileMenuOpen(false)}
+              className="btn-luxury-primary full-width text-center"
+              style={{ marginTop: '20px' }}
+            >
+              <i className="fa-solid fa-key" style={{ marginRight: '8px' }} />
+              <span>{t('nav_espace_prive')}</span>
+            </Link>
+
+            <div className="mobile-nav-footer">
+              <div>
+                <i className="fa-solid fa-location-dot" style={{ color: 'var(--c-gold)', marginRight: '6px' }} />
+                Bojarah, Yedi Mavi, Tetuán, Marruecos
+              </div>
+              <div>
+                <i className="fa-solid fa-phone" style={{ color: 'var(--c-gold)', marginRight: '6px' }} />
+                0539702927 / 0762517478
+              </div>
+              <a href="https://instagram.com/Lamhastudios" target="_blank" rel="noopener noreferrer">
+                <i className="fa-brands fa-instagram" style={{ marginRight: '6px' }} />
+                @Lamhastudios • STAY TUNED
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}

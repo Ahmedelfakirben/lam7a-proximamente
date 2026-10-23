@@ -3,47 +3,6 @@
    LUXURY DESIGN SYSTEM & HIGH-END EDITORIAL EXPERIENCE
    ALIGNMENT: BRAND BOOK & CORPORATE IDENTITY SPECIFICATIONS
    =================================================== */
-
-@font-face {
-  font-family: 'IBM Plex Sans Arabic';
-  src: url('02_ typography/IBM_Plex_Sans_Arabic/New Folder With Items/IBMPlexSansArabic-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Arabic';
-  src: url('02_ typography/IBM_Plex_Sans_Arabic/New Folder With Items/IBMPlexSansArabic-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Arabic';
-  src: url('02_ typography/IBM_Plex_Sans_Arabic/New Folder With Items/IBMPlexSansArabic-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Arabic';
-  src: url('02_ typography/IBM_Plex_Sans_Arabic/New Folder With Items/IBMPlexSansArabic-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Arabic';
-  src: url('02_ typography/IBM_Plex_Sans_Arabic/New Folder With Items/IBMPlexSansArabic-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
   /* PALETA OFICIAL LAMHA (BRAND BOOK PÁG. 13 & 14) */
   --c-moka: #564031;          /* Lamha Brown */
@@ -1455,7 +1414,8 @@ button {
 
 @media (max-width: 640px) {
   .client-masonry-gallery {
-    column-count: 1;
+    column-count: 2 !important;
+    column-gap: 10px !important;
   }
 }
 

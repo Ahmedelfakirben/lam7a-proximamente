@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #fbfaf8;
+  --color-beige: #f3efec;
+  --color-mocha: #564031;
+  --color-mocha-dark: #3b2b21;
+  --color-noir: #161616;
+  --color-gold: #C69F68;
+  --color-gold-light: #E8C99A;
+  --color-gold-muted: rgba(198, 159, 104, 0.35);
+
+  --font-title: var(--font-aref-ruqaa), 'Aref Ruqaa', serif;
+  --font-body: var(--font-outfit), 'Outfit', sans-serif;
+  --font-arabic: var(--font-ibm-arabic), 'IBM Plex Sans Arabic', sans-serif;
+  --font-serif: var(--font-ibm-serif), 'IBM Plex Serif', Georgia, serif;
+}
+
+/* ================================================
+   LAMHA STUDIOS — Design System & Luxury Utilities
+   ================================================ */
+
+:root {
+  --cream: #fbfaf8;
+  --beige: #f3efec;
+  --mocha: #564031;
+  --mocha-dark: #3b2b21;
+  --noir: #161616;
+  --gold: #C69F68;
+  --gold-light: #E8C99A;
+  --gold-muted: rgba(198, 159, 104, 0.35);
+
+  --font-primary: var(--font-outfit), 'Outfit', sans-serif;
+  --font-arabic: var(--font-ibm-arabic), 'IBM Plex Sans Arabic', sans-serif;
+  --font-serif: var(--font-ibm-serif), 'IBM Plex Serif', Georgia, serif;
+  --font-display: var(--font-aref-ruqaa), 'Aref Ruqaa', serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* RTL support */
+html[dir="rtl"] {
+  text-align: right;
+}
+
+body {
+  background-color: #161616;
+  color: #fbfaf8;
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings with Aref Ruqaa */
+h1, h2, h3, .font-title {
+  font-family: var(--font-display);
+}
+
+/* ================================================
+   LOADER — FILM FRAME (EXACT ORIGINAL STYLES)
+   ================================================ */
+#lmhLoader {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  background: #080706 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  pointer-events: all !important;
+}
+
+#ldrFrame {
+  width: 380px !important;
+  height: 220px !important;
+  border: 1px solid rgba(198, 159, 104, 0.7) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  opacity: 0;
+  flex-shrink: 0;
+  box-shadow: 0 0 80px rgba(198, 159, 104, 0.04), inset 0 0 80px rgba(198, 159, 104, 0.02);
+}
+
+.ldr-fc {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(198, 159, 104, 0.95);
+  border-style: solid;
+}
+.ldr-fc-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.ldr-fc-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+.ldr-fc-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+.ldr-fc-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+#ldrLogoSVG {
+  width: 120px !important;
+  height: auto !important;
+  fill: #fbfaf8 !important;
+  opacity: 0;
+  filter: drop-shadow(0 0 16px rgba(198, 159, 104, 0.18));
+}
+
+#ldrTagline {
+  font-family: var(--font-primary);
+  font-size: 0.54rem !important;
+  letter-spacing: 0.46em !important;
+  color: rgba(198, 159, 104, 0.65) !important;
+  text-transform: uppercase !important;
+  margin-top: 14px !important;
+  opacity: 0;
+}
+
+/* ================================================
+   HERO CINEMATIC STYLES
+   ================================================ */
+.hero-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(22, 22, 22, 0.1) 0%, rgba(14, 13, 12, 0.85) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-museum-frame {
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(198, 159, 104, 0.22);
+  pointer-events: none;
+  z-index: 3;
+}
+
+@media (max-width: 768px) {
+  .hero-museum-frame {
+    inset: 10px;
+  }
+}
+
+/* ================================================
+   BEFORE & AFTER SLIDER STYLES
+   ================================================ */
+.split-slider-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(198, 159, 104, 0.25);
+  user-select: none;
+}
+
+.split-slider-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .split-slider-container {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ================================================
+   ANIMATIONS & REVEALS
+   ================================================ */
+.reveal-on-scroll,
+.gsap-reveal {
+  will-change: transform, opacity;
+}
+
+.sep-gold {
+  background: linear-gradient(90deg, transparent, #C69F68, transparent);
+  height: 1px;
+  width: 100%;
+}
+
+.text-gold-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(135deg, #C69F68, #E8C99A, #C69F68);
+}
+
+.bg-noise {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Custom luxury scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #11100e;
+}
+::-webkit-scrollbar-thumb {
+  background: #564031;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C69F68;
+}
