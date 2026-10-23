@@ -2,69 +2,57 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import { LamhaLogo } from '@/components/LamhaLogo'
 
 type Lang = 'es' | 'en' | 'fr' | 'ar'
 
 const CONTENT: Record<Lang, {
   label: string
-  title1: string
-  title2: string
+  title: [string, string]
   sub: string
   ig: string
-  fb: string
-  wa: string
-  portalBtn: string
-  portalDesc: string
+  portal: string
+  code: string
+  name: string
   dir: 'ltr' | 'rtl'
 }> = {
   es: {
     label: "Haute Photographie d'Auteur • Tetuán",
-    title1: 'Sitio en ',
-    title2: 'construcción',
-    sub: 'Estamos preparando algo especial. Pronto estaremos en línea. Mientras tanto, encuéntranos en nuestras redes.',
+    title: ['Sitio en ', 'construcción'],
+    sub: 'Estamos preparando algo especial. Estaremos en línea muy pronto.<br/>Mientras tanto, encuéntranos en Instagram.',
     ig: 'Seguir en Instagram',
-    fb: 'Facebook',
-    wa: 'Contactar con Afaf',
-    portalBtn: 'Espace Privé • Acceso Clientes',
-    portalDesc: '¿Tienes una sesión con nosotros? Introduce tu PIN para seleccionar tus fotos.',
+    portal: 'Espace Privé • Acceso Clientes',
+    code: 'ES',
+    name: 'Español',
     dir: 'ltr',
   },
   en: {
     label: "Haute Photographie d'Auteur • Tetuán",
-    title1: 'Site under ',
-    title2: 'construction',
-    sub: 'We are preparing something special. We will be online soon. In the meantime, find us on our social networks.',
+    title: ['Site under ', 'construction'],
+    sub: 'We are preparing something special. We will be online very soon.<br/>In the meantime, find us on Instagram.',
     ig: 'Follow on Instagram',
-    fb: 'Facebook',
-    wa: 'Contact Afaf',
-    portalBtn: 'Client Suite • Private Access',
-    portalDesc: 'Do you have an active session? Enter your PIN to view and select your photos.',
+    portal: 'Client Suite • Private Access',
+    code: 'EN',
+    name: 'English',
     dir: 'ltr',
   },
   fr: {
     label: "Haute Photographie d'Auteur • Tétouan",
-    title1: 'Site en ',
-    title2: 'construction',
-    sub: 'Nous préparons quelque chose de spécial. Bientôt en ligne. En attendant, retrouvez-nous sur nos réseaux.',
+    title: ['Site en ', 'construction'],
+    sub: 'Nous préparons quelque chose de spécial. Bientôt en ligne.<br/>En attendant, retrouvez-nous sur Instagram.',
     ig: 'Suivre sur Instagram',
-    fb: 'Facebook',
-    wa: 'Contacter Afaf',
-    portalBtn: 'Espace Privé • Accès Client',
-    portalDesc: 'Vous avez une séance avec nous ? Entrez votre code PIN pour choisir vos photos.',
+    portal: 'Espace Privé • Accès Client',
+    code: 'FR',
+    name: 'Français',
     dir: 'ltr',
   },
   ar: {
     label: 'هوت فوتوغرافي • تطوان',
-    title1: 'الموقع قيد ',
-    title2: 'الإنشاء',
-    sub: 'نحن نحضّر شيئاً مميزاً. سنكون متاحين قريباً. في غضون ذلك، تابعونا على وسائل التواصل الاجتماعي.',
+    title: ['الموقع قيد ', 'الإنشاء'],
+    sub: 'نحن نحضّر شيئاً مميزاً. سنكون متاحين قريباً.<br/>في غضون ذلك، تجدوننا على إنستغرام.',
     ig: 'تابعونا على إنستغرام',
-    fb: 'فيسبوك',
-    wa: 'تواصل مع عفاف',
-    portalBtn: 'الجناح الخاص • دخول العملاء',
-    portalDesc: 'هل لديك جلسة تصوير معنا؟ أدخل رقمك السري لاختيار صورك.',
+    portal: 'الجناح الخاص • دخول العملاء',
+    code: 'AR',
+    name: 'العربية',
     dir: 'rtl',
   },
 }
@@ -75,167 +63,109 @@ export default function HomePage() {
   const current = CONTENT[lang]
 
   return (
-    <div
-      className="relative min-h-screen w-full overflow-hidden flex flex-col justify-between items-center text-[#fbfaf8] select-none p-4 sm:p-6"
-      dir={current.dir}
-    >
-      {/* ── 1. FONDO CON EFECTO CINEMATOGRÁFICO ── */}
-      <div className="fixed inset-0 z-0 overflow-hidden">
-        <Image
-          src="/assets/lamha-coming-soon-bg.jpg"
-          alt="Lamha Studios Coming Soon Background"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover scale-105 animate-pulse duration-[8000ms]"
-        />
+    <div className={`cs-body-root ${current.dir === 'rtl' ? 'cs-ar-text' : ''}`} dir={current.dir}>
+      {/* ── Background Layer (Idéntico a lamha-proximamente) ── */}
+      <div className="cs-bg-wrapper" aria-hidden="true">
+        <div className="cs-bg" />
+        <div className="cs-overlay" />
+        <div className="cs-glow-orb cs-glow-orb-1" />
+        <div className="cs-glow-orb cs-glow-orb-2" />
       </div>
 
-      {/* ── 2. OVERLAY CINEMATOGRÁFICO OSCURO ── */}
-      <div className="fixed inset-0 z-[1] bg-[#100c0a]/85 backdrop-blur-[2px]" />
-
-      {/* ── 3. TOPBAR: SELECTOR DE IDIOMA & ENLACE ESPACE PRIVÉ ── */}
-      <header className="relative z-20 w-full max-w-5xl flex justify-between items-center px-2 pt-2 sm:pt-4">
-        {/* Acceso Directo al Portal de Clientes */}
-        <Link
-          href="/portal"
-          className="cs-topbar-portal-btn"
-          title="Acceso directo al portal de clientes"
+      {/* ── Language Switcher Dropdown (Idéntico a lamha-proximamente) ── */}
+      <div className="cs-lang-drop">
+        <button
+          className="cs-lang-drop-btn"
+          onClick={() => setLangOpen(!langOpen)}
+          aria-label="Cambiar idioma"
         >
-          <i className="fa-solid fa-lock text-[11px]" />
-          <span>{current.portalBtn}</span>
-        </Link>
+          <i className="fa-solid fa-globe globe" />
+          <span>{current.code}</span>
+          <i className={`fa-solid fa-chevron-down chevron ${langOpen ? 'rotate-180' : ''}`} />
+        </button>
 
-        {/* Dropdown Idioma */}
-        <div className="relative">
-          <button
-            onClick={() => setLangOpen(!langOpen)}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#C69F68]/20 border border-[#C69F68]/40 text-xs tracking-wider uppercase text-[#fbfaf8] transition-all backdrop-blur-md"
-          >
-            <i className="fa-solid fa-globe text-[#C69F68]" />
-            <span>{lang.toUpperCase()}</span>
-            <i className={`fa-solid fa-chevron-down text-[0.6rem] transition-transform ${langOpen ? 'rotate-180' : ''}`} />
-          </button>
+        {langOpen && (
+          <div className="cs-lang-drop-menu">
+            {(['es', 'en', 'fr', 'ar'] as Lang[]).map((l) => (
+              <button
+                key={l}
+                className={`cs-lang-option ${l === lang ? 'active' : ''}`}
+                onClick={() => {
+                  setLang(l)
+                  setLangOpen(false)
+                }}
+              >
+                <span>{CONTENT[l].name}</span>
+                <span className="lang-code">{CONTENT[l].code}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
-          {langOpen && (
-            <div className="absolute top-full mt-2 end-0 w-32 rounded-xl bg-[#161514]/95 border border-[#C69F68]/30 shadow-2xl py-1 overflow-hidden z-30">
-              {(['es', 'en', 'fr', 'ar'] as Lang[]).map((l) => (
-                <button
-                  key={l}
-                  onClick={() => {
-                    setLang(l)
-                    setLangOpen(false)
-                  }}
-                  className={`w-full text-start px-3 py-1.5 text-xs transition-colors ${
-                    l === lang ? 'text-[#C69F68] font-semibold bg-white/5' : 'text-[#fbfaf8]/70 hover:text-white'
-                  }`}
-                >
-                  {{ es: 'Español', en: 'English', fr: 'Français', ar: 'العربية' }[l]}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </header>
-
-      {/* ── 4. CONTENIDO CENTRAL ── */}
-      <main className="relative z-10 my-auto text-center flex flex-col items-center w-full max-w-2xl px-4 py-4">
-        {/* Logo SVG */}
-        <div className="mb-4 sm:mb-6">
-          <LamhaLogo color="#fbfaf8" className="h-14 sm:h-20 w-auto drop-shadow-[0_0_24px_rgba(198,159,104,0.3)] hover:scale-105 transition-transform" />
+      {/* ── Central Card Content (1:1 con lamha-proximamente) ── */}
+      <main className="cs-main-card" role="main">
+        {/* Logo SVG Oficial con filtro dorado de autor */}
+        <div className="cs-logo-container">
+          <svg viewBox="100 400 750 300" className="cs-logo-svg" aria-label="Lamha Studios Logo">
+            <path d="M805.99,486.53c-.82,1.83-3.51,1.4-3.8-.58-4.38-31.31-23.1-39.11-23.1-39.11-15.71.09,61.92,158.43-10.37,158.43-26.61,0-23.93-9.1-28.57-9.27-4.64-.19-1.44,21.08-6.96,18.55-8.83-4.05-41.53-29.06-45.68-26.41-4.69,3.01-10.35,18.92-38.72,18.92-34.78-1.31-27.42-35.48-25.92-47.03,4.98-3.74,8.5-6.84,10.93-9.19.37,12.24,3.76,26.96,21.84,26.96,32.08.3,46.58-50.29,66.63-50.29,27.46.32,9.81,44.71,41.65,44.71,0,0,20.56.89,21.01-7.57,1.8-33.81-46.2-120.95-10.28-143.77,3.67-2.33,8.47-2,11.72.88,11.55,10.24,30.47,40.26,19.61,64.77Z" />
+            <path d="M615.34,560.8l.03.04c-18.99,12.47-73.99,49.65-176.24,49.65-130.47,0-125.84-48.73-121.22-64.15,4.64-15.42,23.44-39.79,19.44-44.73-4.02-4.94-17.58-7.1-17.58-7.1,0,0-10.18,25.3-16.04,25.6-5.86.32-22.52-10.18-30.54-10.18s6.18-28.07,10.18-28.68c4.02-.62,22.52,11.1,26.22,9.26,3.7-1.86,13.56-26.84,17.88-26.84s28.38,12.34,28.38,15.42-26.22,53.67-25.3,63.55c.94,9.86,16.66,50.63,133.88,38.59,144.04-16.96,175.81-63.58,175.81-63.58l-125.14,13.2c-2.53.22-4.36-2.38-3.31-4.69l9.4-23.78c.49-1.05,1.47-1.79,2.62-1.93,14.76-1.83,113.34-13.82,135.62-12.14,2.48.19,4.35,2.3,4.25,4.78-1.09,24.45-21.95,39.87-28.17,50.13,0,0-.01.03-.04.07-.52.73-5.04,6.94-20.13,17.5Z" />
+          </svg>
         </div>
 
-        {/* Separador */}
-        <div className="flex items-center gap-3 w-48 mb-5 opacity-60">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#C69F68] to-transparent" />
-          <div className="w-1.5 h-1.5 rounded-full bg-[#C69F68]" />
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#C69F68] to-transparent" />
+        {/* Separador Dorado */}
+        <div className="cs-sep" aria-hidden="true">
+          <div className="cs-sep-line" />
+          <div className="cs-sep-dot" />
+          <div className="cs-sep-line" />
         </div>
 
         {/* Etiqueta */}
-        <p className="text-[0.68rem] tracking-[0.32em] uppercase text-[#C69F68] font-semibold mb-2 sm:mb-3">
-          {current.label}
-        </p>
+        <p className="cs-label">{current.label}</p>
 
         {/* Titular */}
-        <h1 className="font-serif text-3xl sm:text-5xl text-[#fbfaf8] mb-3 leading-tight">
-          {current.title1}
-          <em className="italic text-[#C69F68] font-serif not-italic">
-            {current.title2}
-          </em>
+        <h1 className="cs-h1">
+          {current.title[0]}
+          <em>{current.title[1]}</em>
         </h1>
 
         {/* Subtítulo */}
-        <p className="text-xs sm:text-sm text-[#fbfaf8]/75 font-serif leading-relaxed mb-6 max-w-lg">
-          {current.sub}
-        </p>
+        <p
+          className="cs-sub"
+          dangerouslySetInnerHTML={{ __html: current.sub }}
+        />
 
-        {/* Tarjeta destacada de Acceso a la Suite de Cliente (Ultra-Luxury Editorial VIP Badge) */}
-        <div className="cs-portal-card">
-          <div className="cs-portal-card-inner">
-            <div className="cs-portal-info-wrap">
-              <div className="cs-portal-icon-box">
-                <i className="fa-solid fa-key" />
-              </div>
-              <div className="cs-portal-text-box">
-                <h3 className="cs-portal-card-title">
-                  <span>{current.portalBtn}</span>
-                </h3>
-                <p className="cs-portal-card-desc">
-                  {current.portalDesc}
-                </p>
-              </div>
-            </div>
-
-            <Link
-              href="/portal"
-              className="cs-portal-btn-action"
-            >
-              <span>Acceder</span>
-              <i className="fa-solid fa-arrow-right text-[10px]" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Botones de Redes Sociales (Instagram + Facebook + WhatsApp) */}
-        <div className="cs-social-row">
+        {/* Grupo de Acciones: Botón Instagram Original + Botón Acceso Portal Cliente */}
+        <div className="cs-cta-group">
+          {/* 1. Botón de Instagram (Original de lamha-proximamente) */}
           <a
             href="https://www.instagram.com/lam7a.studios?stkn=emJlcGp2ZnBiNDR6"
             target="_blank"
             rel="noopener noreferrer"
-            className="cs-social-btn cs-social-btn-ig"
+            className="cs-btn-action cs-btn-ig"
           >
-            <i className="fa-brands fa-instagram text-sm" />
+            <i className="fa-brands fa-instagram" />
             <span>{current.ig}</span>
           </a>
 
-          <a
-            href="https://www.facebook.com/lam7a.studios"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cs-social-btn cs-social-btn-fb"
+          {/* 2. Botón de Acceso Portal Cliente (Añadido elegantemente con estilo de autor) */}
+          <Link
+            href="/portal"
+            className="cs-btn-action cs-btn-portal"
+            title="Acceso al Espace Privé de Clientes"
           >
-            <i className="fa-brands fa-facebook-f text-sm text-[#1877F2]" />
-            <span>{current.fb}</span>
-          </a>
-
-          <a
-            href="https://wa.me/212762517478"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cs-social-btn cs-social-btn-wa"
-          >
-            <i className="fa-brands fa-whatsapp text-sm text-emerald-400" />
-            <span>{current.wa}</span>
-          </a>
+            <i className="fa-solid fa-key" />
+            <span>{current.portal}</span>
+          </Link>
         </div>
       </main>
 
-      {/* ── 5. FOOTER ── */}
-      <footer className="relative z-10 text-center text-[0.62rem] tracking-[0.2em] text-[#fbfaf8]/40 uppercase font-body py-2">
-        <p>© 2026 <span className="text-[#C69F68]">Lamha Studios</span> by Afaf El Aribi • Tetuán, Maroc</p>
+      {/* ── Footer (Idéntico a lamha-proximamente) ── */}
+      <footer className="cs-footer">
+        <p>© 2026 <span>Lamha Studios</span> by Afaf El Aribi • Tetuán, Maroc</p>
       </footer>
     </div>
   )
 }
+
 

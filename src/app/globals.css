@@ -195,236 +195,356 @@ h1, h2, h3, .font-title {
   background-size: 24px 24px;
 }
 
-/* ================================================
-   COMING SOON SUITE & SOCIAL ACTIONS (HIGH SPECIFICITY)
-   ================================================ */
-.cs-portal-card {
-  width: 100% !important;
-  max-width: 680px !important;
-  margin: 28px auto 28px auto !important;
-  padding: 24px 28px !important;
-  border-radius: 20px !important;
-  background: linear-gradient(145deg, rgba(24, 20, 18, 0.94) 0%, rgba(14, 12, 11, 0.97) 100%) !important;
-  border: 1px solid rgba(198, 159, 104, 0.38) !important;
-  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.85), 0 0 30px rgba(198, 159, 104, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(20px) !important;
+/* =========================================================
+   LAMHA-PROXIMAMENTE EXACT 1:1 STYLES + PORTAL ACCESS
+   ========================================================= */
+.cs-body-root {
+  font-family: var(--font-primary), 'Outfit', sans-serif !important;
+  background: #0F0D0C !important;
+  color: #FAF8F5 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
   position: relative !important;
-  overflow: hidden !important;
-  text-align: left !important;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  box-sizing: border-box !important;
+  perspective: 1000px !important;
+  padding: 20px !important;
+  width: 100% !important;
+  overflow-x: hidden !important;
 }
 
-[dir="rtl"] .cs-portal-card {
+.cs-bg-wrapper {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
+}
+
+.cs-bg {
+  position: absolute !important;
+  inset: -5% !important;
+  background-image: url('/assets/lamha-coming-soon-bg.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  filter: brightness(0.65) contrast(1.1) !important;
+}
+
+.cs-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  background: radial-gradient(circle at center, rgba(15, 13, 12, 0.75) 0%, rgba(10, 8, 7, 0.94) 100%) !important;
+}
+
+.cs-glow-orb {
+  position: fixed !important;
+  width: 450px !important;
+  height: 450px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, rgba(198,159,104,0.15) 0%, rgba(0,0,0,0) 70%) !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+.cs-glow-orb-1 { top: -100px !important; left: -100px !important; }
+.cs-glow-orb-2 { bottom: -120px !important; right: -120px !important; }
+
+/* Language Switcher */
+.cs-lang-drop {
+  position: fixed !important;
+  top: 24px !important;
+  right: 28px !important;
+  z-index: 50 !important;
+}
+
+[dir="rtl"] .cs-lang-drop {
+  right: auto !important;
+  left: 28px !important;
+}
+
+.cs-lang-drop-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 16px !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid rgba(198, 159, 104, 0.25) !important;
+  border-radius: 999px !important;
+  color: rgba(250, 248, 245, 0.85) !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1em !important;
+  cursor: pointer !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.cs-lang-drop-btn:hover {
+  background: rgba(198, 159, 104, 0.18) !important;
+  border-color: #C69F68 !important;
+  color: #C69F68 !important;
+  box-shadow: 0 0 15px rgba(198, 159, 104, 0.2) !important;
+}
+
+.cs-lang-drop-btn i.globe { font-size: 0.8rem !important; color: #C69F68 !important; }
+.cs-lang-drop-btn .chevron { font-size: 0.6rem !important; opacity: 0.6 !important; transition: transform 0.3s ease !important; }
+
+.cs-lang-drop-menu {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  background: rgba(18, 14, 12, 0.95) !important;
+  border: 1px solid rgba(198, 159, 104, 0.25) !important;
+  border-radius: 14px !important;
+  padding: 6px !important;
+  min-width: 160px !important;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.6) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  z-index: 55 !important;
+}
+
+[dir="rtl"] .cs-lang-drop-menu {
+  right: auto !important;
+  left: 0 !important;
+}
+
+.cs-lang-option {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  padding: 9px 14px !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  border: none !important;
+  color: rgba(250, 248, 245, 0.75) !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-size: 0.8rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  text-align: left !important;
+}
+
+[dir="rtl"] .cs-lang-option {
   text-align: right !important;
 }
 
-.cs-portal-card:hover {
-  border-color: rgba(198, 159, 104, 0.65) !important;
-  box-shadow: 0 30px 70px -10px rgba(0, 0, 0, 0.9), 0 0 45px rgba(198, 159, 104, 0.22) !important;
-  transform: translateY(-2px) !important;
+.cs-lang-option:hover {
+  background: rgba(198, 159, 104, 0.15) !important;
+  color: #C69F68 !important;
 }
 
-.cs-portal-card-inner {
+.cs-lang-option.active {
+  color: #C69F68 !important;
+  font-weight: 600 !important;
+  background: rgba(198, 159, 104, 0.1) !important;
+}
+
+.cs-lang-option .lang-code {
+  font-size: 0.65rem !important;
+  opacity: 0.5 !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* 1:1 EXACT MAIN CONTAINER CARD FROM LAMHA-PROXIMAMENTE */
+.cs-main-card {
   position: relative !important;
-  z-index: 2 !important;
+  z-index: 10 !important;
   display: flex !important;
-  flex-direction: row !important;
+  flex-direction: column !important;
   align-items: center !important;
-  justify-content: space-between !important;
-  gap: 24px !important;
+  text-align: center !important;
+  padding: 54px 40px !important;
+  max-width: 580px !important;
+  width: 90% !important;
+  margin: 40px auto !important;
+  background: rgba(22, 18, 15, 0.78) !important;
+  border: 1px solid rgba(198, 159, 104, 0.25) !important;
+  border-radius: 28px !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  transform-style: preserve-3d !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+@media (max-width: 540px) {
+  .cs-main-card {
+    padding: 36px 20px !important;
+    width: 94% !important;
+    margin: 20px auto !important;
+  }
+}
+
+.cs-logo-container {
+  position: relative !important;
+  margin-bottom: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.cs-logo-svg {
+  width: 145px !important;
+  height: auto !important;
+  fill: #FAF8F5 !important;
+  filter: drop-shadow(0 0 20px rgba(198,159,104,0.4)) !important;
+  transition: transform 0.3s ease !important;
+}
+
+.cs-logo-svg:hover {
+  transform: scale(1.05) !important;
+}
+
+/* Decorative Divider */
+.cs-sep {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 24px !important;
+  width: 200px !important;
+}
+
+.cs-sep-line {
+  flex: 1 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, #C69F68, transparent) !important;
+}
+
+.cs-sep-dot {
+  width: 5px !important;
+  height: 5px !important;
+  border-radius: 50% !important;
+  background: #C69F68 !important;
+  box-shadow: 0 0 8px #C69F68 !important;
+}
+
+/* Headings & Text */
+.cs-label {
+  font-size: 0.7rem !important;
+  letter-spacing: 0.32em !important;
+  color: #C69F68 !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  margin-bottom: 16px !important;
+}
+
+.cs-h1 {
+  font-family: var(--font-ibm-serif), 'IBM Plex Serif', Georgia, serif !important;
+  font-size: clamp(2.2rem, 5vw, 3.5rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.15 !important;
+  color: #FAF8F5 !important;
+  margin-bottom: 20px !important;
+  letter-spacing: -0.01em !important;
+}
+
+.cs-h1 em {
+  font-style: italic !important;
+  color: #E4C597 !important;
+  background: linear-gradient(135deg, #FAF8F5 30%, #C69F68 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.cs-sub {
+  font-size: clamp(0.9rem, 1.8vw, 1.02rem) !important;
+  color: rgba(250, 248, 245, 0.65) !important;
+  font-weight: 300 !important;
+  line-height: 1.75 !important;
+  max-width: 440px !important;
+  margin-bottom: 32px !important;
+}
+
+/* CTA Group: Botones de Acción (Instagram + Acceso Portal Cliente) */
+.cs-cta-group {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 14px !important;
   width: 100% !important;
 }
 
-@media (max-width: 640px) {
-  .cs-portal-card {
-    padding: 20px 20px !important;
-    margin: 20px auto 22px auto !important;
-  }
-  .cs-portal-card-inner {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 18px !important;
-  }
-}
-
-.cs-portal-info-wrap {
-  display: flex !important;
-  align-items: center !important;
-  gap: 16px !important;
-  min-width: 0 !important;
-  flex: 1 1 auto !important;
-}
-
-.cs-portal-icon-box {
-  width: 48px !important;
-  height: 48px !important;
-  min-width: 48px !important;
-  border-radius: 50% !important;
-  background: radial-gradient(circle at 30% 30%, rgba(198, 159, 104, 0.25) 0%, rgba(198, 159, 104, 0.08) 100%) !important;
-  border: 1px solid rgba(198, 159, 104, 0.4) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  color: #C69F68 !important;
-  font-size: 1rem !important;
-  box-shadow: 0 0 15px rgba(198, 159, 104, 0.2) !important;
-  flex-shrink: 0 !important;
-}
-
-.cs-portal-text-box {
-  min-width: 0 !important;
-  flex: 1 1 auto !important;
-}
-
-.cs-portal-card-title {
-  font-size: 0.88rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-  color: #FAF8F5 !important;
-  margin: 0 0 4px 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  line-height: 1.3 !important;
-}
-
-.cs-portal-card-desc {
-  font-size: 0.82rem !important;
-  line-height: 1.55 !important;
-  color: #b8aea0 !important;
-  margin: 0 !important;
-  font-family: var(--font-serif), Georgia, serif !important;
-}
-
-.cs-portal-btn-action {
+.cs-btn-action {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 10px !important;
-  padding: 13px 26px !important;
+  gap: 12px !important;
+  padding: 15px 36px !important;
   border-radius: 999px !important;
-  background: linear-gradient(135deg, #E4C597 0%, #C69F68 50%, #9e7542 100%) !important;
-  color: #14110f !important;
-  font-size: 0.78rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
   text-decoration: none !important;
-  white-space: nowrap !important;
-  flex-shrink: 0 !important;
-  box-shadow: 0 6px 20px rgba(198, 159, 104, 0.35) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  width: 100% !important;
+  max-width: 320px !important;
+  box-sizing: border-box !important;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
   cursor: pointer !important;
 }
 
-.cs-portal-btn-action:hover {
-  background: linear-gradient(135deg, #ffffff 0%, #E4C597 100%) !important;
-  color: #0b0a09 !important;
-  transform: translateY(-2px) scale(1.02) !important;
-  box-shadow: 0 10px 28px rgba(198, 159, 104, 0.55) !important;
-}
-
-/* Redes Sociales Luxury Row */
-.cs-social-row {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 14px !important;
-  width: 100% !important;
-  margin-top: 6px !important;
-  margin-bottom: 24px !important;
-}
-
-.cs-social-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 10px !important;
-  padding: 12px 24px !important;
-  border-radius: 999px !important;
-  font-size: 0.76rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.1em !important;
-  text-transform: uppercase !important;
-  text-decoration: none !important;
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-  box-sizing: border-box !important;
-}
-
-.cs-social-btn-ig {
+/* Botón Instagram original de lamha-proximamente */
+.cs-btn-ig {
   background: linear-gradient(135deg, rgba(198, 159, 104, 0.95), rgba(86, 64, 49, 0.95)) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(228, 197, 151, 0.35) !important;
-  box-shadow: 0 4px 20px rgba(198, 159, 104, 0.35) !important;
+  border: 1px solid rgba(228, 197, 151, 0.3) !important;
+  box-shadow: 0 4px 24px rgba(198, 159, 104, 0.4) !important;
 }
 
-.cs-social-btn-ig:hover {
+.cs-btn-ig:hover {
   transform: translateY(-3px) scale(1.04) !important;
-  box-shadow: 0 8px 30px rgba(198, 159, 104, 0.55) !important;
+  box-shadow: 0 8px 32px rgba(198, 159, 104, 0.6) !important;
   color: #ffffff !important;
 }
 
-.cs-social-btn-fb {
-  background: rgba(24, 119, 242, 0.15) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(24, 119, 242, 0.4) !important;
-  backdrop-filter: blur(10px) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
-}
-
-.cs-social-btn-fb:hover {
-  background: rgba(24, 119, 242, 0.3) !important;
-  border-color: rgba(24, 119, 242, 0.7) !important;
-  transform: translateY(-3px) scale(1.04) !important;
-  box-shadow: 0 8px 24px rgba(24, 119, 242, 0.35) !important;
-  color: #ffffff !important;
-}
-
-.cs-social-btn-wa {
-  background: rgba(255, 255, 255, 0.08) !important;
+/* Botón de Acceso Portal Clientes integrado armónicamente */
+.cs-btn-portal {
+  background: rgba(255, 255, 255, 0.06) !important;
   color: #FAF8F5 !important;
-  border: 1px solid rgba(198, 159, 104, 0.35) !important;
-  backdrop-filter: blur(10px) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+  border: 1px solid rgba(198, 159, 104, 0.45) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
 }
 
-.cs-social-btn-wa:hover {
-  background: rgba(198, 159, 104, 0.2) !important;
-  border-color: #C69F68 !important;
-  transform: translateY(-3px) scale(1.04) !important;
-  box-shadow: 0 8px 24px rgba(198, 159, 104, 0.3) !important;
-  color: #ffffff !important;
-}
-
-/* Topbar Portal Pill */
-.cs-topbar-portal-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  padding: 9px 18px !important;
-  border-radius: 999px !important;
-  background: rgba(22, 19, 17, 0.9) !important;
-  border: 1px solid rgba(198, 159, 104, 0.4) !important;
-  font-size: 0.74rem !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
+.cs-btn-portal i {
   color: #C69F68 !important;
-  font-weight: 600 !important;
-  text-decoration: none !important;
-  transition: all 0.3s ease !important;
-  backdrop-filter: blur(10px) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
-.cs-topbar-portal-btn:hover {
+.cs-btn-portal:hover {
   background: rgba(198, 159, 104, 0.18) !important;
   border-color: #C69F68 !important;
-  color: #FAF8F5 !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 6px 20px rgba(198, 159, 104, 0.25) !important;
+  color: #ffffff !important;
+  transform: translateY(-3px) scale(1.04) !important;
+  box-shadow: 0 8px 32px rgba(198, 159, 104, 0.35) !important;
 }
+
+/* Footer exacto de lamha-proximamente */
+.cs-footer {
+  position: relative !important;
+  z-index: 10 !important;
+  margin-top: 10px !important;
+  margin-bottom: 24px !important;
+  text-align: center !important;
+}
+
+.cs-footer p {
+  font-size: 0.68rem !important;
+  letter-spacing: 0.16em !important;
+  color: rgba(250, 248, 245, 0.35) !important;
+  text-transform: uppercase !important;
+}
+
+.cs-footer span {
+  color: #C69F68 !important;
+}
+
+.cs-ar-text {
+  font-family: var(--font-ibm-arabic), 'IBM Plex Sans Arabic', sans-serif !important;
+  direction: rtl !important;
+}
+
 
