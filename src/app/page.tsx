@@ -13,6 +13,7 @@ const CONTENT: Record<Lang, {
   title2: string
   sub: string
   ig: string
+  fb: string
   wa: string
   portalBtn: string
   portalDesc: string
@@ -22,8 +23,9 @@ const CONTENT: Record<Lang, {
     label: "Haute Photographie d'Auteur • Tetuán",
     title1: 'Sitio en ',
     title2: 'construcción',
-    sub: 'Estamos preparando algo especial. Pronto estaremos en línea. Mientras tanto, encuéntranos en Instagram.',
+    sub: 'Estamos preparando algo especial. Pronto estaremos en línea. Mientras tanto, encuéntranos en nuestras redes.',
     ig: 'Seguir en Instagram',
+    fb: 'Facebook',
     wa: 'Contactar con Afaf',
     portalBtn: 'Espace Privé • Acceso Clientes',
     portalDesc: '¿Tienes una sesión con nosotros? Introduce tu PIN para seleccionar tus fotos.',
@@ -33,8 +35,9 @@ const CONTENT: Record<Lang, {
     label: "Haute Photographie d'Auteur • Tetuán",
     title1: 'Site under ',
     title2: 'construction',
-    sub: 'We are preparing something special. We will be online soon. In the meantime, find us on Instagram.',
+    sub: 'We are preparing something special. We will be online soon. In the meantime, find us on our social networks.',
     ig: 'Follow on Instagram',
+    fb: 'Facebook',
     wa: 'Contact Afaf',
     portalBtn: 'Client Suite • Private Access',
     portalDesc: 'Do you have an active session? Enter your PIN to view and select your photos.',
@@ -44,8 +47,9 @@ const CONTENT: Record<Lang, {
     label: "Haute Photographie d'Auteur • Tétouan",
     title1: 'Site en ',
     title2: 'construction',
-    sub: 'Nous préparons quelque chose de spécial. Bientôt en ligne. En attendant, retrouvez-nous sur Instagram.',
+    sub: 'Nous préparons quelque chose de spécial. Bientôt en ligne. En attendant, retrouvez-nous sur nos réseaux.',
     ig: 'Suivre sur Instagram',
+    fb: 'Facebook',
     wa: 'Contacter Afaf',
     portalBtn: 'Espace Privé • Accès Client',
     portalDesc: 'Vous avez une séance avec nous ? Entrez votre code PIN pour choisir vos photos.',
@@ -55,8 +59,9 @@ const CONTENT: Record<Lang, {
     label: 'هوت فوتوغرافي • تطوان',
     title1: 'الموقع قيد ',
     title2: 'الإنشاء',
-    sub: 'نحن نحضّر شيئاً مميزاً. سنكون متاحين قريباً. في غضون ذلك، تجدوننا على إنستغرام.',
+    sub: 'نحن نحضّر شيئاً مميزاً. سنكون متاحين قريباً. في غضون ذلك، تابعونا على وسائل التواصل الاجتماعي.',
     ig: 'تابعونا على إنستغرام',
+    fb: 'فيسبوك',
     wa: 'تواصل مع عفاف',
     portalBtn: 'الجناح الخاص • دخول العملاء',
     portalDesc: 'هل لديك جلسة تصوير معنا؟ أدخل رقمك السري لاختيار صورك.',
@@ -71,10 +76,10 @@ export default function HomePage() {
 
   return (
     <div
-      className="relative min-h-screen w-full overflow-hidden flex flex-col justify-between items-center text-[#fbfaf8] select-none p-6"
+      className="relative min-h-screen w-full overflow-hidden flex flex-col justify-between items-center text-[#fbfaf8] select-none p-4 sm:p-6"
       dir={current.dir}
     >
-      {/* ── 1. FONDO CON EFECTO RESPIRACIÓN ── */}
+      {/* ── 1. FONDO CON EFECTO CINEMATOGRÁFICO ── */}
       <div className="fixed inset-0 z-0 overflow-hidden">
         <Image
           src="/assets/lamha-coming-soon-bg.jpg"
@@ -90,14 +95,15 @@ export default function HomePage() {
       <div className="fixed inset-0 z-[1] bg-[#100c0a]/85 backdrop-blur-[2px]" />
 
       {/* ── 3. TOPBAR: SELECTOR DE IDIOMA & ENLACE ESPACE PRIVÉ ── */}
-      <header className="relative z-20 w-full max-w-5xl flex justify-between items-center px-2 pt-2">
+      <header className="relative z-20 w-full max-w-5xl flex justify-between items-center px-2 pt-2 sm:pt-4">
         {/* Acceso Directo al Portal de Clientes */}
         <Link
           href="/portal"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#181513]/85 hover:bg-[#C69F68]/20 border border-[#C69F68]/35 text-xs tracking-wider uppercase text-[#C69F68] transition-all backdrop-blur-md shadow-md shadow-[#C69F68]/10"
+          className="cs-topbar-portal-btn"
+          title="Acceso directo al portal de clientes"
         >
           <i className="fa-solid fa-lock text-[11px]" />
-          <span className="font-semibold">{current.portalBtn}</span>
+          <span>{current.portalBtn}</span>
         </Link>
 
         {/* Dropdown Idioma */}
@@ -133,26 +139,26 @@ export default function HomePage() {
       </header>
 
       {/* ── 4. CONTENIDO CENTRAL ── */}
-      <main className="relative z-10 my-auto text-center flex flex-col items-center max-w-2xl px-4 py-6">
+      <main className="relative z-10 my-auto text-center flex flex-col items-center w-full max-w-2xl px-4 py-4">
         {/* Logo SVG */}
-        <div className="mb-6">
-          <LamhaLogo color="#fbfaf8" className="h-16 md:h-20 w-auto drop-shadow-[0_0_24px_rgba(198,159,104,0.3)] hover:scale-105 transition-transform" />
+        <div className="mb-4 sm:mb-6">
+          <LamhaLogo color="#fbfaf8" className="h-14 sm:h-20 w-auto drop-shadow-[0_0_24px_rgba(198,159,104,0.3)] hover:scale-105 transition-transform" />
         </div>
 
         {/* Separador */}
-        <div className="flex items-center gap-3 w-48 mb-6 opacity-60">
+        <div className="flex items-center gap-3 w-48 mb-5 opacity-60">
           <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#C69F68] to-transparent" />
           <div className="w-1.5 h-1.5 rounded-full bg-[#C69F68]" />
           <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#C69F68] to-transparent" />
         </div>
 
         {/* Etiqueta */}
-        <p className="text-[0.68rem] tracking-[0.32em] uppercase text-[#C69F68] font-semibold mb-3">
+        <p className="text-[0.68rem] tracking-[0.32em] uppercase text-[#C69F68] font-semibold mb-2 sm:mb-3">
           {current.label}
         </p>
 
         {/* Titular */}
-        <h1 className="font-serif text-3xl sm:text-5xl text-[#fbfaf8] mb-4 leading-tight">
+        <h1 className="font-serif text-3xl sm:text-5xl text-[#fbfaf8] mb-3 leading-tight">
           {current.title1}
           <em className="italic text-[#C69F68] font-serif not-italic">
             {current.title2}
@@ -160,25 +166,22 @@ export default function HomePage() {
         </h1>
 
         {/* Subtítulo */}
-        <p className="text-xs sm:text-sm text-[#fbfaf8]/75 font-serif leading-relaxed mb-8 max-w-lg">
+        <p className="text-xs sm:text-sm text-[#fbfaf8]/75 font-serif leading-relaxed mb-6 max-w-lg">
           {current.sub}
         </p>
 
         {/* Tarjeta destacada de Acceso a la Suite de Cliente (Ultra-Luxury Editorial VIP Badge) */}
-        <div className="w-full max-w-xl mb-8 p-5 sm:p-6 rounded-2xl bg-[#14110f]/95 border border-[#C69F68]/40 shadow-[0_20px_50px_rgba(0,0,0,0.85)] backdrop-blur-xl relative overflow-hidden transition-all hover:border-[#C69F68]/60 text-start">
-          {/* Marco interior sutil */}
-          <div className="pointer-events-none absolute inset-2 border border-[#C69F68]/15 rounded-xl" />
-
-          <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-5">
-            <div className="flex items-start gap-4 min-w-0 flex-1">
-              <div className="w-11 h-11 rounded-full bg-[#C69F68]/15 border border-[#C69F68]/35 flex items-center justify-center shrink-0 shadow-md shadow-[#C69F68]/15 mt-0.5">
-                <i className="fa-solid fa-key text-[#C69F68] text-sm" />
+        <div className="cs-portal-card">
+          <div className="cs-portal-card-inner">
+            <div className="cs-portal-info-wrap">
+              <div className="cs-portal-icon-box">
+                <i className="fa-solid fa-key" />
               </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="text-xs sm:text-sm font-semibold tracking-wider text-[#FAF8F5] uppercase font-body flex items-center gap-2">
+              <div className="cs-portal-text-box">
+                <h3 className="cs-portal-card-title">
                   <span>{current.portalBtn}</span>
                 </h3>
-                <p className="text-[11px] sm:text-xs text-[#a89f91] mt-1 font-serif leading-relaxed">
+                <p className="cs-portal-card-desc">
                   {current.portalDesc}
                 </p>
               </div>
@@ -186,7 +189,7 @@ export default function HomePage() {
 
             <Link
               href="/portal"
-              className="shrink-0 inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl bg-gradient-to-r from-[#C69F68] via-[#dfba85] to-[#C69F68] text-[#0b0a09] font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#C69F68]/25 hover:scale-105 active:scale-95 transition-all text-center w-full sm:w-auto"
+              className="cs-portal-btn-action"
             >
               <span>Acceder</span>
               <i className="fa-solid fa-arrow-right text-[10px]" />
@@ -194,23 +197,33 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Botones de acción (Instagram + WhatsApp) con separación adecuada */}
-        <div className="flex flex-wrap justify-center gap-3 w-full">
+        {/* Botones de Redes Sociales (Instagram + Facebook + WhatsApp) */}
+        <div className="cs-social-row">
           <a
             href="https://www.instagram.com/lam7a.studios?stkn=emJlcGp2ZnBiNDR6"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-full bg-gradient-to-r from-[#C69F68] to-[#564031] text-white font-semibold text-xs tracking-wider uppercase shadow-xl hover:scale-105 transition-transform"
+            className="cs-social-btn cs-social-btn-ig"
           >
             <i className="fa-brands fa-instagram text-sm" />
             <span>{current.ig}</span>
           </a>
 
           <a
+            href="https://www.facebook.com/lam7a.studios"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cs-social-btn cs-social-btn-fb"
+          >
+            <i className="fa-brands fa-facebook-f text-sm text-[#1877F2]" />
+            <span>{current.fb}</span>
+          </a>
+
+          <a
             href="https://wa.me/212762517478"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-full bg-white/10 hover:bg-[#C69F68]/20 border border-[#C69F68]/40 text-[#fbfaf8] text-xs tracking-wider uppercase backdrop-blur-md hover:border-[#C69F68] transition-all"
+            className="cs-social-btn cs-social-btn-wa"
           >
             <i className="fa-brands fa-whatsapp text-sm text-emerald-400" />
             <span>{current.wa}</span>
@@ -225,3 +238,4 @@ export default function HomePage() {
     </div>
   )
 }
+
