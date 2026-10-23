@@ -89,14 +89,14 @@ export default function HomePage() {
       {/* ── 2. OVERLAY CINEMATOGRÁFICO OSCURO ── */}
       <div className="fixed inset-0 z-[1] bg-[#100c0a]/85 backdrop-blur-[2px]" />
 
-      {/* ── 3. SELECTOR DE IDIOMA & ENLACE ESPACE PRIVÉ TOPBAR ── */}
-      <div className="relative z-20 w-full max-w-5xl flex justify-between items-center">
+      {/* ── 3. TOPBAR: SELECTOR DE IDIOMA & ENLACE ESPACE PRIVÉ ── */}
+      <header className="relative z-20 w-full max-w-5xl flex justify-between items-center px-2 pt-2">
         {/* Acceso Directo al Portal de Clientes */}
         <Link
           href="/portal"
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#C69F68]/15 hover:bg-[#C69F68]/30 border border-[#C69F68]/50 text-xs tracking-wider uppercase text-[#C69F68] transition-all backdrop-blur-md shadow-lg shadow-[#C69F68]/10"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#181513]/85 hover:bg-[#C69F68]/20 border border-[#C69F68]/35 text-xs tracking-wider uppercase text-[#C69F68] transition-all backdrop-blur-md shadow-md shadow-[#C69F68]/10"
         >
-          <i className="fa-solid fa-key text-xs" />
+          <i className="fa-solid fa-lock text-[11px]" />
           <span className="font-semibold">{current.portalBtn}</span>
         </Link>
 
@@ -130,10 +130,10 @@ export default function HomePage() {
             </div>
           )}
         </div>
-      </div>
+      </header>
 
       {/* ── 4. CONTENIDO CENTRAL ── */}
-      <main className="relative z-10 my-auto text-center flex flex-col items-center max-w-xl px-4">
+      <main className="relative z-10 my-auto text-center flex flex-col items-center max-w-2xl px-4 py-6">
         {/* Logo SVG */}
         <div className="mb-6">
           <LamhaLogo color="#fbfaf8" className="h-16 md:h-20 w-auto drop-shadow-[0_0_24px_rgba(198,159,104,0.3)] hover:scale-105 transition-transform" />
@@ -160,30 +160,41 @@ export default function HomePage() {
         </h1>
 
         {/* Subtítulo */}
-        <p className="text-xs sm:text-sm text-[#fbfaf8]/70 font-serif leading-relaxed mb-6 max-w-md">
+        <p className="text-xs sm:text-sm text-[#fbfaf8]/75 font-serif leading-relaxed mb-8 max-w-lg">
           {current.sub}
         </p>
 
-        {/* Tarjeta destacada de Acceso a la Suite de Cliente */}
-        <div className="w-full max-w-md p-4 mb-6 rounded-2xl bg-[#161311]/80 border border-[#C69F68]/30 shadow-2xl backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-3 text-start">
-          <div className="min-w-0">
-            <p className="text-xs font-semibold text-[#fbfaf8] flex items-center gap-1.5">
-              <i className="fa-solid fa-lock text-[#C69F68] text-xs" />
-              <span>{current.portalBtn}</span>
-            </p>
-            <p className="text-[11px] text-[#8c7a6b] mt-0.5 leading-snug">
-              {current.portalDesc}
-            </p>
+        {/* Tarjeta destacada de Acceso a la Suite de Cliente (Ultra-Luxury Editorial VIP Badge) */}
+        <div className="w-full max-w-xl mb-8 p-5 sm:p-6 rounded-2xl bg-[#14110f]/95 border border-[#C69F68]/40 shadow-[0_20px_50px_rgba(0,0,0,0.85)] backdrop-blur-xl relative overflow-hidden transition-all hover:border-[#C69F68]/60 text-start">
+          {/* Marco interior sutil */}
+          <div className="pointer-events-none absolute inset-2 border border-[#C69F68]/15 rounded-xl" />
+
+          <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-5">
+            <div className="flex items-start gap-4 min-w-0 flex-1">
+              <div className="w-11 h-11 rounded-full bg-[#C69F68]/15 border border-[#C69F68]/35 flex items-center justify-center shrink-0 shadow-md shadow-[#C69F68]/15 mt-0.5">
+                <i className="fa-solid fa-key text-[#C69F68] text-sm" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-xs sm:text-sm font-semibold tracking-wider text-[#FAF8F5] uppercase font-body flex items-center gap-2">
+                  <span>{current.portalBtn}</span>
+                </h3>
+                <p className="text-[11px] sm:text-xs text-[#a89f91] mt-1 font-serif leading-relaxed">
+                  {current.portalDesc}
+                </p>
+              </div>
+            </div>
+
+            <Link
+              href="/portal"
+              className="shrink-0 inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl bg-gradient-to-r from-[#C69F68] via-[#dfba85] to-[#C69F68] text-[#0b0a09] font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#C69F68]/25 hover:scale-105 active:scale-95 transition-all text-center w-full sm:w-auto"
+            >
+              <span>Acceder</span>
+              <i className="fa-solid fa-arrow-right text-[10px]" />
+            </Link>
           </div>
-          <Link
-            href="/portal"
-            className="shrink-0 px-4 py-2 rounded-xl bg-gradient-to-r from-[#C69F68] to-[#dfba85] text-[#0b0a09] font-bold text-xs uppercase tracking-wider shadow-md hover:brightness-110 active:scale-95 transition-all text-center"
-          >
-            Acceder
-          </Link>
         </div>
 
-        {/* Botones de acción (Instagram + WhatsApp) */}
+        {/* Botones de acción (Instagram + WhatsApp) con separación adecuada */}
         <div className="flex flex-wrap justify-center gap-3 w-full">
           <a
             href="https://www.instagram.com/lam7a.studios?stkn=emJlcGp2ZnBiNDR6"

@@ -5,6 +5,7 @@ import './original-styles.css'
 import './portal.css'
 import { LanguageProvider } from '@/context/LanguageContext'
 import { CustomCursor } from '@/components/CustomCursor'
+import { CameraPreloader } from '@/components/CameraPreloader'
 
 /* ── Google Fonts ───────────────────────────────── */
 const outfit = Outfit({
@@ -75,6 +76,7 @@ export default function RootLayout({
       </head>
       <body className="luxury-experience public-web bg-[#161616] text-[#fbfaf8] font-body overflow-x-hidden antialiased selection:bg-[#C69F68]/30 selection:text-[#fbfaf8]">
         <LanguageProvider>
+          <CameraPreloader />
           <CustomCursor />
           {children}
         </LanguageProvider>

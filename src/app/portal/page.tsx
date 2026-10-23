@@ -1109,105 +1109,25 @@ export default function PortalPage() {
   // ══════════════════════════════════════════════
   if (!isAuthenticated) {
     return (
-      <div
-        dir={isRTL ? 'rtl' : 'ltr'}
-        style={{
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'relative',
-          overflow: 'hidden',
-          backgroundColor: '#0b0a09',
-        }}
-      >
-        {/* Cinematic Background */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage:
-              'url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=85")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'brightness(0.22) sepia(0.3) hue-rotate(-15deg)',
-            zIndex: 0,
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'radial-gradient(circle at center, rgba(11,10,9,0.4) 0%, rgba(11,10,9,0.95) 100%)',
-            zIndex: 1,
-          }}
-        />
+      <div className="portal-login-screen" dir={isRTL ? 'rtl' : 'ltr'}>
+        {/* Cinematic Background Layer */}
+        <div className="portal-login-bg" />
+        <div className="portal-login-overlay" />
 
-        {/* Topbar minimalista con Selector de Idioma */}
-        <aside
-          style={{
-            position: 'relative',
-            zIndex: 10,
-            width: '100%',
-            padding: '1.5rem 2rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Link
-            href="/"
-            className="back-to-site-link"
-            style={{
-              color: 'rgba(251, 250, 248, 0.7)',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '0.75rem',
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-            }}
-          >
+        {/* Topbar minimalista con enlace de regreso y Selector de Idioma */}
+        <header className="portal-login-topbar">
+          <Link href="/" className="back-to-site-link">
             <i className={`fa-solid ${isRTL ? 'fa-arrow-right' : 'fa-arrow-left'}`} />
             <span>{t.backToSite}</span>
           </Link>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            {renderLanguageSelector('topbar')}
-          </div>
-        </aside>
+          <div>{renderLanguageSelector('topbar')}</div>
+        </header>
 
         {/* Centro de Login con Email y PIN */}
-        <main
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '2rem',
-            position: 'relative',
-            zIndex: 10,
-          }}
-        >
-          <div
-            className="invitation-panel"
-            style={{
-              maxWidth: '480px',
-              width: '100%',
-              padding: '3.5rem 2.5rem',
-              position: 'relative',
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              textAlign: 'center',
-              background: 'rgba(20, 18, 17, 0.85)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(198, 159, 104, 0.25)',
-              borderRadius: '18px',
-              boxShadow: '0 30px 80px rgba(0,0,0, 0.6)',
-            }}
-          >
+        <main className="portal-login-main">
+          <div className="portal-login-card">
+            {/* Marco de esquinas doradas */}
             <div className="invitation-gold-frame" style={{ pointerEvents: 'none' }}>
               <span className="frame-corner top-left" />
               <span className="frame-corner top-right" />
@@ -1215,79 +1135,38 @@ export default function PortalPage() {
               <span className="frame-corner bottom-right" />
             </div>
 
+            {/* Insignia Dorada de la Llave */}
+            <div className="portal-login-key-badge">
+              <i className="fa-solid fa-key" />
+            </div>
+
             {/* Logo oficial de Lamha Studios */}
-            <div
-              style={{
-                marginBottom: '1.75rem',
-                position: 'relative',
-                zIndex: 10,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <Link href="/" style={{ display: 'inline-block', transition: 'opacity 0.2s ease' }} title="Lamha Studios">
-                <div style={{ width: '175px', height: 'auto' }}>
-                  <LamhaLogo color="var(--c-gold)" />
+            <div style={{ marginBottom: '1.25rem', position: 'relative', zIndex: 10 }}>
+              <Link href="/" title="Lamha Studios">
+                <div style={{ width: '160px', height: 'auto' }}>
+                  <LamhaLogo color="#C69F68" />
                 </div>
               </Link>
             </div>
 
-            <div
-              className="section-tag-gold"
-              style={{ justifyContent: 'center', marginBottom: '0.75rem', position: 'relative', zIndex: 10 }}
-            >
+            <div className="section-tag-gold" style={{ justifyContent: 'center', marginBottom: '0.6rem' }}>
               <span>{t.confidentialTag}</span>
             </div>
 
-            <h1
-              className="editorial-heading"
-              style={{
-                fontSize: '2.2rem',
-                color: 'var(--c-ivory)',
-                marginBottom: '0.75rem',
-                position: 'relative',
-                zIndex: 10,
-              }}
-            >
-              {t.espacePrive}
-            </h1>
+            <h1 className="portal-login-title">{t.espacePrive}</h1>
 
-            <p
-              style={{
-                fontSize: '0.85rem',
-                color: 'rgba(251, 250, 248, 0.7)',
-                fontFamily: 'var(--f-serif)',
-                lineHeight: 1.6,
-                marginBottom: '2rem',
-                position: 'relative',
-                zIndex: 10,
-              }}
-            >
-              {t.loginDesc}
-            </p>
+            <p className="portal-login-desc">{t.loginDesc}</p>
 
             <form
               onSubmit={(e) => {
                 e.preventDefault()
                 handleLogin(email, pin)
               }}
-              style={{ width: '100%', position: 'relative', zIndex: 10, textAlign: isRTL ? 'right' : 'left' }}
+              style={{ width: '100%', position: 'relative', zIndex: 10 }}
             >
               {/* Campo Email */}
-              <div style={{ marginBottom: '1.25rem' }}>
-                <label
-                  style={{
-                    display: 'block',
-                    fontSize: '0.72rem',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.12em',
-                    color: '#c69f68',
-                    marginBottom: '0.5rem',
-                    fontFamily: 'var(--f-body)',
-                    fontWeight: 600,
-                  }}
-                >
+              <div className="portal-login-input-group">
+                <label className="portal-login-label">
                   <i className="fa-regular fa-envelope" style={{ marginInlineEnd: '6px' }} /> {t.emailLabel}
                 </label>
                 <input
@@ -1299,65 +1178,26 @@ export default function PortalPage() {
                     setEmail(e.target.value)
                     setLoginError(null)
                   }}
-                  style={{
-                    width: '100%',
-                    fontSize: '0.95rem',
-                    padding: '0.85rem 1rem',
-                    borderRadius: '10px',
-                    background: 'rgba(10, 8, 7, 0.65)',
-                    border: '1px solid rgba(198, 159, 104, 0.35)',
-                    color: '#f5f2eb',
-                    outline: 'none',
-                    fontFamily: 'var(--f-body)',
-                    transition: 'border-color 0.3s ease',
-                  }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--c-gold)')}
-                  onBlur={(e) => (e.target.style.borderColor = 'rgba(198, 159, 104, 0.35)')}
+                  className="portal-login-input"
                 />
               </div>
 
               {/* Campo PIN */}
-              <div style={{ marginBottom: '1.5rem' }}>
-                <label
-                  style={{
-                    display: 'block',
-                    fontSize: '0.72rem',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.12em',
-                    color: '#c69f68',
-                    marginBottom: '0.5rem',
-                    fontFamily: 'var(--f-body)',
-                    fontWeight: 600,
-                  }}
-                >
-                  <i className="fa-solid fa-key" style={{ marginInlineEnd: '6px' }} /> {t.pinLabel}
+              <div className="portal-login-input-group" style={{ marginBottom: '1.5rem' }}>
+                <label className="portal-login-label">
+                  <i className="fa-solid fa-lock" style={{ marginInlineEnd: '6px' }} /> {t.pinLabel}
                 </label>
                 <input
                   type="password"
                   required
-                  maxLength={8}
+                  maxLength={10}
                   placeholder="••••"
                   value={pin}
                   onChange={(e) => {
                     setPin(e.target.value)
                     setLoginError(null)
                   }}
-                  style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    fontSize: '1.5rem',
-                    letterSpacing: '0.35em',
-                    padding: '0.75rem',
-                    borderRadius: '10px',
-                    background: 'rgba(10, 8, 7, 0.65)',
-                    border: '1px solid rgba(198, 159, 104, 0.35)',
-                    color: 'var(--c-gold)',
-                    outline: 'none',
-                    fontFamily: 'var(--f-mono, monospace)',
-                    transition: 'border-color 0.3s ease',
-                  }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--c-gold)')}
-                  onBlur={(e) => (e.target.style.borderColor = 'rgba(198, 159, 104, 0.35)')}
+                  className="portal-login-input portal-login-pin"
                 />
               </div>
 
@@ -1366,43 +1206,54 @@ export default function PortalPage() {
                   style={{
                     padding: '0.75rem 1rem',
                     borderRadius: '8px',
-                    background: 'rgba(244, 63, 94, 0.1)',
-                    border: '1px solid rgba(244, 63, 94, 0.3)',
+                    background: 'rgba(244, 63, 94, 0.12)',
+                    border: '1px solid rgba(244, 63, 94, 0.35)',
                     marginBottom: '1.25rem',
+                    textAlign: isRTL ? 'right' : 'left',
                   }}
                 >
-                  <p style={{ fontSize: '0.78rem', color: '#f87171', margin: 0, fontFamily: 'var(--f-body)', lineHeight: 1.4 }}>
+                  <p style={{ fontSize: '0.78rem', color: '#f87171', margin: 0, lineHeight: 1.4 }}>
                     <i className="fa-solid fa-circle-exclamation" style={{ marginInlineEnd: '6px' }} />
                     {loginError}
                   </p>
                 </div>
               )}
 
-              <button
-                type="submit"
-                disabled={isLoggingIn}
-                className="btn-luxury-primary"
-                style={{ width: '100%', justifyContent: 'center', padding: '1.1rem', fontSize: '0.85rem' }}
-              >
+              <button type="submit" disabled={isLoggingIn} className="portal-login-btn">
                 {isLoggingIn ? (
                   <>
-                    <i className="fa-solid fa-spinner fa-spin" style={{ marginInlineEnd: '8px' }} />
-                    {t.verifying}
+                    <i className="fa-solid fa-spinner fa-spin" />
+                    <span>{t.verifying}</span>
                   </>
                 ) : (
                   <>
-                    <i className="fa-solid fa-arrow-right-to-bracket" style={{ marginInlineEnd: '8px' }} />
-                    {t.accessBtn}
+                    <i className="fa-solid fa-arrow-right-to-bracket" />
+                    <span>{t.accessBtn}</span>
                   </>
                 )}
+              </button>
+
+              {/* Acceso directo a sesión Demo */}
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('demo@lamhastudios.com')
+                  setPin('8942')
+                  handleLogin('demo@lamhastudios.com', '8942')
+                }}
+                className="portal-demo-btn"
+                title="Acceder con cuenta de demostración"
+              >
+                <i className="fa-solid fa-wand-magic-sparkles" style={{ marginInlineEnd: '6px' }} />
+                <span>{t.demoBtn}</span>
               </button>
             </form>
 
             {/* Selector de idioma desplegable */}
             <div
               style={{
-                marginTop: '2rem',
-                paddingTop: '1.25rem',
+                marginTop: '1.75rem',
+                paddingTop: '1rem',
                 borderTop: '1px solid rgba(255,255,255,0.08)',
                 width: '100%',
                 display: 'flex',

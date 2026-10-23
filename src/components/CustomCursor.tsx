@@ -82,13 +82,13 @@ export function CustomCursor() {
       <div
         ref={dotRef}
         className="pointer-events-none fixed top-0 left-0 z-[99999] w-2 h-2 rounded-full bg-[#C69F68] opacity-0 transition-opacity duration-200"
-        style={{ willChange: 'transform' }}
+        style={{ willChange: 'transform', transform: 'translate3d(-100px, -100px, 0)' }}
         aria-hidden="true"
       />
       <div
         ref={ringRef}
         className="pointer-events-none fixed top-0 left-0 z-[99998] w-9 h-9 rounded-full border border-[#C69F68]/50 opacity-0 transition-all duration-300"
-        style={{ willChange: 'transform' }}
+        style={{ willChange: 'transform', transform: 'translate3d(-100px, -100px, 0)' }}
         aria-hidden="true"
       />
     </>
