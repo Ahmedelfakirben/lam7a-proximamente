@@ -891,6 +891,7 @@ export default function PortalPage() {
           selected_assets: selectedArr,
           comments: updatedComments,
           status: 'client_selected',
+          pipeline_stage: 'client_selected',
           tags: updatedTags,
         })
         .eq('id', currentSession.id)
@@ -912,6 +913,23 @@ export default function PortalPage() {
           }
         }
       }
+
+      // Disparar automatismo de notificaciones (Email confirmación cliente + WhatsApp cliente + alerta WhatsApp taller)
+      const adminApiUrl = process.env.NEXT_PUBLIC_ADMIN_URL || "https://admin.lam7a.ma"
+      fetch(`${adminApiUrl}/api/portal/selection`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionId: currentSession.id,
+          selectedAssets: selectedArr,
+          notesCount: Object.values(notes).filter((n) => typeof n === 'string' && n.trim().length > 0).length,
+          generalNotes: generalNotes.trim(),
+          assetNotes: notes,
+          language: lang ? lang.toLowerCase() : 'fr',
+        }),
+      }).catch((apiErr) => {
+        console.warn("Fallo no bloqueante al invocar automatismos de selección:", apiErr)
+      })
 
       setReviewModalOpen(false)
       setOrderSubmittedSuccess(true)
