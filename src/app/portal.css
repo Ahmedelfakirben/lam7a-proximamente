@@ -884,6 +884,24 @@ body.luxury-portal-body {
   color: #ff8585;
 }
 
+.lb-btn-icon.lb-btn-whatsapp {
+  background: rgba(37, 211, 102, 0.12);
+  border-color: rgba(37, 211, 102, 0.45);
+  color: #25d366;
+}
+
+.lb-btn-icon.lb-btn-whatsapp:hover {
+  background: rgba(37, 211, 102, 0.25);
+  border-color: #25d366;
+  color: #25d366;
+  box-shadow: 0 0 14px rgba(37, 211, 102, 0.35);
+}
+
+.lb-btn-icon.lb-btn-whatsapp i {
+  color: #25d366;
+  font-size: 1.05rem;
+}
+
 .lightbox-main-stage {
   flex: 1 1 0%;
   min-height: 0;
@@ -2266,6 +2284,11 @@ html[dir="rtl"] .portal-drawer-panel {
     color: #ffffff !important;
     font-size: 1rem !important;
     margin-left: 4px !important;
+  }
+  .lb-btn-icon.lb-btn-whatsapp {
+    background: rgba(37, 211, 102, 0.16) !important;
+    border: 1px solid rgba(37, 211, 102, 0.45) !important;
+    color: #25d366 !important;
   }
   .lightbox-main-stage {
     touch-action: pan-y pinch-zoom !important;

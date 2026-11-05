@@ -105,6 +105,10 @@ const PORTAL_I18N = {
     lbRotate: 'Girar',
     lbFitScreen: 'Ajustar',
     lbZoomIn: 'Ampliar 1:1',
+    lbWhatsApp: 'WhatsApp',
+    lbWhatsAppTitle: 'Compartir fotografía por WhatsApp',
+    lbWhatsAppShareText: (id: string, url: string) =>
+      `¡Mira esta fotografía de nuestra sesión con Lamha Studios (${id})!\n${url}`,
     lbRetouchTitle: (id: string) => `Instrucción de Retoque para ${id}`,
     lbRetouchPlaceholder: 'Escribe aquí tu ajuste para esta foto...',
     lbSaveNote: 'Guardar Nota',
@@ -259,6 +263,10 @@ const PORTAL_I18N = {
     lbRotate: 'Pivoter',
     lbFitScreen: 'Ajuster',
     lbZoomIn: 'Agrandir 1:1',
+    lbWhatsApp: 'WhatsApp',
+    lbWhatsAppTitle: 'Partager la photographie sur WhatsApp',
+    lbWhatsAppShareText: (id: string, url: string) =>
+      `Regardez cette photographie de notre séance avec Lamha Studios (${id}) !\n${url}`,
     lbRetouchTitle: (id: string) => `Instruction de Retouche pour ${id}`,
     lbRetouchPlaceholder: 'Indiquez ici vos souhaits de retouche pour cette photo...',
     lbSaveNote: 'Enregistrer la Note',
@@ -412,6 +420,10 @@ const PORTAL_I18N = {
     lbRotate: 'Rotate',
     lbFitScreen: 'Fit Screen',
     lbZoomIn: 'Zoom 1:1',
+    lbWhatsApp: 'WhatsApp',
+    lbWhatsAppTitle: 'Share photograph via WhatsApp',
+    lbWhatsAppShareText: (id: string, url: string) =>
+      `Check out this photograph from our session with Lamha Studios (${id})!\n${url}`,
     lbRetouchTitle: (id: string) => `Retouch Instruction for ${id}`,
     lbRetouchPlaceholder: 'Write your retouching notes for this photo...',
     lbSaveNote: 'Save Note',
@@ -565,6 +577,10 @@ const PORTAL_I18N = {
     lbRotate: 'تدوير',
     lbFitScreen: 'ملاءمة',
     lbZoomIn: 'تكبير 1:1',
+    lbWhatsApp: 'واتساب',
+    lbWhatsAppTitle: 'مشاركة الصورة عبر واتساب',
+    lbWhatsAppShareText: (id: string, url: string) =>
+      `شاهد هذه الصورة من جلستنا مع استوديو لمحة (${id})!\n${url}`,
     lbRetouchTitle: (id: string) => `تعليمات التعديل لـ ${id}`,
     lbRetouchPlaceholder: 'اكتب ملاحظاتك وتعديلاتك على هذه الصورة...',
     lbSaveNote: 'حفظ الملاحظة',
@@ -2487,6 +2503,26 @@ export default function PortalPage() {
                   <span>
                     {notes[filteredPhotos[lightboxIndex].id] ? t.lbNoteSaved : t.lbAddNote}
                   </span>
+                </button>
+
+                <button
+                  type="button"
+                  className="lb-btn-icon lb-btn-whatsapp"
+                  title={t.lbWhatsAppTitle}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    const photo = filteredPhotos[lightboxIndex]
+                    if (!photo) return
+                    const fullUrl = photo.url.startsWith('http')
+                      ? photo.url
+                      : (typeof window !== 'undefined' ? `${window.location.origin}${photo.url}` : photo.url)
+                    const text = t.lbWhatsAppShareText(photo.id, fullUrl)
+                    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`
+                    window.open(waUrl, '_blank', 'noopener,noreferrer')
+                  }}
+                >
+                  <i className="fa-brands fa-whatsapp" />
+                  <span>{t.lbWhatsApp}</span>
                 </button>
 
                 <button 
