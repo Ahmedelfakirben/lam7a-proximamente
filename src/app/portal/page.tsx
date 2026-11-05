@@ -42,8 +42,8 @@ const PORTAL_I18N = {
     errUnexpected: 'Ocurrió un error inesperado al acceder a la suite.',
     suiteTag: 'ESPACE PRIVÉ DU CLIENT',
     defaultSessionDesc: 'Boda de Destino en Namaskar & Retratos Íntimos',
-    tabSelection: 'Selección de Fotos',
-    tabTimeline: 'Estado del Pedido',
+    tabSelection: 'Fotos',
+    tabTimeline: 'Estado',
     curationSubtitle: 'Curaduría de vuestro libro en piel',
     quotaTitle: (quota: number) => `Seleccionad vuestras ${quota} fotografías maestras`,
     quotaDescActive: (count: number, quota: number) =>
@@ -195,8 +195,8 @@ const PORTAL_I18N = {
     errUnexpected: 'Une erreur inattendue est survenue lors de l’accès à la suite.',
     suiteTag: 'ESPACE PRIVÉ DU CLIENT',
     defaultSessionDesc: 'Mariage de Destination à Namaskar & Portraits Intimes',
-    tabSelection: 'Sélection de Photos',
-    tabTimeline: 'Statut de la Commande',
+    tabSelection: 'Photos',
+    tabTimeline: 'Statut',
     curationSubtitle: 'Curation de votre livre d’art en cuir',
     quotaTitle: (quota: number) => `Sélectionnez vos ${quota} photographies maîtresses`,
     quotaDescActive: (count: number, quota: number) =>
@@ -349,8 +349,8 @@ const PORTAL_I18N = {
     errUnexpected: 'An unexpected error occurred while accessing the suite.',
     suiteTag: 'CLIENT PRIVATE SUITE',
     defaultSessionDesc: 'Destination Wedding in Namaskar & Fine Art Portraits',
-    tabSelection: 'Photo Selection',
-    tabTimeline: 'Order Timeline',
+    tabSelection: 'Photos',
+    tabTimeline: 'Status',
     curationSubtitle: 'Curation of your fine leather art book',
     quotaTitle: (quota: number) => `Select your ${quota} master photographs`,
     quotaDescActive: (count: number, quota: number) =>
@@ -502,8 +502,8 @@ const PORTAL_I18N = {
     errUnexpected: 'حدث خطأ غير متوقع أثناء الدخول للجناح.',
     suiteTag: 'الجناح الخاص للعميل',
     defaultSessionDesc: 'حفل زفاف في مراكش وجلسات تصوير فنية',
-    tabSelection: 'اختيار الصور',
-    tabTimeline: 'مراحل الطلب',
+    tabSelection: 'الصور',
+    tabTimeline: 'الحالة',
     curationSubtitle: 'تنسيق ألبومكم الجلدي الفاخر',
     quotaTitle: (quota: number) => `اختر صورك الفنية الـ ${quota}`,
     quotaDescActive: (count: number, quota: number) =>
@@ -1781,15 +1781,7 @@ export default function PortalPage() {
             <div className="selection-quota-hero">
               <div className="container quota-inner">
                 <div className="quota-text-col">
-                  <span className="quota-subtitle">{t.curationSubtitle}</span>
                   <h2 className="quota-title">{t.quotaTitle(maxQuota)}</h2>
-                  <p className="quota-desc">
-                    {activePhotos.length > 0 ? (
-                      <>{t.quotaDescActive(activePhotos.length, maxQuota)}</>
-                    ) : (
-                      <>{t.quotaDescEmpty}</>
-                    )}
-                  </p>
                 </div>
 
                 <div className="quota-metric-card">
