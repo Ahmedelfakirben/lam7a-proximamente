@@ -566,42 +566,10 @@ body.luxury-portal-body {
   .quota-inner { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 640px) {
-  .suite-masonry-grid {
-    column-count: 2 !important;
-    column-gap: 10px !important;
-  }
-  .suite-gallery-container {
-    padding: 12px 10px 80px !important;
-  }
-  .client-photo-card {
-    margin-bottom: 10px !important;
-    border-radius: 10px !important;
-  }
-  .client-photo-card img {
-    border-radius: 10px !important;
-  }
-  .client-photo-card .card-overlay-luxury {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    background: linear-gradient(180deg, rgba(20, 19, 18, 0.5) 0%, transparent 40%, rgba(20, 19, 18, 0.4) 100%) !important;
-    padding: 8px !important;
-  }
-  .client-photo-card .photo-badge-id {
-    font-size: 0.60rem !important;
-    padding: 2px 7px !important;
-  }
-  .client-photo-card .btn-card-heart,
-  .client-photo-card .btn-card-note {
-    width: 30px !important;
-    height: 30px !important;
-    font-size: 0.74rem !important;
-    background: rgba(20, 19, 18, 0.85) !important;
-    border-color: rgba(198, 159, 104, 0.4) !important;
-  }
-  .client-photo-card .card-bottom-info {
-    display: none !important;
-  }
+/* Grilla Masonry Responsive */
+@media (max-width: 1024px) {
+  .suite-masonry-grid { column-count: 2; }
+  .quota-inner { grid-template-columns: 1fr; }
 }
 
 /* ============================================
@@ -1962,7 +1930,14 @@ html[dir="rtl"] .portal-drawer-panel {
     padding: 10px 0 6px !important;
   }
   .suite-brand {
-    display: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 6px !important;
+  }
+  .brand-svg-logo-gold {
+    height: 30px !important;
+    width: auto !important;
   }
   .suite-welcome {
     margin-bottom: 4px !important;
@@ -2748,4 +2723,161 @@ html[dir="rtl"] .portal-drawer-panel {
   .portal-login-topbar {
     padding: 1rem;
   }
+}
+
+/* ============================================
+   ESTRUCTURA DE FOTO LIMPIA (EL NOMBRE NUNCA TAPA LA FOTO)
+   ============================================ */
+.client-photo-card {
+  display: inline-block;
+  width: 100%;
+  break-inside: avoid;
+  margin-bottom: 16px;
+  position: relative;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(198, 159, 104, 0.2);
+  box-shadow: 0 4px 18px rgba(86, 64, 49, 0.06);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+}
+
+.client-photo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(86, 64, 49, 0.12);
+  border-color: rgba(198, 159, 104, 0.5);
+}
+
+.client-photo-card.is-selected {
+  border-color: #c69f68 !important;
+  box-shadow: 0 0 0 2px #c69f68, 0 8px 24px rgba(198, 159, 104, 0.3) !important;
+}
+
+.card-media-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 13px 13px 0 0;
+  background: #151311;
+}
+
+.card-media-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.client-photo-card:hover .card-media-wrapper img {
+  transform: scale(1.025);
+}
+
+/* Botón flotante corazón en la esquina superior */
+.btn-card-floating-heart {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(14, 12, 10, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #f5f2eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+[dir="rtl"] .btn-card-floating-heart {
+  right: auto;
+  left: 8px;
+}
+
+.btn-card-floating-heart:active {
+  transform: scale(0.9);
+}
+
+.btn-card-floating-heart.is-selected {
+  background: #c69f68 !important;
+  border-color: #c69f68 !important;
+  color: #12100e !important;
+  box-shadow: 0 4px 16px rgba(198, 159, 104, 0.55) !important;
+}
+
+.btn-card-floating-heart.is-selected i {
+  color: #12100e !important;
+}
+
+/* Pie de foto limpio DEBAJO de la imagen */
+.card-caption-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: #ffffff;
+  border-top: 1px solid rgba(198, 159, 104, 0.12);
+  gap: 8px;
+}
+
+.card-caption-filename {
+  font-family: var(--f-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #7a6e62;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.client-photo-card.is-selected .card-caption-filename {
+  color: #c69f68;
+  font-weight: 700;
+}
+
+.card-caption-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-caption-note {
+  background: none;
+  border: none;
+  color: #a39587;
+  font-size: 0.82rem;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.15s ease;
+}
+
+.btn-caption-note:hover,
+.btn-caption-note.has-note {
+  color: #c69f68;
+}
+
+/* Logo Oficial en Header */
+.suite-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.brand-svg-logo-gold {
+  height: 34px;
+  width: auto;
+  fill: #C69F68;
+  filter: drop-shadow(0 2px 8px rgba(198, 159, 104, 0.2));
 }

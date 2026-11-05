@@ -720,6 +720,9 @@ export default function PortalPage() {
       // Demo Account
       if (cleanPin === '8942' && (cleanEmail === 'demo@lamhastudios.com' || cleanEmail.includes('demo') || cleanEmail.includes('leyla'))) {
         setIsAuthenticated(true)
+        try {
+          localStorage.setItem('lamha_portal_session_auth', JSON.stringify({ email: cleanEmail, pin: cleanPin }))
+        } catch {}
         setMaxQuota(20)
         setSessionPhotos(PHOTOS)
         setSelectedIds(new Set(PHOTOS.slice(0, 10).map((p) => p.id)))
@@ -767,6 +770,9 @@ export default function PortalPage() {
       if (session) {
         setCurrentSession(session)
         setIsAuthenticated(true)
+        try {
+          localStorage.setItem('lamha_portal_session_auth', JSON.stringify({ email: cleanEmail, pin: cleanPin }))
+        } catch {}
 
         // 1. Quota variable from session tags
         let resolvedQuota = 20
@@ -842,6 +848,21 @@ export default function PortalPage() {
       } else if (urlPin === '8942') {
         setEmail('demo@lamhastudios.com')
         handleLogin('demo@lamhastudios.com', '8942')
+      } else {
+        // Restaurar sesión guardada para que no se desconecte en el móvil al actualizar
+        try {
+          const savedAuth = localStorage.getItem('lamha_portal_session_auth')
+          if (savedAuth) {
+            const { email: savedEmail, pin: savedPin } = JSON.parse(savedAuth)
+            if (savedEmail && savedPin) {
+              setEmail(savedEmail)
+              setPin(savedPin)
+              handleLogin(savedEmail, savedPin)
+            }
+          }
+        } catch (e) {
+          console.warn('Error restaurando sesión previa:', e)
+        }
       }
     }
   }, [])
@@ -1344,6 +1365,7 @@ export default function PortalPage() {
             )}
             <button
               onClick={() => {
+                try { localStorage.removeItem('lamha_portal_session_auth') } catch {}
                 setIsAuthenticated(false)
                 setCurrentSession(null)
                 setSessionPhotos([])
@@ -1529,6 +1551,7 @@ export default function PortalPage() {
                 type="button"
                 className="portal-drawer-logout-btn"
                 onClick={() => {
+                  try { localStorage.removeItem('lamha_portal_session_auth') } catch {}
                   setMobileUserMenuOpen(false)
                   setIsAuthenticated(false)
                   setCurrentSession(null)
@@ -1548,7 +1571,7 @@ export default function PortalPage() {
         <div className="container suite-header-inner">
           <div className="suite-brand">
             <Link href="/" title="Lamha Studios">
-              <LamhaLogo className="brand-svg-logo-dark" />
+              <LamhaLogo color="#C69F68" className="brand-svg-logo-gold" style={{ height: '34px', width: 'auto' }} />
             </Link>
           </div>
 
@@ -1921,67 +1944,55 @@ export default function PortalPage() {
                           }
                         }}
                       >
-                        {isSelected && (
-                          <div className="card-corner-ribbon">
-                            <i className="fa-solid fa-check" /> {t.inBookBadge}
-                          </div>
-                        )}
-                        {hasNote && (
-                          <div className="card-note-ribbon" title={notes[photo.id]}>
-                            <i className="fa-solid fa-pen-nib" /> {t.withNoteBadge}
-                          </div>
-                        )}
-
-                        <Image
-                          src={photo.url}
-                          alt={photo.title}
-                          width={800}
-                          height={600}
-                          unoptimized
-                          style={{ width: '100%', height: 'auto', display: 'block' }}
-                        />
-
-                        <div className="card-overlay-luxury">
-                          <div className="card-top-actions">
-                            <span className="photo-badge-id">{photo.id}</span>
-                            <div className="card-top-btns">
-                              <button
-                                className={`btn-card-note ${hasNote ? 'has-note' : ''}`}
-                                title={hasNote ? notes[photo.id] : t.addNoteTitle}
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  setActiveNoteModal(photo)
-                                }}
-                              >
-                                <i className="fa-regular fa-comment-dots" />
-                              </button>
-                              <button
-                                className="btn-card-heart"
-                                title={t.markForBookTitle}
-                                onClick={(e) => toggleSelect(photo.id, e)}
-                              >
-                                <i className={`${isSelected ? 'fa-solid' : 'fa-regular'} fa-heart`} />
-                              </button>
+                        {/* Contenedor de la fotografía: 100% limpia de texto encima */}
+                        <div className="card-media-wrapper">
+                          {isSelected && (
+                            <div className="card-corner-ribbon">
+                              <i className="fa-solid fa-check" />
                             </div>
-                          </div>
-                          <div className="card-bottom-info">
-                            <div className="card-meta-txt">
-                              <h4>{photo.title}</h4>
-                              <span>{photo.category}</span>
-                              {hasNote && (
-                                <p className="card-note-preview">
-                                  <i className="fa-solid fa-pen-nib" /> {notes[photo.id]}
-                                </p>
-                              )}
+                          )}
+                          {hasNote && (
+                            <div className="card-note-ribbon" title={notes[photo.id]}>
+                              <i className="fa-solid fa-pen-nib" />
                             </div>
+                          )}
+
+                          <Image
+                            src={photo.url}
+                            alt={photo.title}
+                            width={800}
+                            height={600}
+                            unoptimized
+                            style={{ width: '100%', height: 'auto', display: 'block' }}
+                          />
+
+                          {/* Botón flotante para marcar como favorita en la esquina superior derecha */}
+                          <button
+                            type="button"
+                            className={`btn-card-floating-heart ${isSelected ? 'is-selected' : ''}`}
+                            title={t.markForBookTitle}
+                            onClick={(e) => toggleSelect(photo.id, e)}
+                          >
+                            <i className={`${isSelected ? 'fa-solid' : 'fa-regular'} fa-heart`} />
+                          </button>
+                        </div>
+
+                        {/* Pie de foto limpio DEBAJO de la imagen: el nombre jamás tapa la fotografía */}
+                        <div className="card-caption-strip">
+                          <span className="card-caption-filename" title={photo.title || photo.id}>
+                            {photo.id}
+                          </span>
+                          <div className="card-caption-actions">
                             <button
-                              className="btn-expand-icon"
+                              type="button"
+                              className={`btn-caption-note ${hasNote ? 'has-note' : ''}`}
+                              title={hasNote ? notes[photo.id] : t.addNoteTitle}
                               onClick={(e) => {
                                 e.stopPropagation()
-                                setLightboxIndex(index)
+                                setActiveNoteModal(photo)
                               }}
                             >
-                              <i className="fa-solid fa-expand" />
+                              <i className="fa-regular fa-comment-dots" />
                             </button>
                           </div>
                         </div>
