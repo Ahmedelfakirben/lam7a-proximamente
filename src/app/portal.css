@@ -1938,17 +1938,20 @@ html[dir="rtl"] .portal-drawer-panel {
 }
 
 @media (max-width: 768px) {
-  /* Topbar Mobile: Single compact line with logo on left, quick count + burger on right */
+  /* =========================================================================
+     1. TOPBAR & DRAWER MOBILE
+     ========================================================================= */
   .desktop-topbar-actions { display: none !important; }
   .mobile-topbar-actions { display: flex !important; align-items: center !important; gap: 8px !important; }
   .desktop-only-link { display: none !important; }
   .mobile-topbar-brand { display: flex !important; align-items: center !important; }
-  .suite-topbar { padding: 6px 0 !important; }
+  .suite-topbar { padding: 8px 0 !important; }
   .suite-topbar-inner {
     flex-direction: row !important;
     justify-content: space-between !important;
     align-items: center !important;
     gap: 8px !important;
+    padding: 0 14px !important;
   }
   .topbar-left, .topbar-right {
     width: auto !important;
@@ -1956,16 +1959,16 @@ html[dir="rtl"] .portal-drawer-panel {
 
   /* Compact suite header to reclaim maximum vertical space for photos */
   .suite-header {
-    padding: 8px 0 4px !important;
+    padding: 10px 0 6px !important;
   }
   .suite-brand {
-    display: none !important; /* Logo already present in sticky topbar */
+    display: none !important;
   }
   .suite-welcome {
     margin-bottom: 4px !important;
   }
   .suite-tag {
-    display: none !important; /* Reclaims 20px vertical space */
+    display: none !important;
   }
   .suite-client-name {
     font-size: 1.25rem !important;
@@ -1984,7 +1987,7 @@ html[dir="rtl"] .portal-drawer-panel {
     -webkit-overflow-scrolling: touch;
     width: 100% !important;
     justify-content: flex-start !important;
-    padding: 3px 4px !important;
+    padding: 4px 14px !important;
     gap: 6px !important;
     scrollbar-width: none;
     margin-top: 4px !important;
@@ -1993,82 +1996,546 @@ html[dir="rtl"] .portal-drawer-panel {
   .suite-tab-btn {
     flex-shrink: 0 !important;
     width: auto !important;
-    font-size: 0.72rem !important;
-    padding: 6px 12px !important;
+    font-size: 0.74rem !important;
+    padding: 6px 14px !important;
     white-space: nowrap !important;
     border-radius: 999px !important;
   }
 
-  /* Compact Quota Banner on mobile */
-  .suite-quota-section {
-    padding: 12px 10px !important;
-    margin-top: 6px !important;
+  /* =========================================================================
+     2. COMPACT STUDIO HERO & SELECTION QUOTA ON MOBILE
+     ========================================================================= */
+  .selection-quota-hero {
+    padding: 14px 0 10px !important;
+    background: #f6f1ec !important;
+  }
+  .selection-quota-hero::before {
+    display: none !important;
+  }
+  .quota-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 0 16px !important;
+  }
+  .quota-subtitle {
+    font-size: 0.65rem !important;
+    margin-bottom: 2px !important;
+    letter-spacing: 0.15em !important;
   }
   .quota-title {
     font-size: 1.15rem !important;
-    margin-bottom: 3px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 4px !important;
   }
   .quota-desc {
-    font-size: 0.74rem !important;
-    margin-bottom: 8px !important;
+    font-size: 0.78rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
   }
   .quota-metric-card {
-    padding: 8px 10px !important;
+    padding: 10px 14px !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 14px rgba(86, 64, 49, 0.05) !important;
+    background: #ffffff !important;
   }
-  
-  /* Lightbox Mobile Fixes */
+  .q-metric-header {
+    margin-bottom: 4px !important;
+  }
+  .q-label {
+    font-size: 0.68rem !important;
+  }
+  .q-ratio {
+    font-size: 0.88rem !important;
+  }
+  .q-progress-bar {
+    height: 6px !important;
+    margin: 4px 0 6px !important;
+    border-radius: 999px !important;
+  }
+  .q-subtext {
+    font-size: 0.72rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 0 !important;
+  }
+  .q-actions {
+    display: none !important; /* Reubicado en la barra flotante inferior */
+  }
+
+  /* =========================================================================
+     3. STICKY FILTER BAR ON MOBILE (SLIM HORIZONTAL ROW)
+     ========================================================================= */
+  .suite-filters-bar {
+    padding: 8px 0 !important;
+    top: 42px !important;
+    background: rgba(251, 250, 248, 0.96) !important;
+    border-bottom: 1px solid rgba(198, 159, 104, 0.25) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+  }
+  .filters-bar-inner {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding: 0 14px !important;
+  }
+  .filters-bar-inner::-webkit-scrollbar {
+    display: none !important;
+  }
+  .suite-pills-row {
+    flex-shrink: 0 !important;
+    gap: 6px !important;
+  }
+  .suite-pill {
+    padding: 5px 12px !important;
+    font-size: 0.72rem !important;
+    height: 32px !important;
+    border-radius: 999px !important;
+    flex-shrink: 0 !important;
+  }
+  .suite-view-options {
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+  }
+  [dir="rtl"] .suite-view-options {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+  .suite-search {
+    width: 135px !important;
+  }
+  .suite-search input {
+    height: 32px !important;
+    font-size: 0.75rem !important;
+    padding: 4px 8px 4px 26px !important;
+    border-radius: 999px !important;
+  }
+  [dir="rtl"] .suite-search input {
+    padding: 4px 26px 4px 8px !important;
+  }
+
+  /* =========================================================================
+     4. MASONRY GALLERY & PHOTO CARDS TOUCH OPTIMIZATION
+     ========================================================================= */
+  .suite-gallery-container {
+    padding: 12px 10px 115px !important; /* Espacio inferior para no tapar fotos con la barra flotante */
+  }
+  .suite-masonry-grid {
+    column-count: 2 !important;
+    column-gap: 8px !important;
+  }
+  .client-photo-card {
+    margin-bottom: 8px !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 10px rgba(86, 64, 49, 0.08) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+  }
+  .client-photo-card:active {
+    transform: scale(0.98) !important;
+  }
+  .client-photo-card.is-selected {
+    box-shadow: 0 0 0 2.5px #c69f68, 0 6px 20px rgba(198, 159, 104, 0.45) !important;
+  }
+  .client-photo-card.is-selected img {
+    filter: brightness(0.96) !important;
+  }
+  .client-photo-card .card-corner-ribbon {
+    font-size: 0.65rem !important;
+    padding: 3px 8px !important;
+    border-radius: 0 0 8px 0 !important;
+    background: linear-gradient(135deg, #c69f68 0%, #b88f58 100%) !important;
+    color: #12100e !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+  }
+  .client-photo-card .card-note-ribbon {
+    font-size: 0.62rem !important;
+    padding: 3px 8px !important;
+    border-radius: 8px 0 0 0 !important;
+  }
+
+  /* Botones táctiles grandes y ergonómicos en la foto */
+  .client-photo-card .card-overlay-luxury {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    background: linear-gradient(180deg, rgba(14, 12, 10, 0.65) 0%, transparent 40%, rgba(14, 12, 10, 0.45) 100%) !important;
+    padding: 6px 8px !important;
+  }
+  .client-photo-card .card-top-actions {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .client-photo-card .photo-badge-id {
+    font-size: 0.58rem !important;
+    padding: 2px 6px !important;
+    background: rgba(18, 16, 14, 0.8) !important;
+    border-radius: 6px !important;
+    font-family: var(--f-mono, monospace) !important;
+    color: #e5c38e !important;
+    border: 1px solid rgba(198, 159, 104, 0.25) !important;
+  }
+  .client-photo-card .card-top-btns {
+    display: flex !important;
+    gap: 6px !important;
+  }
+  .client-photo-card .btn-card-heart,
+  .client-photo-card .btn-card-note {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 10px !important;
+    font-size: 0.85rem !important;
+    background: rgba(18, 16, 14, 0.85) !important;
+    border: 1.5px solid rgba(198, 159, 104, 0.45) !important;
+    color: #f5f2eb !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: transform 0.15s ease, background 0.15s ease !important;
+  }
+  .client-photo-card .btn-card-heart:active,
+  .client-photo-card .btn-card-note:active {
+    transform: scale(0.9) !important;
+  }
+  .client-photo-card .btn-card-heart i.fa-solid {
+    color: #c69f68 !important;
+    transform: scale(1.1) !important;
+  }
+  .client-photo-card.is-selected .btn-card-heart {
+    background: #c69f68 !important;
+    border-color: #c69f68 !important;
+  }
+  .client-photo-card.is-selected .btn-card-heart i {
+    color: #12100e !important;
+  }
+  .client-photo-card .btn-card-note.has-note {
+    background: rgba(198, 159, 104, 0.3) !important;
+    border-color: #c69f68 !important;
+    color: #c69f68 !important;
+  }
+  .client-photo-card .card-bottom-info {
+    display: none !important;
+  }
+
+  /* =========================================================================
+     5. LIGHTBOX ULTRA-TOUCH EXPERIENCIA MÓVIL (SWIPE & COMPACT)
+     ========================================================================= */
   .lightbox-content {
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    border-radius: 0 !important;
   }
   .lightbox-topbar {
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 12px;
+    padding: 8px 12px !important;
+    background: rgba(12, 10, 9, 0.92) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(198, 159, 104, 0.25) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
   }
   .lightbox-counter {
-    width: 100%;
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+    width: auto !important;
+    text-align: left !important;
+    font-size: 0.78rem !important;
+    color: #e5c38e !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+  }
+  [dir="rtl"] .lightbox-counter {
+    text-align: right !important;
   }
   .lb-category-tag {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    border-radius: 4px;
-    padding: 4px 8px;
+    display: none !important;
   }
   .lightbox-actions {
-    width: 100%;
-    justify-content: center;
-    gap: 16px;
+    width: auto !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
   }
   .lb-btn-icon {
-    padding: 10px;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    justify-content: center;
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.85rem !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(198, 159, 104, 0.35) !important;
   }
   .lb-btn-icon span {
-    display: none; /* Hide text on mobile to save space */
+    display: none !important;
   }
-  .lightbox-image-wrapper {
-    max-width: 100%;
-    padding: 0;
+  .lb-btn-icon.close-btn {
+    width: 38px !important;
+    height: 38px !important;
+    background: rgba(255, 255, 255, 0.16) !important;
+    color: #ffffff !important;
+    font-size: 1rem !important;
+    margin-left: 4px !important;
+  }
+  .lightbox-main-stage {
+    touch-action: pan-y pinch-zoom !important;
   }
   .lb-nav-btn {
-    width: 40px;
-    height: 40px;
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 0.85rem !important;
+    background: rgba(12, 10, 9, 0.6) !important;
+    border: 1px solid rgba(198, 159, 104, 0.3) !important;
+    opacity: 0.65 !important;
   }
-  .lb-nav-btn.prev { left: 8px; }
-  .lb-nav-btn.next { right: 8px; }
+  .lb-nav-btn.prev { left: 6px !important; }
+  .lb-nav-btn.next { right: 6px !important; }
+  .lightbox-filmstrip {
+    height: 56px !important;
+    padding: 4px 8px !important;
+    background: rgba(12, 10, 9, 0.94) !important;
+  }
+  .filmstrip-thumb {
+    height: 42px !important;
+    width: 42px !important;
+    border-radius: 8px !important;
+  }
+  .lightbox-notes-drawer {
+    bottom: 64px !important;
+    right: 8px !important;
+    left: 8px !important;
+    border-radius: 16px !important;
+    padding: 14px !important;
+    background: rgba(18, 16, 14, 0.98) !important;
+  }
+
+  /* =========================================================================
+     6. MODALS AS LUXURY BOTTOM-SHEETS ON MOBILE
+     ========================================================================= */
+  .modal-dialog-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+  .modal-window {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 24px 24px 0 0 !important;
+    max-height: 88vh !important;
+    max-height: 88dvh !important;
+    padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px !important;
+    margin: 0 !important;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.5) !important;
+    animation: sheetUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  @keyframes sheetUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .modal-window::before {
+    content: '' !important;
+    display: block !important;
+    width: 36px !important;
+    height: 4px !important;
+    background: rgba(198, 159, 104, 0.4) !important;
+    border-radius: 999px !important;
+    margin: 0 auto 12px !important;
+  }
+  .modal-header {
+    padding: 4px 0 12px !important;
+  }
+  .selection-summary-banner {
+    padding: 10px !important;
+    gap: 8px !important;
+    border-radius: 12px !important;
+  }
+  .summary-metric .metric-num {
+    font-size: 1.15rem !important;
+  }
+  .summary-metric .metric-label {
+    font-size: 0.65rem !important;
+  }
+  .modal-footer {
+    padding: 14px 0 4px !important;
+    display: flex !important;
+    gap: 8px !important;
+  }
+  .modal-footer button {
+    flex: 1 !important;
+    padding: 12px 14px !important;
+    font-size: 0.85rem !important;
+    justify-content: center !important;
+  }
+}
+
+/* =========================================================================
+   BARRA FLOTANTE DE SELECCIÓN RÁPIDA (STYLES BASE & MEDIA QUERY)
+   ========================================================================= */
+.mobile-floating-selection-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-floating-selection-bar {
+    display: block !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 180 !important;
+    background: rgba(18, 16, 14, 0.94) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid rgba(198, 159, 104, 0.35) !important;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.45) !important;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)) 14px !important;
+    animation: slideUpFloat 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  @keyframes slideUpFloat {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .mobile-floating-bar-inner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    max-width: 540px !important;
+    margin: 0 auto !important;
+  }
+
+  .mobile-floating-meta {
+    flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+  }
+
+  .mobile-floating-quota-row {
+    display: flex !important;
+    align-items: baseline !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+  }
+
+  .mobile-floating-quota-count {
+    font-size: 0.92rem !important;
+    color: #f5f2eb !important;
+    font-family: var(--f-mono, monospace) !important;
+    font-weight: 700 !important;
+  }
+
+  .mobile-floating-quota-count strong {
+    color: #c69f68 !important;
+    font-size: 1.05rem !important;
+  }
+
+  .mobile-floating-quota-label {
+    font-size: 0.72rem !important;
+    color: #a89f91 !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .mobile-floating-progress-track {
+    width: 100% !important;
+    height: 4px !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-radius: 999px !important;
+    overflow: hidden !important;
+  }
+
+  .mobile-floating-progress-fill {
+    height: 100% !important;
+    background: linear-gradient(90deg, #c69f68 0%, #ecd0a2 100%) !important;
+    border-radius: 999px !important;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .mobile-floating-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .mobile-floating-fav-toggle {
+    background: rgba(198, 159, 104, 0.12) !important;
+    border: 1px solid rgba(198, 159, 104, 0.35) !important;
+    color: #e5c38e !important;
+    border-radius: 12px !important;
+    padding: 8px 12px !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+    height: 40px !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .mobile-floating-fav-toggle:active {
+    transform: scale(0.95) !important;
+  }
+
+  .mobile-floating-fav-toggle.active {
+    background: #c69f68 !important;
+    color: #12100e !important;
+    border-color: #c69f68 !important;
+  }
+
+  .mobile-floating-fav-toggle.active i {
+    color: #12100e !important;
+  }
+
+  .mobile-floating-review-btn {
+    background: linear-gradient(135deg, #c69f68 0%, #dbb37c 100%) !important;
+    color: #12100e !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 8px 14px !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    cursor: pointer !important;
+    height: 40px !important;
+    box-shadow: 0 4px 14px rgba(198, 159, 104, 0.35) !important;
+    transition: all 0.2s ease !important;
+    white-space: nowrap !important;
+  }
+
+  .mobile-floating-review-btn:active {
+    transform: scale(0.95) !important;
+  }
+
+  .mobile-floating-review-btn:disabled {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+  }
 }
 
 /* ============================================
@@ -2193,12 +2660,12 @@ html[dir="rtl"] .portal-drawer-panel {
 
 .portal-login-input {
   width: 100%;
-  padding: 12px 16px;
-  border-radius: 10px;
+  padding: 13px 16px;
+  border-radius: 12px;
   background: rgba(10, 8, 7, 0.75);
-  border: 1px solid rgba(198, 159, 104, 0.3);
+  border: 1px solid rgba(198, 159, 104, 0.35);
   color: #FAF8F5;
-  font-size: 0.95rem;
+  font-size: 16px;
   outline: none;
   font-family: inherit;
   transition: all 0.25s ease;

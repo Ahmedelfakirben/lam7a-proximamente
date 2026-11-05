@@ -170,6 +170,11 @@ const PORTAL_I18N = {
     deliveryBadgeOptical: 'Calibrado Óptico de Autor',
     deliveryBadgePrint: 'Listo para Impresión 300 DPI',
     deliveryBadgeSecure: 'Almacenamiento Seguro Cloud',
+    mobileBarQuota: (count: number, max: number) => `${count} / ${max}`,
+    mobileBarRemaining: (rem: number) => `${rem} restantes`,
+    mobileBarFull: 'Cupo completado',
+    mobileBarAll: 'Todas',
+    mobileBarSubmit: 'Enviar Selección',
   },
   FR: {
     backToSite: 'Retour à Lamha Studios',
@@ -319,6 +324,11 @@ const PORTAL_I18N = {
     deliveryBadgeOptical: "Étalonnage Optique d'Auteur",
     deliveryBadgePrint: 'Prêt pour Tirage 300 DPI',
     deliveryBadgeSecure: 'Stockage Cloud Sécurisé',
+    mobileBarQuota: (count: number, max: number) => `${count} / ${max}`,
+    mobileBarRemaining: (rem: number) => `${rem} restantes`,
+    mobileBarFull: 'Quota atteint',
+    mobileBarAll: 'Toutes',
+    mobileBarSubmit: 'Envoyer Sélection',
   },
   EN: {
     backToSite: 'Back to Lamha Studios',
@@ -467,6 +477,11 @@ const PORTAL_I18N = {
     deliveryBadgeOptical: 'Signature Optical Calibration',
     deliveryBadgePrint: 'Ready for 300 DPI Fine Art Print',
     deliveryBadgeSecure: 'Secure Cloud Storage',
+    mobileBarQuota: (count: number, max: number) => `${count} / ${max}`,
+    mobileBarRemaining: (rem: number) => `${rem} remaining`,
+    mobileBarFull: 'Quota reached',
+    mobileBarAll: 'All',
+    mobileBarSubmit: 'Send Selection',
   },
   AR: {
     backToSite: 'العودة إلى استوديوهات لمحة',
@@ -615,6 +630,11 @@ const PORTAL_I18N = {
     deliveryBadgeOptical: 'معايرة بصرية فنية خاصة',
     deliveryBadgePrint: 'جاهز للطباعة بدقة 300 DPI',
     deliveryBadgeSecure: 'تخزين سحابي آمن',
+    mobileBarQuota: (count: number, max: number) => `${count} / ${max}`,
+    mobileBarRemaining: (rem: number) => `${rem} متبقية`,
+    mobileBarFull: 'تم استكمال العدد',
+    mobileBarAll: 'الكل',
+    mobileBarSubmit: 'إرسال الاختيارات',
   },
 }
 
@@ -998,6 +1018,10 @@ export default function PortalPage() {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [lightboxIndex, activeNoteModal, filteredPhotos.length])
+
+  // Touch swipe gesture support for mobile lightbox
+  const touchStartXRef = useRef<number | null>(null)
+  const touchStartYRef = useRef<number | null>(null)
 
   // Language Dropdown Component
   const renderLanguageSelector = (placement: 'topbar' | 'card' = 'topbar') => {
@@ -2350,6 +2374,54 @@ export default function PortalPage() {
         })()}
       </main>
 
+      {/* BARRA FLOTANTE MÓVIL DE SELECCIÓN RÁPIDA (STICKY BOTTOM BAR) */}
+      {activeTab === 'selection' && activePhotos.length > 0 && lightboxIndex === null && !reviewModalOpen && !activeNoteModal && (
+        <aside className="mobile-floating-selection-bar" dir={isRTL ? 'rtl' : 'ltr'}>
+          <div className="mobile-floating-bar-inner">
+            <div className="mobile-floating-meta">
+              <div className="mobile-floating-quota-row">
+                <span className="mobile-floating-quota-count">
+                  <strong>{selectedIds.size}</strong> / {maxQuota}
+                </span>
+                <span className="mobile-floating-quota-label">
+                  {selectedIds.size >= maxQuota
+                    ? t.mobileBarFull
+                    : t.mobileBarRemaining(maxQuota - selectedIds.size)}
+                </span>
+              </div>
+              <div className="mobile-floating-progress-track">
+                <div
+                  className="mobile-floating-progress-fill"
+                  style={{ width: `${Math.min(100, (selectedIds.size / (maxQuota || 1)) * 100)}%` }}
+                />
+              </div>
+            </div>
+
+            <div className="mobile-floating-actions">
+              <button
+                type="button"
+                className={`mobile-floating-fav-toggle ${category === 'favs' ? 'active' : ''}`}
+                onClick={() => setCategory(category === 'favs' ? 'all' : 'favs')}
+                title={category === 'favs' ? t.filterAll : t.filterFavs}
+              >
+                <i className={`fa-${category === 'favs' ? 'solid' : 'regular'} fa-heart`} />
+                <span>{category === 'favs' ? t.mobileBarAll : `${selectedIds.size}`}</span>
+              </button>
+
+              <button
+                type="button"
+                className="mobile-floating-review-btn"
+                onClick={() => setReviewModalOpen(true)}
+                disabled={selectedIds.size === 0}
+              >
+                <i className="fa-solid fa-check-double" />
+                <span>{t.mobileBarSubmit}</span>
+              </button>
+            </div>
+          </div>
+        </aside>
+      )}
+
       {/* LIGHTBOX CINEMATOGRÁFICO DE LA SUITE */}
       {lightboxIndex !== null && filteredPhotos[lightboxIndex] && (
         <div className="lightbox-overlay" id="lightboxModal" role="dialog" aria-modal="true">
@@ -2425,7 +2497,41 @@ export default function PortalPage() {
               </div>
             </div>
 
-            <div className="lightbox-main-stage">
+            <div 
+            className="lightbox-main-stage"
+            onTouchStart={(e) => {
+              if (e.touches.length === 1) {
+                touchStartXRef.current = e.touches[0].clientX
+                touchStartYRef.current = e.touches[0].clientY
+              }
+            }}
+            onTouchEnd={(e) => {
+              if (touchStartXRef.current === null || touchStartYRef.current === null) return
+              const diffX = e.changedTouches[0].clientX - touchStartXRef.current
+              const diffY = e.changedTouches[0].clientY - touchStartYRef.current
+              touchStartXRef.current = null
+              touchStartYRef.current = null
+
+              if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX < 0) {
+                  // Swipe left -> next photo (or prev in RTL)
+                  if (isRTL) {
+                    setLightboxIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : filteredPhotos.length - 1))
+                  } else {
+                    setLightboxIndex((prev) => (prev !== null && prev < filteredPhotos.length - 1 ? prev + 1 : 0))
+                  }
+                } else {
+                  // Swipe right -> prev photo (or next in RTL)
+                  if (isRTL) {
+                    setLightboxIndex((prev) => (prev !== null && prev < filteredPhotos.length - 1 ? prev + 1 : 0))
+                  } else {
+                    setLightboxIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : filteredPhotos.length - 1))
+                  }
+                }
+                setActiveNoteModal(null)
+              }
+            }}
+          >
               <button
                 type="button"
                 className="lb-nav-btn prev"
