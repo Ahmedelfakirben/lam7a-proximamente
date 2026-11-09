@@ -784,17 +784,32 @@ export default function PortalPage() {
         return
       }
 
-      // Supabase Email + PIN Verification (incluyendo media_deliveries)
-      const { data: session, error } = await supabase
-        .from('sessions')
-        .select('id, client_name, client_email, category, session_date, portal_pin, status, tags, selected_assets, media_assets(*), media_deliveries(*)')
-        .ilike('client_email', cleanEmail)
-        .eq('portal_pin', cleanPin)
-        .maybeSingle()
+      // Supabase Email + PIN Verification (vía RPC segura portal_verify_session con fallback a consulta directa)
+      let session: any = null
+      const { data: rpcData, error: rpcError } = await supabase.rpc('portal_verify_session', {
+        p_email: cleanEmail,
+        p_pin: cleanPin,
+      })
 
-      if (error) {
-        console.error('Error verificando credenciales en Supabase:', error)
-        setLoginError(t.errServer)
+      if (!rpcError && rpcData && typeof rpcData === 'object' && rpcData.success && rpcData.session) {
+        session = rpcData.session
+      } else if (rpcError || (rpcData && !rpcData.success && rpcData.error !== 'invalid_credentials')) {
+        // Fallback temporal de compatibilidad a consulta directa
+        const { data: directSession, error: directError } = await supabase
+          .from('sessions')
+          .select('id, client_name, client_email, category, session_date, portal_pin, status, tags, selected_assets, media_assets(*), media_deliveries(*)')
+          .ilike('client_email', cleanEmail)
+          .eq('portal_pin', cleanPin)
+          .maybeSingle()
+
+        if (directError) {
+          console.error('Error verificando credenciales en Supabase:', directError)
+          setLoginError(t.errServer)
+          return
+        }
+        session = directSession
+      } else {
+        setLoginError(t.errInvalid)
         return
       }
 
@@ -961,31 +976,43 @@ export default function PortalPage() {
       const filteredTags = currentTags.filter((item: string) => !item.startsWith('stage:'))
       const updatedTags = [...filteredTags, 'stage:client_selected']
 
-      await supabase
-        .from('sessions')
-        .update({
-          selected_assets: selectedArr,
-          comments: updatedComments,
-          status: 'client_selected',
-          pipeline_stage: 'client_selected',
-          tags: updatedTags,
-        })
-        .eq('id', currentSession.id)
+      // 1. Guardar mediante RPC segura (SECURITY DEFINER)
+      const { error: rpcErr } = await supabase.rpc('portal_submit_selection', {
+        p_session_id: currentSession.id,
+        p_selected_assets: selectedArr,
+        p_asset_notes: notes,
+        p_general_notes: generalNotes.trim(),
+      })
 
-      if (selectedArr.length > 0) {
+      // Fallback de compatibilidad directa por si el RPC no respondiera
+      if (rpcErr) {
+        console.warn('Fallback a update directo de sesion:', rpcErr.message)
         await supabase
-          .from('media_assets')
-          .update({ client_selected: true })
-          .eq('session_id', currentSession.id)
-          .in('filename', selectedArr)
+          .from('sessions')
+          .update({
+            selected_assets: selectedArr,
+            comments: updatedComments,
+            status: 'client_selected',
+            pipeline_stage: 'client_selected',
+            tags: updatedTags,
+          })
+          .eq('id', currentSession.id)
 
-        for (const [photoFilename, photoNote] of Object.entries(notes)) {
-          if (photoNote && photoNote.trim()) {
-            await supabase
-              .from('media_assets')
-              .update({ client_notes: photoNote.trim() })
-              .eq('session_id', currentSession.id)
-              .eq('filename', photoFilename)
+        if (selectedArr.length > 0) {
+          await supabase
+            .from('media_assets')
+            .update({ client_selected: true })
+            .eq('session_id', currentSession.id)
+            .in('filename', selectedArr)
+
+          for (const [photoFilename, photoNote] of Object.entries(notes)) {
+            if (photoNote && photoNote.trim()) {
+              await supabase
+                .from('media_assets')
+                .update({ client_notes: photoNote.trim() })
+                .eq('session_id', currentSession.id)
+                .eq('filename', photoFilename)
+            }
           }
         }
       }
