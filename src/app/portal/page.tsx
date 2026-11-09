@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import JSZip from 'jszip'
 import { LamhaLogo } from '@/components/LamhaLogo'
 import { useLanguage } from '@/context/LanguageContext'
 import { supabase } from '@/lib/supabase'
@@ -56,6 +57,9 @@ const PORTAL_I18N = {
       `¡Cupo completado exactamente (${selected}/${quota})! Lista para enviar a Afaf.`,
     sendToAtelierBtn: 'Enviar Selección al Taller',
     downloadPreviewsBtn: 'Descargar Previews',
+    downloadingZip: (percent: number) => `Generando ZIP... ${percent}%`,
+    downloadZipEmpty: 'No hay fotografías compartidas para descargar.',
+    downloadZipError: 'Ocurrió un error al preparar la descarga. Por favor inténtalo de nuevo.',
     filterAll: 'Todas',
     filterFavs: 'Mis Favoritas',
     filterPreparativos: 'Preparativos',
@@ -213,6 +217,9 @@ const PORTAL_I18N = {
       `Quota complété exactement (${selected}/${quota}) ! Prêt pour l’envoi à Afaf.`,
     sendToAtelierBtn: 'Envoyer la Sélection à l’Atelier',
     downloadPreviewsBtn: 'Télécharger les Aperçus',
+    downloadingZip: (percent: number) => `Génération du ZIP... ${percent}%`,
+    downloadZipEmpty: 'Aucune photographie partagée disponible au téléchargement.',
+    downloadZipError: 'Une erreur est survenue lors du téléchargement. Veuillez réessayer.',
     filterAll: 'Toutes',
     filterFavs: 'Mes Favorites',
     filterPreparativos: 'Préparatifs',
@@ -371,6 +378,9 @@ const PORTAL_I18N = {
       `Quota completed perfectly (${selected}/${quota})! Ready to send to Afaf.`,
     sendToAtelierBtn: 'Submit Selection to Atelier',
     downloadPreviewsBtn: 'Download Previews',
+    downloadingZip: (percent: number) => `Generating ZIP... ${percent}%`,
+    downloadZipEmpty: 'No shared photographs available for download.',
+    downloadZipError: 'An error occurred during download. Please try again.',
     filterAll: 'All',
     filterFavs: 'My Favorites',
     filterPreparativos: 'Getting Ready',
@@ -528,6 +538,9 @@ const PORTAL_I18N = {
       `تم استيفاء الحد تماماً (${selected}/${quota})! جاهز للإرسال إلى عفاف.`,
     sendToAtelierBtn: 'إرسال الاختيارات للاستوديو',
     downloadPreviewsBtn: 'تحميل المعاينات',
+    downloadingZip: (percent: number) => `جاري تجهيز الملف المضغوط... ${percent}%`,
+    downloadZipEmpty: 'لا توجد صور مشاركة متاحة للتحميل.',
+    downloadZipError: 'حدث خطأ أثناء إعداد التحميل. يرجى المحاولة مرة أخرى.',
     filterAll: 'الكل',
     filterFavs: 'المفضلة لدي',
     filterPreparativos: 'التحضيرات',
@@ -719,6 +732,8 @@ export default function PortalPage() {
   const [generalNotes, setGeneralNotes] = useState('')
   const [isSubmittingOrder, setIsSubmittingOrder] = useState(false)
   const [orderSubmittedSuccess, setOrderSubmittedSuccess] = useState(false)
+  const [isDownloadingZip, setIsDownloadingZip] = useState(false)
+  const [downloadZipProgress, setDownloadZipProgress] = useState(0)
 
   const handleLogin = async (enteredEmail: string, enteredPin: string) => {
     const cleanEmail = enteredEmail.trim().toLowerCase()
@@ -995,6 +1010,104 @@ export default function PortalPage() {
       alert(t.submitOrderError)
     } finally {
       setIsSubmittingOrder(false)
+    }
+  }
+
+  // Descarga empaquetada en ZIP de todas las fotografías / aperçus compartidos
+  const handleDownloadAllPreviews = async () => {
+    if (activePhotos.length === 0) {
+      alert(t.downloadZipEmpty)
+      return
+    }
+
+    if (isDownloadingZip) return
+
+    setIsDownloadingZip(true)
+    setDownloadZipProgress(5)
+
+    try {
+      const zip = new JSZip()
+      const clientSlug = (currentSession?.client_name || 'Client')
+        .replace(/[^a-zA-Z0-9_\u0600-\u06FF-]/g, '_')
+        .replace(/_+/g, '_')
+      const folderName = `${clientSlug}_Apercus_Lamha`
+      const imgFolder = zip.folder(folderName) || zip
+
+      const total = activePhotos.length
+      let loaded = 0
+
+      // Descargar cada fotografía compartida en paralelo (con límite de concurrencia)
+      const CONCURRENCY = 6
+      const results: { filename: string; blob: Blob | null }[] = new Array(total)
+
+      for (let i = 0; i < total; i += CONCURRENCY) {
+        const batch = activePhotos.slice(i, i + CONCURRENCY)
+        await Promise.all(
+          batch.map(async (photo, batchIdx) => {
+            const index = i + batchIdx
+            try {
+              let cleanName = (photo.title || photo.id || `photo_${index + 1}`).trim()
+              if (!cleanName.toLowerCase().endsWith('.jpg') && !cleanName.toLowerCase().endsWith('.jpeg') && !cleanName.toLowerCase().endsWith('.png')) {
+                cleanName = `${cleanName}.jpg`
+              }
+
+              const res = await fetch(photo.url, { mode: 'cors' })
+              if (!res.ok) throw new Error(`HTTP ${res.status}`)
+              const blob = await res.blob()
+              results[index] = { filename: cleanName, blob }
+            } catch (fetchErr) {
+              console.warn(`Error descargando preview ${photo.id}:`, fetchErr)
+              results[index] = { filename: `photo_${index + 1}.jpg`, blob: null }
+            } finally {
+              loaded++
+              const percent = Math.min(85, Math.round((loaded / total) * 80) + 5)
+              setDownloadZipProgress(percent)
+            }
+          })
+        )
+      }
+
+      // Añadir al ZIP
+      for (const item of results) {
+        if (item && item.blob) {
+          imgFolder.file(item.filename, item.blob)
+        }
+      }
+
+      setDownloadZipProgress(90)
+
+      // Generar el archivo ZIP
+      const content = await zip.generateAsync(
+        {
+          type: 'blob',
+          compression: 'DEFLATE',
+          compressionOptions: { level: 6 },
+        },
+        (metadata) => {
+          const zipPercent = Math.min(99, 90 + Math.round((metadata.percent / 100) * 9))
+          setDownloadZipProgress(zipPercent)
+        }
+      )
+
+      // Disparar la descarga nativa en el navegador
+      const zipFileName = `${folderName}.zip`
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(content)
+      link.download = zipFileName
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      setTimeout(() => URL.revokeObjectURL(link.href), 10000)
+
+      setDownloadZipProgress(100)
+    } catch (zipErr) {
+      console.error('Error generando ZIP de previews:', zipErr)
+      alert(t.downloadZipError)
+    } finally {
+      setTimeout(() => {
+        setIsDownloadingZip(false)
+        setDownloadZipProgress(0)
+      }, 1500)
     }
   }
 
@@ -1824,9 +1937,18 @@ export default function PortalPage() {
                       <i className="fa-solid fa-check-double" />
                       <span>{t.sendToAtelierBtn}</span>
                     </button>
-                    <button className="btn-luxury-ghost-dark">
-                      <i className="fa-solid fa-download" />
-                      <span>{t.downloadPreviewsBtn}</span>
+                    <button
+                      className="btn-luxury-ghost-dark"
+                      onClick={handleDownloadAllPreviews}
+                      disabled={isDownloadingZip || activePhotos.length === 0}
+                      style={{ cursor: isDownloadingZip ? 'wait' : 'pointer' }}
+                    >
+                      <i className={`fa-solid ${isDownloadingZip ? 'fa-spinner fa-spin' : 'fa-download'}`} />
+                      <span>
+                        {isDownloadingZip
+                          ? t.downloadingZip(downloadZipProgress)
+                          : `${t.downloadPreviewsBtn} (${activePhotos.length})`}
+                      </span>
                     </button>
                   </div>
                 </div>
