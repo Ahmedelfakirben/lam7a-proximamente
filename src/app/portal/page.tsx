@@ -871,6 +871,10 @@ export default function PortalPage() {
       const params = new URLSearchParams(window.location.search)
       const urlEmail = params.get('email')
       const urlPin = params.get('pin')
+      const urlLang = params.get('lang')?.toUpperCase()
+      if (urlLang && ['ES', 'EN', 'FR', 'AR'].includes(urlLang)) {
+        setLang(urlLang as Lang)
+      }
       if (urlEmail) setEmail(urlEmail)
       if (urlPin) setPin(urlPin)
 
